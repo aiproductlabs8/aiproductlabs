@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import './App.css'
 import ContrastCard from './components/ContrastCard'
 import FlightStatus from './components/FlightStatus'
+import SignalBoard from './components/SignalBoard'
 
 /* ─── Icons ──────────────────────────────────────────────── */
 const ArrowIcon = () => (
@@ -64,38 +65,63 @@ const MicrosoftIcon = () => (
 
 /* ─── Boot sequence ──────────────────────────────────────── */
 function BootSequence({ onComplete }) {
-  const LINES = [
-    { text: 'INITIALISING SYSTEM...', cls: 'boot-line--init' },
-    { text: 'OPERATOR......... RAHIL POPAT',          cls: 'boot-line--data' },
-    { text: 'DISCIPLINE....... AERONAUTICAL ENG → AI', cls: 'boot-line--data' },
-    { text: 'STATUS........... BUILDING',             cls: 'boot-line--data' },
-    { text: 'LAB.............. ACTIVE',               cls: 'boot-line--active' },
-    { text: 'LOADING GENIUS......... ERROR 404',      cls: 'boot-line--error' },
-    { text: 'LOADING PRAGMATISM..... COMPLETE',       cls: 'boot-line--active' },
-    { text: 'RUNNING ANYWAY.',                        cls: 'boot-line--init' },
+  const isReturn = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('hasBooted') === '1'
+
+  const FULL_LINES = [
+    { content: 'INITIALISING LARGE LANGUAGE OPERATOR...', cls: 'boot-line--teal', delay: 0 },
+    { content: 'LOADING CONTEXT WINDOW......... READY',   cls: 'boot-line--teal', delay: 300 },
+    { content: 'CALIBRATING REASONING........... COMPLETE', cls: 'boot-line--teal', delay: 600 },
+    { content: 'INJECTING DOMAIN KNOWLEDGE...... AERONAUTICS + AI', cls: 'boot-line--teal', delay: 900 },
+    { content: 'ALIGNING VALUES................. PRAGMATIC > PERFECT', cls: 'boot-line--teal', delay: 1200 },
+    { content: <span>LOADING GENIUS..................{' '}<span style={{ color: '#f59e0b' }}>ERROR 404</span></span>, cls: 'boot-line--teal', delay: 1500 },
+    { content: <span>LOADING PRAGMATISM..............{' '}<span style={{ color: '#4ade80' }}>COMPLETE</span></span>, cls: 'boot-line--teal', delay: 1800 },
+    { content: <span>OPERATOR........................{' '}<span style={{ color: '#fff', fontWeight: 500 }}>RAHIL POPAT</span></span>, cls: 'boot-line--teal', delay: 2100 },
+    { content: 'READY FOR INFERENCE.', cls: 'boot-line--ready', delay: 2700 },
   ]
+
+  const RETURN_LINES = [
+    { content: 'OPERATOR RECOGNISED', cls: 'boot-line--teal', delay: 0 },
+    { content: 'CONTEXT LOADED',      cls: 'boot-line--teal', delay: 300 },
+    { content: 'READY FOR INFERENCE.', cls: 'boot-line--ready', delay: 900 },
+  ]
+
+  const LINES = isReturn ? RETURN_LINES : FULL_LINES
+  const lastDelay = LINES[LINES.length - 1].delay
+
   const [visible, setVisible] = useState([])
   const [fading, setFading] = useState(false)
+  const hasRun = useRef(false)
+  const timers = useRef([])
 
   useEffect(() => {
+    if (hasRun.current) return
+    hasRun.current = true
+
     LINES.forEach((line, i) => {
-      setTimeout(() => {
+      const t = setTimeout(() => {
         setVisible(prev => [...prev, line])
-        if (i === LINES.length - 1) {
-          setTimeout(() => {
-            setFading(true)
-            setTimeout(onComplete, 650)
-          }, 520)
-        }
-      }, i * 310)
+      }, line.delay)
+      timers.current.push(t)
     })
+
+    const fadeT = setTimeout(() => {
+      setFading(true)
+      const doneT = setTimeout(() => {
+        sessionStorage.setItem('hasBooted', '1')
+        onComplete()
+      }, 650)
+      timers.current.push(doneT)
+    }, lastDelay + 520)
+    timers.current.push(fadeT)
+
+    return () => timers.current.forEach(clearTimeout)
   }, [])
 
   return (
     <div className={`boot-overlay${fading ? ' boot-overlay--fading' : ''}`}>
       <div className="boot-content">
         {visible.map((line, i) => (
-          <div key={i} className={`boot-line ${line.cls}`}>{line.text}</div>
+          <div key={i} className={`boot-line ${line.cls}`}>{line.content}</div>
         ))}
         {visible.length < LINES.length && <span className="boot-cursor">█</span>}
       </div>
@@ -843,7 +869,7 @@ function PassionStat() {
   )
 }
 
-function AboutTab() {
+function AboutTab({ onNavigate, onOpenArticle }) {
   useScrollReveal()
   const TYPING_TEXTS = [
     'Rahil Popat',
@@ -869,7 +895,7 @@ function AboutTab() {
                 {!showSubtitle && <span className="type-cursor" />}
               </h1>
               {showSubtitle && (
-                <p className="tab-hero-sub">
+                <p className="tab-hero-sub" style={{ color: 'var(--accent)' }}>
                   {displayed[1]}
                   {!showTagline && <span className="type-cursor" />}
                 </p>
@@ -915,7 +941,7 @@ function AboutTab() {
 
             <div className="about-bio">
               {showBio && (
-                <p className="about-p">
+                <p className="about-p about-p--lead">
                   {displayed[3]}
                   {!done && <span className="type-cursor type-cursor--teal" />}
                 </p>
@@ -939,6 +965,7 @@ function AboutTab() {
               </div>
 
               <ContrastCard />
+              <SignalBoard onNavigate={onNavigate} onOpenArticle={onOpenArticle} />
             </div>
 
             <div className="about-credentials">
@@ -1128,7 +1155,7 @@ export default function App() {
   const TAB_CONTENT = {
     agents:   <AgentsTab />,
     insights: <InsightsTab onReadMore={handleReadMore} />,
-    about:    <AboutTab />,
+    about:    <AboutTab onNavigate={handleSwitch} onOpenArticle={handleReadMore} />,
   }
 
   const articleContent = openArticle === 'aero-to-ai'
