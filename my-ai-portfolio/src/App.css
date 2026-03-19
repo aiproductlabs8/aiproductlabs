@@ -20,6 +20,9 @@
   --r-lg:       22px;
   --font-h:     'Syne', sans-serif;
   --font-b:     'Outfit', sans-serif;
+  --font-mono:  'JetBrains Mono', monospace;
+  --amber:      #F59E0B;
+  --amber-dim:  rgba(245,158,11,0.15);
 }
 
 html { scroll-behavior: smooth; }
@@ -759,6 +762,174 @@ body::before {
 .footer-nav-link:hover { color: var(--text-1); background: rgba(255,255,255,0.04); }
 .footer-copy { margin-left: auto; font-size: 13px; color: var(--text-3); }
 .footer-disclaimer { width: 100%; text-align: center; font-size: 11px; color: var(--text-3); opacity: 0.5; margin-top: 8px; }
+
+/* Reading progress bar */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: #00ffff;
+  z-index: 9999;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* Card hover glow */
+.cred-card,
+.agent-card,
+.insight-card,
+.insight-featured,
+.gh-widget,
+.about-stack-card {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.cred-card:hover,
+.agent-card:hover,
+.insight-card:hover,
+.insight-featured:hover,
+.gh-widget:hover,
+.about-stack-card:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.08);
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Constellation canvas */
+.constellation-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.45;
+}
+
+/* GitHub Activity Widget */
+.gh-widget { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 16px; margin-top: 16px; }
+.gh-widget-header { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+.gh-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; margin-left: auto; animation: pulse-green 2s ease-in-out infinite; }
+.gh-state { font-size: 12px; color: var(--text-3); font-style: italic; }
+.gh-commit { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.gh-commit:last-child { border-bottom: none; }
+.gh-commit-dot { color: var(--accent-cyan, #22d3ee); font-size: 14px; line-height: 1.4; flex-shrink: 0; }
+.gh-commit-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.gh-commit-msg { font-size: 12px; color: var(--text-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gh-commit-meta { font-size: 11px; color: var(--text-3); }
+
+/* Typewriter cursor */
+.type-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--accent-cyan, #22d3ee);
+  margin-left: 3px;
+  vertical-align: text-bottom;
+  animation: blink-cursor 0.75s step-end infinite;
+}
+.type-cursor--teal { background: #00ffff; }
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* About — building status */
+.about-building-status { display: inline-flex; align-items: center; gap: 7px; margin-top: 12px; font-size: 13px; color: var(--text-3); }
+.about-building-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; flex-shrink: 0; animation: pulse-green 2s ease-in-out infinite; }
+@keyframes pulse-green {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+  50%       { opacity: 0.7; box-shadow: 0 0 0 5px rgba(74,222,128,0); }
+}
+
+/* About — obsessing line */
+.about-obsessing { font-size: 13px; color: var(--text-3); opacity: 0.8; font-style: italic; margin-bottom: 20px; line-height: 1.6; border-left: 2px solid var(--amber); padding-left: 12px; }
+
+/* ─── Boot sequence ──────────────────────────────────────── */
+.boot-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity 0.65s ease;
+}
+.boot-overlay--fading { opacity: 0; pointer-events: none; }
+.boot-content {
+  font-family: var(--font-mono);
+  font-size: clamp(13px, 1.5vw, 16px);
+  line-height: 2;
+  min-width: 340px;
+}
+.boot-line { opacity: 0; animation: bootLineIn 0.2s ease forwards; }
+@keyframes bootLineIn { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: translateX(0); } }
+.boot-line--init   { color: var(--accent); }
+.boot-line--data   { color: var(--amber); }
+.boot-line--active { color: #4ade80; letter-spacing: 0.04em; }
+.boot-cursor { color: var(--amber); animation: blink-cursor 0.6s step-end infinite; font-family: var(--font-mono); }
+.main--booting { visibility: hidden; }
+
+/* ─── HUD reticle ────────────────────────────────────────── */
+.hud-reticle-wrap {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: flex-end;
+  pointer-events: none; z-index: 0; overflow: hidden;
+}
+.hud-reticle {
+  width: min(60vw, 520px); height: min(60vw, 520px);
+  color: var(--accent);
+  opacity: 0.04;
+  animation: hud-spin 60s linear infinite;
+  flex-shrink: 0;
+  margin-right: -80px;
+}
+@keyframes hud-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ─── Nav brackets ───────────────────────────────────────── */
+.nav-bracket { opacity: 0.45; font-family: var(--font-mono); font-size: 0.9em; }
+
+/* ─── GitHub button amber hover ──────────────────────────── */
+.btn-outline:hover { border-color: var(--amber); color: var(--amber); box-shadow: 0 0 16px var(--amber-dim); }
+
+/* ─── Agent SYS readout ──────────────────────────────────── */
+.agent-sys {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding: 3px 0;
+  border-bottom: 1px solid var(--border);
+}
+.agent-sys--active  { color: var(--accent); }
+.agent-sys--standby { color: var(--amber); }
+
+/* ─── Active/live indicators amber ───────────────────────── */
+.agent-status-dot { background: var(--amber) !important; }
+.agent-card-soon .agent-status-dot { background: var(--amber) !important; }
+
+/* ─── Stats readout ──────────────────────────────────────── */
+.stats-readout {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat-row {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.stat-key { color: var(--text-3); }
+.stat-val { color: var(--accent); font-weight: 600; }
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE

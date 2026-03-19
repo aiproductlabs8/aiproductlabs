@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
 /* ─── Icons ──────────────────────────────────────────────── */
@@ -48,6 +48,256 @@ const MicrosoftIcon = () => (
   </svg>
 )
 
+/* ─── Boot sequence ──────────────────────────────────────── */
+function BootSequence({ onComplete }) {
+  const LINES = [
+    { text: 'INITIALISING SYSTEM...', cls: 'boot-line--init' },
+    { text: 'OPERATOR......... RAHIL POPAT',       cls: 'boot-line--data' },
+    { text: 'DISCIPLINE....... AERONAUTICAL ENG → AI', cls: 'boot-line--data' },
+    { text: 'STATUS........... BUILDING',          cls: 'boot-line--data' },
+    { text: 'LAB.............. ACTIVE',            cls: 'boot-line--active' },
+  ]
+  const [visible, setVisible] = useState([])
+  const [fading, setFading] = useState(false)
+
+  useEffect(() => {
+    LINES.forEach((line, i) => {
+      setTimeout(() => {
+        setVisible(prev => [...prev, line])
+        if (i === LINES.length - 1) {
+          setTimeout(() => {
+            setFading(true)
+            setTimeout(onComplete, 650)
+          }, 520)
+        }
+      }, i * 310)
+    })
+  }, [])
+
+  return (
+    <div className={`boot-overlay${fading ? ' boot-overlay--fading' : ''}`}>
+      <div className="boot-content">
+        {visible.map((line, i) => (
+          <div key={i} className={`boot-line ${line.cls}`}>{line.text}</div>
+        ))}
+        {visible.length < LINES.length && <span className="boot-cursor">█</span>}
+      </div>
+    </div>
+  )
+}
+
+/* ─── HUD reticle ────────────────────────────────────────── */
+function HudReticle() {
+  return (
+    <div className="hud-reticle-wrap" aria-hidden="true">
+      <svg className="hud-reticle" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        {/* Concentric rings */}
+        <circle cx="200" cy="200" r="180" fill="none" stroke="currentColor" strokeWidth="0.6" strokeDasharray="4 8" />
+        <circle cx="200" cy="200" r="130" fill="none" stroke="currentColor" strokeWidth="0.8" />
+        <circle cx="200" cy="200" r="80"  fill="none" stroke="currentColor" strokeWidth="0.6" strokeDasharray="2 6" />
+        <circle cx="200" cy="200" r="30"  fill="none" stroke="currentColor" strokeWidth="1" />
+        {/* Crosshairs */}
+        <line x1="200" y1="20"  x2="200" y2="80"  stroke="currentColor" strokeWidth="0.8" />
+        <line x1="200" y1="320" x2="200" y2="380" stroke="currentColor" strokeWidth="0.8" />
+        <line x1="20"  y1="200" x2="80"  y2="200" stroke="currentColor" strokeWidth="0.8" />
+        <line x1="320" y1="200" x2="380" y2="200" stroke="currentColor" strokeWidth="0.8" />
+        {/* Diagonal ticks */}
+        <line x1="72"  y1="72"  x2="94"  y2="94"  stroke="currentColor" strokeWidth="0.6" />
+        <line x1="328" y1="72"  x2="306" y2="94"  stroke="currentColor" strokeWidth="0.6" />
+        <line x1="72"  y1="328" x2="94"  y2="306" stroke="currentColor" strokeWidth="0.6" />
+        <line x1="328" y1="328" x2="306" y2="306" stroke="currentColor" strokeWidth="0.6" />
+        {/* Compass tick marks on outer ring */}
+        {[0,30,60,90,120,150,180,210,240,270,300,330].map(deg => {
+          const r = Math.PI * deg / 180
+          const inner = deg % 90 === 0 ? 165 : 172
+          return (
+            <line
+              key={deg}
+              x1={200 + Math.sin(r) * inner} y1={200 - Math.cos(r) * inner}
+              x2={200 + Math.sin(r) * 180}   y2={200 - Math.cos(r) * 180}
+              stroke="currentColor" strokeWidth={deg % 90 === 0 ? 1.2 : 0.6}
+            />
+          )
+        })}
+        {/* Centre dot */}
+        <circle cx="200" cy="200" r="3" fill="currentColor" />
+      </svg>
+    </div>
+  )
+}
+
+/* ─── Reading progress bar ───────────────────────────────── */
+function ReadingProgress() {
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const onScroll = () => {
+      const el = document.documentElement
+      const scrolled = el.scrollTop
+      const total = el.scrollHeight - el.clientHeight
+      setProgress(total > 0 ? (scrolled / total) * 100 : 0)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  return <div className="reading-progress" style={{ width: `${progress}%` }} />
+}
+
+/* ─── Magnetic button ────────────────────────────────────── */
+function MagneticBtn({ className, children, href, onClick, target, rel }) {
+  const ref = useRef(null)
+
+  const onMouseMove = (e) => {
+    const el = ref.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const cx = rect.left + rect.width / 2
+    const cy = rect.top + rect.height / 2
+    const dx = (e.clientX - cx) * 0.28
+    const dy = (e.clientY - cy) * 0.28
+    el.style.transform = `translate(${dx}px, ${dy}px)`
+  }
+
+  const onMouseLeave = () => {
+    if (ref.current) ref.current.style.transform = 'translate(0,0)'
+  }
+
+  const props = { ref, className, onMouseMove, onMouseLeave, style: { transition: 'transform 0.2s ease' } }
+
+  return href
+    ? <a href={href} target={target} rel={rel} {...props}>{children}</a>
+    : <button onClick={onClick} {...props}>{children}</button>
+}
+
+/* ─── Scroll-reveal hook ─────────────────────────────────── */
+function useScrollReveal(selector = '.reveal') {
+  useEffect(() => {
+    const els = document.querySelectorAll(selector)
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('revealed')
+            observer.unobserve(e.target)
+          }
+        })
+      },
+      { threshold: 0.12 }
+    )
+    els.forEach(el => observer.observe(el))
+    return () => observer.disconnect()
+  })
+}
+
+/* ─── Constellation background ───────────────────────────── */
+function ConstellationCanvas() {
+  const canvasRef = useRef(null)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    let animId
+
+    const STARS = 90
+    const LINK_DIST = 140
+    let stars = []
+
+    const resize = () => {
+      canvas.width  = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+
+    const init = () => {
+      resize()
+      stars = Array.from({ length: STARS }, () => ({
+        x:  Math.random() * canvas.width,
+        y:  Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.18,
+        vy: (Math.random() - 0.5) * 0.18,
+        r:  Math.random() * 1.2 + 0.4,
+      }))
+    }
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      // draw links
+      for (let i = 0; i < stars.length; i++) {
+        for (let j = i + 1; j < stars.length; j++) {
+          const dx = stars[i].x - stars[j].x
+          const dy = stars[i].y - stars[j].y
+          const dist = Math.sqrt(dx * dx + dy * dy)
+          if (dist < LINK_DIST) {
+            ctx.beginPath()
+            ctx.strokeStyle = `rgba(34,211,238,${0.12 * (1 - dist / LINK_DIST)})`
+            ctx.lineWidth = 0.5
+            ctx.moveTo(stars[i].x, stars[i].y)
+            ctx.lineTo(stars[j].x, stars[j].y)
+            ctx.stroke()
+          }
+        }
+      }
+
+      // draw stars
+      for (const s of stars) {
+        ctx.beginPath()
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(34,211,238,0.55)'
+        ctx.fill()
+
+        // move
+        s.x += s.vx
+        s.y += s.vy
+        if (s.x < 0) s.x = canvas.width
+        if (s.x > canvas.width) s.x = 0
+        if (s.y < 0) s.y = canvas.height
+        if (s.y > canvas.height) s.y = 0
+      }
+
+      animId = requestAnimationFrame(draw)
+    }
+
+    init()
+    draw()
+    window.addEventListener('resize', init)
+    return () => {
+      cancelAnimationFrame(animId)
+      window.removeEventListener('resize', init)
+    }
+  }, [])
+
+  return <canvas ref={canvasRef} className="constellation-canvas" />
+}
+
+/* ─── Typewriter hook ────────────────────────────────────── */
+function useTypewriter(texts, speed = 55) {
+  const [displayed, setDisplayed] = useState(texts.map(() => ''))
+  const [phase, setPhase] = useState(0)
+
+  useEffect(() => {
+    if (phase >= texts.length) return
+    const target = texts[phase]
+    const current = displayed[phase]
+    if (current.length >= target.length) {
+      const t = setTimeout(() => setPhase(p => p + 1), 180)
+      return () => clearTimeout(t)
+    }
+    const t = setTimeout(() => {
+      setDisplayed(prev => {
+        const next = [...prev]
+        next[phase] = target.slice(0, current.length + 1)
+        return next
+      })
+    }, speed)
+    return () => clearTimeout(t)
+  }, [displayed, phase, texts, speed])
+
+  const done = phase >= texts.length
+  return { displayed, done }
+}
+
 const TABS = [
   { id: 'about',    label: 'About' },
   { id: 'agents',   label: 'Agents' },
@@ -74,7 +324,7 @@ function Navbar({ active, onSwitch }) {
               className={`nav-tab ${active === t.id ? 'active' : ''}`}
               onClick={() => { onSwitch(t.id); setMenuOpen(false) }}
             >
-              {t.label}
+              <span className="nav-bracket">[ </span>{t.label}<span className="nav-bracket"> ]</span>
             </button>
           ))}
         </div>
@@ -105,28 +355,32 @@ const agents = [
     tagClasses: ['tc-cyan', 'tc-purple', 'tc-green'],
     delay: 'delay-1',
     comingSoon: true,
+    sys: 'ACTIVE',
   },
   {
     icon: '🔧',
-    title: 'Coming Soon',
-    desc: 'Another agent is in the works. Check back soon.',
+    title: 'In The Lab',
+    desc: 'Something\'s brewing. Check back soon.',
     tags: [],
     tagClasses: [],
     delay: 'delay-2',
     comingSoon: true,
+    sys: 'STANDBY',
   },
   {
     icon: '🔧',
-    title: 'Coming Soon',
-    desc: 'Another agent is in the works. Check back soon.',
+    title: 'In The Lab',
+    desc: 'Something\'s brewing. Check back soon.',
     tags: [],
     tagClasses: [],
     delay: 'delay-3',
     comingSoon: true,
+    sys: 'STANDBY',
   },
 ]
 
 function AgentsTab() {
+  useScrollReveal()
   return (
     <div className="tab-content">
       <section className="tab-section-hero fade-in">
@@ -135,7 +389,7 @@ function AgentsTab() {
             <span className="section-label">Agents</span>
             <h1 className="tab-hero-headline">AI Systems & Agents</h1>
             <p className="tab-hero-sub">
-              Personal agents I've built and documented openly.
+              Things I've built, broken, and learned from.
             </p>
           </div>
         </div>
@@ -146,6 +400,7 @@ function AgentsTab() {
           <div className="agents-grid">
             {agents.map((agent, idx) => (
               <div key={idx} className={`agent-card fade-in ${agent.delay}${agent.comingSoon ? ' agent-card-soon' : ''}`}>
+                <div className={`agent-sys${agent.sys === 'ACTIVE' ? ' agent-sys--active' : ' agent-sys--standby'}`}>SYS: {agent.sys}</div>
                 <div className="agent-card-top">
                   <div className="agent-icon">{agent.icon}</div>
                   <div className="agent-tags">
@@ -159,7 +414,7 @@ function AgentsTab() {
                 <div className="agent-card-footer">
                   <span className="agent-status">
                     <span className="agent-status-dot" />
-                    {agent.comingSoon ? 'Under Construction' : 'Live'}
+                    {agent.comingSoon ? 'In the lab' : 'Live'}
                   </span>
                   {!agent.comingSoon && (
                     <a href="https://github.com/aiproductlabs8/aiproductlabs" target="_blank" rel="noreferrer" className="agent-cta">
@@ -220,7 +475,7 @@ function AeroToAiPage({ onBack }) {
               <span className="article-date">Mar 2026 · 10 min read</span>
             </div>
             <h1 className="article-title">From Aeronautical Engineering to AI Product Management</h1>
-            <p className="article-byline">By Rahil Popat · Senior AI Product Owner</p>
+            <p className="article-byline">By Rahil Popat</p>
           </div>
         </div>
       </section>
@@ -272,7 +527,7 @@ function AeroToAiPage({ onBack }) {
 
               <h2>Certification culture and the AI safety moment</h2>
               <p>Aviation is one of the most heavily regulated industries on earth, and for good reason. The consequence of failure is catastrophic and often irreversible. As a result, aeronautical engineers develop an almost instinctive relationship with documentation, traceability, and sign-off culture. Nothing ships without a paper trail.</p>
-              <p>AI is in the early stages of building exactly this kind of rigour — and it desperately needs people who already understand why it matters. The emerging landscape of AI governance, safety evals, model cards, and deployment audits maps almost directly onto the design assurance frameworks I worked within as an engineer. If you have an aerospace background, you&apos;re not new to this conversation. You&apos;ve been living it.</p>
+              <p>AI is in the early stages of building exactly this kind of rigour — and it desperately needs people who already understand why it matters. The emerging landscape of AI governance, safety evals, model cards, and deployment audits maps almost directly onto the design assurance frameworks I studied and worked within during my engineering years. If you have an aerospace background, you&apos;re not new to this conversation. You&apos;ve been living it.</p>
 
               <h2>What actually changed</h2>
               <p>Honesty matters here. The transition was not frictionless. Engineering produces artefacts — drawings, simulations, test reports — where correctness is binary or at least measurable. Product management produces decisions, alignment, and momentum, where quality is far harder to assess. Learning to operate in that ambiguity, to lead without formal authority, to communicate in the language of business outcomes rather than technical specifications — that took real work.</p>
@@ -300,7 +555,7 @@ function PmFundamentalsPage({ onBack }) {
               <span className="article-date">Mar 2026 · 8 min read</span>
             </div>
             <h1 className="article-title">Product Management Fundamentals Every PM Should Know</h1>
-            <p className="article-byline">By Rahil Popat · Senior AI Product Owner</p>
+            <p className="article-byline">By Rahil Popat</p>
           </div>
         </div>
       </section>
@@ -385,6 +640,7 @@ function PmFundamentalsPage({ onBack }) {
 }
 
 function InsightsTab({ onReadMore }) {
+  useScrollReveal()
   const [featured, ...rest] = insights
 
   return (
@@ -392,10 +648,10 @@ function InsightsTab({ onReadMore }) {
       <section className="tab-section-hero fade-in">
         <div className="container">
           <div className="tab-hero-text">
-            <span className="section-label">Insights</span>
+            <span className="section-label">Transmission Log</span>
             <h1 className="tab-hero-headline">Thinking Out Loud on AI</h1>
             <p className="tab-hero-sub">
-              Notes on AI product thinking, agent architecture, and what it actually takes to ship in production.
+              Signals from the lab. Thinking out loud on AI, agents, and what it actually takes to build.
             </p>
           </div>
         </div>
@@ -447,26 +703,57 @@ function InsightsTab({ onReadMore }) {
    ABOUT TAB
 ═══════════════════════════════════════════════════════════ */
 function AboutTab() {
+  useScrollReveal()
+  const TYPING_TEXTS = [
+    'Rahil Popat',
+    'Agent Builder · Aeronautical Engineer · Building in Public',
+    'Builder. AI products, agents, and everything in between.',
+  ]
+  const { displayed, done } = useTypewriter(TYPING_TEXTS, 48)
+  const showSubtitle = displayed[0].length === TYPING_TEXTS[0].length
+  const showBio = displayed[1].length === TYPING_TEXTS[1].length
+
   return (
     <div className="tab-content">
-      <section className="tab-section-hero fade-in">
+      <section className="tab-section-hero fade-in" style={{ position: 'relative', overflow: 'hidden' }}>
+        <HudReticle />
         <div className="container">
           <div className="tab-hero-text">
             <span className="section-label">About</span>
-            <h1 className="tab-hero-headline">Rahil Popat</h1>
-            <p className="tab-hero-sub">Agent Builder · Aeronautical Engineer · Building in Public</p>
+            <h1 className="tab-hero-headline">
+              {displayed[0]}
+              {!showSubtitle && <span className="type-cursor" />}
+            </h1>
+            {showSubtitle && (
+              <p className="tab-hero-sub">
+                {displayed[1]}
+                {!done && <span className="type-cursor" />}
+              </p>
+            )}
+            <div className="about-building-status">
+              <span className="about-building-dot" />
+              Currently building
+            </div>
+            <div className="stats-readout">
+              <div className="stat-row"><span className="stat-key">EXPERIENCE....... </span><span className="stat-val">5+ YRS</span></div>
+              <div className="stat-row"><span className="stat-key">CERTIFICATIONS... </span><span className="stat-val">4</span></div>
+              <div className="stat-row"><span className="stat-key">PASSION.......... </span><span className="stat-val">∞</span></div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="tab-section fade-in delay-1">
+      <section className="tab-section fade-in delay-1 reveal">
         <div className="container">
           <div className="about-inner">
 
             <div className="about-bio">
-              <p className="about-p">
-                Builder. AI products, agents, and everything in between.
-              </p>
+              {showBio && (
+                <p className="about-p">
+                  {displayed[2]}
+                  {!done && <span className="type-cursor type-cursor--teal" />}
+                </p>
+              )}
               <p className="about-p">
                 My foundation is aeronautical engineering, which taught me to treat complex systems with rigour: mapping failure modes, thinking in feedback loops, and defaulting to pragmatic over perfect. That lens shapes everything I build.
               </p>
@@ -477,18 +764,20 @@ function AboutTab() {
                 AI Product Labs is my personal lab — one builder, experimenting and sharing in public. Not a company, not a consultancy.
               </p>
 
+              <p className="about-obsessing">Currently obsessing over: Claude Code, agentic memory, and whether a Raspberry Pi can run a useful agent.</p>
+
               <div className="about-tags">
                 <span className="tag tag-purple">Agent Design</span>
                 <span className="tag tag-green">Building in Public</span>
               </div>
 
               <div className="about-links">
-                <a href="https://github.com/aiproductlabs8/aiproductlabs" target="_blank" rel="noreferrer" className="btn btn-outline">
+                <MagneticBtn href="https://github.com/aiproductlabs8/aiproductlabs" target="_blank" rel="noreferrer" className="btn btn-outline">
                   <GitHubIcon /> GitHub
-                </a>
-                <a href="https://www.linkedin.com/in/rahilpopat" target="_blank" rel="noreferrer" className="btn btn-primary">
+                </MagneticBtn>
+                <MagneticBtn href="https://www.linkedin.com/in/rahilpopat" target="_blank" rel="noreferrer" className="btn btn-primary">
                   Connect on LinkedIn
-                </a>
+                </MagneticBtn>
               </div>
             </div>
 
@@ -523,12 +812,72 @@ function AboutTab() {
                   ))}
                 </div>
               </div>
+
+              <GitHubActivity />
             </div>
 
           </div>
         </div>
       </section>
 
+    </div>
+  )
+}
+
+/* ─── GitHub Activity Widget ─────────────────────────────── */
+function GitHubActivity() {
+  const [commits, setCommits] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    fetch('https://api.github.com/users/aiproductlabs8/events/public?per_page=30')
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(events => {
+        const pushes = events
+          .filter(e => e.type === 'PushEvent')
+          .flatMap(e =>
+            e.payload.commits.map(c => ({
+              message: c.message.split('\n')[0].slice(0, 60),
+              repo: e.repo.name.replace('aiproductlabs8/', ''),
+              date: new Date(e.created_at),
+            }))
+          )
+          .slice(0, 3)
+        setCommits(pushes)
+        setLoading(false)
+      })
+      .catch(() => { setError(true); setLoading(false) })
+  }, [])
+
+  const timeAgo = (date) => {
+    const diff = Math.floor((Date.now() - date) / 1000)
+    if (diff < 3600)  return `${Math.floor(diff / 60)}m ago`
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`
+    return `${Math.floor(diff / 86400)}d ago`
+  }
+
+  return (
+    <div className="gh-widget">
+      <div className="gh-widget-header">
+        <GitHubIcon />
+        <span>Latest from the lab</span>
+        <span className="gh-live-dot" />
+      </div>
+      {loading && <p className="gh-state">Fetching commits…</p>}
+      {error   && <p className="gh-state">Couldn't reach GitHub right now.</p>}
+      {!loading && !error && commits.length === 0 && (
+        <p className="gh-state">No recent pushes found.</p>
+      )}
+      {!loading && !error && commits.map((c, i) => (
+        <div key={i} className="gh-commit">
+          <span className="gh-commit-dot">›</span>
+          <div className="gh-commit-body">
+            <span className="gh-commit-msg">{c.message}</span>
+            <span className="gh-commit-meta">{c.repo} · {timeAgo(c.date)}</span>
+          </div>
+        </div>
+      ))}
     </div>
   )
 }
@@ -561,6 +910,7 @@ function Footer({ onSwitch }) {
 export default function App() {
   const [activeTab, setActiveTab] = useState('about')
   const [openArticle, setOpenArticle] = useState(null)
+  const [bootDone, setBootDone] = useState(false)
 
   const handleSwitch = (tab) => {
     setActiveTab(tab)
@@ -592,8 +942,11 @@ export default function App() {
 
   return (
     <>
+      {!bootDone && <BootSequence onComplete={() => setBootDone(true)} />}
+      <ReadingProgress />
+      <ConstellationCanvas />
       <Navbar active={activeTab} onSwitch={handleSwitch} />
-      <main className="main">
+      <main className={`main${!bootDone ? ' main--booting' : ''}`}>
         {articleContent ? (
           <div className="tab-pane">{articleContent}</div>
         ) : (
