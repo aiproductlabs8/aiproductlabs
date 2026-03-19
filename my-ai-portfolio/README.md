@@ -1,16 +1,34 @@
-# React + Vite
+# Rahil Popat
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Builder. AI products, agents, and everything in between.**
 
-Currently, two official plugins are available:
+AI Product Labs is my personal lab for building AI agents and products. One builder, working in public.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+My foundation is aeronautical engineering, which taught me to treat complex systems with rigour: mapping failure modes, thinking in feedback loops, and defaulting to pragmatic over perfect. That lens shapes everything I build.
 
-## React Compiler
+I document my passion projects and learnings from my agent-building journey openly — because the best way to help other PMs and engineers make the leap into AI building is to show the work.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## What I'm Building
+- AI Agents — exploring agentic frameworks, tool use, and multi-step reasoning
+- Claude Code projects — learning to build with Anthropic's API and Claude Code CLI
+- AI Product Labs — my personal builder lab at aiproductlabs.co.uk
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## What I'm Learning
+- Building production-ready agents with memory, tools, and planning
+- RAG pipelines and retrieval architecture
+- Claude Code as a development workflow
+- How to ship AI products end-to-end as a non-traditional engineer
+
+## Current Stack
+Python · JavaScript · React · Claude API · LangChain · LangGraph · RAG · Vercel
+
+## The Journey
+I'm building in public — not because everything works, but because showing the process is more useful than showing the polished result.
+
+If you're a PM or engineer trying to make the leap into AI building, follow along. The mistakes are part of the documentation.
+
+## Connect
+- aiproductlabs.co.uk
+- Senior AI Product Owner · Aeronautical Engineer · Builder

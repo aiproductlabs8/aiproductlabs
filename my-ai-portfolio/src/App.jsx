@@ -49,10 +49,9 @@ const MicrosoftIcon = () => (
 )
 
 const TABS = [
-  { id: 'about',     label: 'About' },
-  { id: 'expertise', label: 'Expertise' },
-  { id: 'agents',    label: 'Agents' },
-  { id: 'insights',  label: 'Insights' },
+  { id: 'about',    label: 'About' },
+  { id: 'agents',   label: 'Agents' },
+  { id: 'insights', label: 'Insights' },
 ]
 
 /* ─── Navbar ─────────────────────────────────────────────── */
@@ -91,187 +90,6 @@ function Navbar({ active, onSwitch }) {
         </button>
       </div>
     </nav>
-  )
-}
-
-/* ═══════════════════════════════════════════════════════════
-   EXPERTISE TAB
-═══════════════════════════════════════════════════════════ */
-const capabilities = [
-  {
-    icon: '🧠',
-    title: 'AI Systems',
-    accent: 'cap-cyan',
-    items: [
-      'RAG systems & knowledge pipelines',
-      'Agent orchestration with LangChain & LangGraph',
-      'LLM-powered workflows & automation',
-      'Copilot-style interface design',
-    ],
-  },
-  {
-    icon: '☁️',
-    title: 'Cloud & Infrastructure',
-    accent: 'cap-purple',
-    items: [
-      'Microsoft Azure AI Services',
-      'Cloud AI deployment & monitoring',
-      'Production deployment & monitoring',
-      'Data pipelines & integrations',
-    ],
-  },
-  {
-    icon: '🎯',
-    title: 'Product Leadership',
-    accent: 'cap-green',
-    items: [
-      '0 → 1 product development',
-      'Roadmap ownership & OKR alignment',
-      'Cross-functional team leadership',
-      'Ship fast, iterate faster',
-    ],
-  },
-]
-
-const certifications = [
-  { icon: <MicrosoftIcon />, acronym: 'AIPM', name: 'AI Product Manager', body: 'Microsoft' },
-  { icon: <img src="/cspo.png" alt="Scrum Alliance" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />, acronym: 'CSPO', name: 'Certified Scrum Product Owner', body: 'Scrum Alliance' },
-  { icon: <img src="/oxford.jpeg" alt="University of Oxford" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />, acronym: 'OBP',  name: 'Oxford Blockchain Programme', body: 'University of Oxford' },
-  { icon: <img src="/dacfp.png" alt="DACFP" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />, acronym: 'DACFP', name: 'Digital Assets Certificate', body: 'DACFP' },
-]
-
-function ExpertiseTab({ onSwitch }) {
-  return (
-    <div className="tab-content">
-
-      {/* ── Hero ── */}
-      <section className="exp-hero">
-        <div className="container">
-          <div className="exp-hero-inner">
-
-            <div className="exp-hero-text fade-in">
-              <div className="hero-badge">
-                <span className="hero-badge-dot" />
-                Senior AI Product Owner
-              </div>
-
-              <h1 className="exp-headline">
-                I build<br />
-                <span className="accent-text">AI products & agents</span><br />
-                and share everything I learn.
-              </h1>
-
-              <p className="exp-sub">
-                From side projects to production — building in public and documenting the journey.
-              </p>
-
-              <div className="exp-stats">
-                <div className="estat">
-                  <span className="estat-val">5<span className="estat-plus">+</span></span>
-                  <span className="estat-label">Years in AI Product</span>
-                </div>
-                <div className="estat-sep" />
-                <div className="estat">
-                  <span className="estat-val">4</span>
-                  <span className="estat-label">Certifications</span>
-                </div>
-                <div className="estat-sep" />
-                <div className="estat">
-                  <span className="estat-val">∞</span>
-                  <span className="estat-label">Passion</span>
-                </div>
-              </div>
-
-              <div className="exp-hero-cta fade-in delay-2">
-                <button className="btn btn-primary" onClick={() => onSwitch('agents')}>View My Agents</button>
-                <a href="https://www.linkedin.com/in/rahilpopat" target="_blank" rel="noreferrer" className="btn btn-outline">Connect →</a>
-              </div>
-            </div>
-
-            <div className="exp-hero-card fade-in delay-1">
-              <div className="stack-card">
-                <div className="stack-card-header">
-                  <span className="stack-live-dot" />
-                  <span className="stack-card-title">AI Product Stack</span>
-                </div>
-                <div className="stack-section">
-                  <div className="stack-section-label">Agents & LLMs</div>
-                  <div className="stack-pills">
-                    {['LangChain', 'LangGraph', 'RAG', 'Claude API', 'OpenClaw', 'Claude Code'].map(t => (
-                      <span key={t} className="spill spill-cyan">{t}</span>
-                    ))}
-                  </div>
-                </div>
-                <div className="stack-section">
-                  <div className="stack-section-label">Cloud Platform</div>
-                  <div className="stack-pills">
-                    {['Azure AI', 'Copilot Studio'].map(t => (
-                      <span key={t} className="spill spill-purple">{t}</span>
-                    ))}
-                  </div>
-                </div>
-                <div className="stack-section">
-                  <div className="stack-section-label">Product Delivery</div>
-                  <div className="stack-pills">
-                    {['0→1 Builds', 'Roadmaps', 'OKRs', 'Agile'].map(t => (
-                      <span key={t} className="spill spill-green">{t}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* ── Capabilities ── */}
-      <section className="tab-section fade-in delay-2">
-        <div className="container">
-          <div className="section-hd">
-            <span className="section-label">Capabilities</span>
-            <h2 className="section-title">What I Bring to the Table</h2>
-          </div>
-          <div className="cap-grid">
-            {capabilities.map(cap => (
-              <div key={cap.title} className={`cap-card ${cap.accent}`}>
-                <div className="cap-icon">{cap.icon}</div>
-                <h3 className="cap-title">{cap.title}</h3>
-                <ul className="cap-list">
-                  {cap.items.map(item => (
-                    <li key={item}>
-                      <span className="cap-check">✓</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Certifications ── */}
-      <section className="tab-section tab-section-last fade-in delay-3">
-        <div className="container">
-          <div className="section-hd">
-            <span className="section-label">Credentials</span>
-            <h2 className="section-title">Certifications</h2>
-          </div>
-          <div className="cert-grid">
-            {certifications.map(cert => (
-              <div key={cert.acronym} className="cert-card">
-                <div className="cert-icon">{cert.icon}</div>
-                <div className="cert-acronym">{cert.acronym}</div>
-                <div className="cert-name">{cert.name}</div>
-                <div className="cert-body">{cert.body}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-    </div>
   )
 }
 
@@ -636,7 +454,7 @@ function AboutTab() {
           <div className="tab-hero-text">
             <span className="section-label">About</span>
             <h1 className="tab-hero-headline">Rahil Popat</h1>
-            <p className="tab-hero-sub">AI Product Management · Agent Builder · Aeronautical Engineer</p>
+            <p className="tab-hero-sub">Agent Builder · Aeronautical Engineer · Building in Public</p>
           </div>
         </div>
       </section>
@@ -647,10 +465,7 @@ function AboutTab() {
 
             <div className="about-bio">
               <p className="about-p">
-                I build AI products by day and AI agents by night.
-              </p>
-              <p className="about-p">
-                Professionally, I&apos;m a Senior AI Product Owner — building intelligent agents, RAG systems, and AI-powered platforms.
+                Builder. AI products, agents, and everything in between.
               </p>
               <p className="about-p">
                 My foundation is aeronautical engineering, which taught me to treat complex systems with rigour: mapping failure modes, thinking in feedback loops, and defaulting to pragmatic over perfect. That lens shapes everything I build.
@@ -660,10 +475,8 @@ function AboutTab() {
               </p>
 
               <div className="about-tags">
-                <span className="tag tag-cyan">AI Product Leadership</span>
                 <span className="tag tag-purple">Agent Design</span>
                 <span className="tag tag-green">Building in Public</span>
-                <span className="tag tag-orange">Finance & Asset Management</span>
               </div>
 
               <div className="about-links">
@@ -722,7 +535,7 @@ function Footer({ onSwitch }) {
   return (
     <footer id="footer">
       <div className="container footer-inner">
-        <button className="footer-logo" onClick={() => onSwitch('expertise')}>
+        <button className="footer-logo" onClick={() => onSwitch('about')}>
           Rahil<span>.</span>
         </button>
         <div className="footer-nav">
@@ -762,10 +575,9 @@ export default function App() {
   }
 
   const TAB_CONTENT = {
-    expertise: <ExpertiseTab onSwitch={handleSwitch} />,
-    agents:    <AgentsTab />,
-    insights:  <InsightsTab onReadMore={handleReadMore} />,
-    about:     <AboutTab />,
+    agents:   <AgentsTab />,
+    insights: <InsightsTab onReadMore={handleReadMore} />,
+    about:    <AboutTab />,
   }
 
   const articleContent = openArticle === 'aero-to-ai'
