@@ -709,7 +709,7 @@ function InsightsTab({ onReadMore }) {
    ABOUT TAB
 ═══════════════════════════════════════════════════════════ */
 /* ─── Quote block ────────────────────────────────────────── */
-const WRIGHT_QUOTE = "The Wright Brothers didn't have a product roadmap. They had a hypothesis, a field, and the willingness to be wrong at speed. That's still the job."
+const WRIGHT_QUOTE = "\u201CThe Wright Brothers didn\u2019t have a product roadmap. They had a hypothesis, a field, and the willingness to be wrong at speed. That\u2019s still the job.\u201D"
 
 function QuoteBlock({ size = 'large' }) {
   const ref = useRef(null)
@@ -728,9 +728,65 @@ function QuoteBlock({ size = 'large' }) {
 
   return (
     <div ref={ref} className={`quote-block quote-block--${size}${visible ? ' quote-block--visible' : ''}`}>
-      <span className="quote-mark">{'\u201C'}</span>
       <blockquote className="quote-text">{WRIGHT_QUOTE}</blockquote>
       <cite className="quote-attr">— Rahil Popat</cite>
+    </div>
+  )
+}
+
+/* ─── Lab Status Card ────────────────────────────────────── */
+const LAB_START = new Date('2026-03-17T00:00:00')
+
+function LabStatusCard() {
+  const [now, setNow] = useState(new Date())
+
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(id)
+  }, [])
+
+  const pad = n => String(n).padStart(2, '0')
+
+  const labStatus = () => {
+    const h = now.getHours()
+    if (h >= 6  && h < 12) return 'OPEN'
+    if (h >= 12 && h < 18) return 'ACTIVE'
+    if (h >= 18 && h < 24) return 'RUNNING HOT'
+    return 'ACTIVE — UNEXPECTED'
+  }
+
+  const localTime = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`
+
+  const mission = () => {
+    const diff = Math.max(0, Math.floor((now - LAB_START) / 1000))
+    const d = Math.floor(diff / 86400)
+    const h = Math.floor((diff % 86400) / 3600)
+    const m = Math.floor((diff % 3600) / 60)
+    const s = diff % 60
+    return `${String(d).padStart(3, '0')}d ${pad(h)}h ${pad(m)}m ${pad(s)}s`
+  }
+
+  return (
+    <div className="lab-status-card">
+      <div className="lsc-title">RAHIL.EXE</div>
+      <div className="lsc-divider">━━━━━━━━━━━━━━━━━━━━</div>
+      <div className="lsc-row">
+        <span className="lsc-key">LAB STATUS: </span>
+        <span className="lsc-val lsc-val--accent">{labStatus()}</span>
+      </div>
+      <div className="lsc-row">
+        <span className="lsc-key">LOCAL TIME: </span>
+        <span className="lsc-val lsc-val--white">{localTime}</span>
+      </div>
+      <div className="lsc-divider">━━━━━━━━━━━━━━━━━━━━</div>
+      <div className="lsc-row">
+        <span className="lsc-key">MISSION: </span>
+        <span className="lsc-val lsc-val--white">{mission()}</span>
+      </div>
+      <div className="lsc-building">
+        <span className="lsc-dot" />
+        CURRENTLY BUILDING
+      </div>
     </div>
   )
 }
@@ -775,26 +831,31 @@ function AboutTab() {
       <section className="tab-section-hero fade-in" style={{ position: 'relative', overflow: 'hidden' }}>
         <HudReticle />
         <div className="container">
-          <div className="tab-hero-text">
-            <span className="section-label">About</span>
-            <h1 className="tab-hero-headline">
-              {displayed[0]}
-              {!showSubtitle && <span className="type-cursor" />}
-            </h1>
-            {showSubtitle && (
-              <p className="tab-hero-sub">
-                {displayed[1]}
-                {!done && <span className="type-cursor" />}
-              </p>
-            )}
-            <div className="about-building-status">
-              <span className="about-building-dot" />
-              Currently building
+          <div className="about-hero-inner">
+            <div className="tab-hero-text">
+              <span className="section-label">About</span>
+              <h1 className="tab-hero-headline">
+                {displayed[0]}
+                {!showSubtitle && <span className="type-cursor" />}
+              </h1>
+              {showSubtitle && (
+                <p className="tab-hero-sub">
+                  {displayed[1]}
+                  {!done && <span className="type-cursor" />}
+                </p>
+              )}
+              <div className="about-building-status">
+                <span className="about-building-dot" />
+                Currently building
+              </div>
+              <div className="stats-readout">
+                <div className="stat-row"><span className="stat-key">EXPERIENCE....... </span><span className="stat-val">5+ YRS</span></div>
+                <div className="stat-row"><span className="stat-key">CERTIFICATIONS... </span><span className="stat-val">4</span></div>
+                <PassionStat />
+              </div>
             </div>
-            <div className="stats-readout">
-              <div className="stat-row"><span className="stat-key">EXPERIENCE....... </span><span className="stat-val">5+ YRS</span></div>
-              <div className="stat-row"><span className="stat-key">CERTIFICATIONS... </span><span className="stat-val">4</span></div>
-              <PassionStat />
+            <div className="about-hero-right">
+              <QuoteBlock size="large" />
             </div>
           </div>
         </div>
@@ -821,8 +882,6 @@ function AboutTab() {
                 AI Product Labs is my personal lab — one builder, experimenting and sharing in public. Not a company, not a consultancy.
               </p>
 
-              <QuoteBlock size="large" />
-
               <p className="about-obsessing">Currently obsessing over: Claude Code, agentic memory, and whether a Raspberry Pi can run a useful agent. Results pending.</p>
 
               <div className="about-tags">
@@ -841,6 +900,7 @@ function AboutTab() {
             </div>
 
             <div className="about-credentials">
+              <LabStatusCard />
               <div className="cred-card">
                 <div className="cred-icon"><MicrosoftIcon /></div>
                 <div>
