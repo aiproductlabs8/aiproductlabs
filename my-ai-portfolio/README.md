@@ -8,6 +8,8 @@ My foundation is aeronautical engineering, which taught me to treat complex syst
 
 I document my passion projects and learnings from my agent-building journey openly — because the best way to help other PMs and engineers make the leap into AI building is to show the work.
 
+AI Product Labs is my personal lab — one builder, experimenting and sharing in public. Not a company, not a consultancy.
+
 ---
 
 ## What I'm Building

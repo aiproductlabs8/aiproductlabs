@@ -473,6 +473,9 @@ function AboutTab() {
               <p className="about-p">
                 I document my passion projects and learnings from my agent-building journey openly — because the best way to help other PMs and engineers make the leap into AI building is to show the work.
               </p>
+              <p className="about-p">
+                AI Product Labs is my personal lab — one builder, experimenting and sharing in public. Not a company, not a consultancy.
+              </p>
 
               <div className="about-tags">
                 <span className="tag tag-purple">Agent Design</span>
