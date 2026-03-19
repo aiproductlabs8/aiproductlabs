@@ -728,7 +728,7 @@ function QuoteBlock({ size = 'large' }) {
 
   return (
     <div ref={ref} className={`quote-block quote-block--${size}${visible ? ' quote-block--visible' : ''}`}>
-      <span className="quote-mark">"</span>
+      <span className="quote-mark">{'\u201C'}</span>
       <blockquote className="quote-text">{WRIGHT_QUOTE}</blockquote>
       <cite className="quote-attr">— Rahil Popat</cite>
     </div>
@@ -891,12 +891,16 @@ function GitHubActivity() {
 
   useEffect(() => {
     fetch('https://api.github.com/users/aiproductlabs8/events/public?per_page=30')
-      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(r => {
+        if (!r.ok) return Promise.reject(new Error(`HTTP ${r.status}`))
+        return r.json()
+      })
       .then(events => {
+        if (!Array.isArray(events)) return Promise.reject(new Error('unexpected response'))
         const pushes = events
           .filter(e => e.type === 'PushEvent')
           .flatMap(e =>
-            e.payload.commits.map(c => ({
+            (e.payload?.commits ?? []).map(c => ({
               message: c.message.split('\n')[0].slice(0, 60),
               repo: e.repo.name.replace('aiproductlabs8/', ''),
               date: new Date(e.created_at),
@@ -924,9 +928,18 @@ function GitHubActivity() {
         <span className="gh-live-dot" />
       </div>
       {loading && <p className="gh-state">Fetching commits…</p>}
-      {error   && <p className="gh-state">Couldn't reach GitHub right now.</p>}
-      {!loading && !error && commits.length === 0 && (
-        <p className="gh-state">No recent pushes found.</p>
+      {(error || (!loading && !error && commits.length === 0)) && (
+        <div className="gh-fallback">
+          <div className="gh-fallback-line">LAB ACTIVITY: CLASSIFIED</div>
+          <a
+            href="https://github.com/aiproductlabs8"
+            target="_blank"
+            rel="noreferrer"
+            className="gh-fallback-link"
+          >
+            CHECK GITHUB FOR LATEST COMMITS
+          </a>
+        </div>
       )}
       {!loading && !error && commits.map((c, i) => (
         <div key={i} className="gh-commit">

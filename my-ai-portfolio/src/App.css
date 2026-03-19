@@ -761,7 +761,7 @@ body::before {
 }
 .footer-nav-link:hover { color: var(--text-1); background: rgba(255,255,255,0.04); }
 .footer-copy { margin-left: auto; font-size: 13px; color: var(--text-3); }
-.footer-disclaimer { width: 100%; text-align: center; font-size: 11px; color: var(--text-3); opacity: 0.5; margin-top: 8px; }
+.footer-disclaimer { width: 100%; text-align: center; font-size: 14px; color: var(--accent); opacity: 0.9; margin-top: 12px; font-weight: 500; letter-spacing: 0.01em; }
 
 /* Reading progress bar */
 .reading-progress {
@@ -820,6 +820,10 @@ body::before {
 .gh-widget-header { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
 .gh-live-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; margin-left: auto; animation: pulse-green 2s ease-in-out infinite; }
 .gh-state { font-size: 12px; color: var(--text-3); font-style: italic; }
+.gh-fallback { display: flex; flex-direction: column; gap: 6px; padding: 4px 0; }
+.gh-fallback-line { font-family: var(--font-mono); font-size: 11px; color: var(--amber); letter-spacing: 0.08em; }
+.gh-fallback-link { font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 0.06em; text-decoration: underline; opacity: 0.7; transition: opacity 0.2s; }
+.gh-fallback-link:hover { opacity: 1; }
 .gh-commit { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
 .gh-commit:last-child { border-bottom: none; }
 .gh-commit-dot { color: var(--accent-cyan, #22d3ee); font-size: 14px; line-height: 1.4; flex-shrink: 0; }
