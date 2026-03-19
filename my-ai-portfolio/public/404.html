@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Route Not Found</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #060c18;
+      --accent: #00d4ff;
+      --amber: #F59E0B;
+      --text-1: #edf2ff;
+      --text-3: #3a5272;
+      --border: #14243a;
+      --mono: 'JetBrains Mono', monospace;
+    }
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text-1);
+      font-family: var(--mono);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      max-width: 560px;
+      padding: 40px 28px;
+      width: 100%;
+    }
+    .alert-label {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      color: var(--amber);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .alert-label::before {
+      content: '▶ ';
+    }
+    h1 {
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 32px;
+      line-height: 1.2;
+    }
+    .causes-label {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+    ul {
+      list-style: none;
+      margin-bottom: 40px;
+      border-left: 1px solid var(--border);
+      padding-left: 20px;
+    }
+    ul li {
+      font-size: 14px;
+      color: var(--text-1);
+      opacity: 0.7;
+      padding: 5px 0;
+      line-height: 1.6;
+    }
+    ul li::before { content: '- '; color: var(--text-3); }
+    .return-btn {
+      display: inline-block;
+      padding: 11px 24px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .return-btn:hover {
+      background: rgba(0, 212, 255, 0.07);
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
+    }
+    /* subtle noise */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.3;
+      z-index: 0;
+    }
+    .container { position: relative; z-index: 1; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="alert-label">System Alert</div>
+    <h1>ERROR 404 — ROUTE NOT FOUND</h1>
+    <div class="causes-label">POSSIBLE CAUSES:</div>
+    <ul>
+      <li>Page does not exist</li>
+      <li>Page never existed</li>
+      <li>You typed something wrong</li>
+      <li>The lab is between deployments</li>
+    </ul>
+    <a href="/" class="return-btn">[ RETURN TO BASE ]</a>
+  </div>
+</body>
+</html>

@@ -52,10 +52,13 @@ const MicrosoftIcon = () => (
 function BootSequence({ onComplete }) {
   const LINES = [
     { text: 'INITIALISING SYSTEM...', cls: 'boot-line--init' },
-    { text: 'OPERATOR......... RAHIL POPAT',       cls: 'boot-line--data' },
+    { text: 'OPERATOR......... RAHIL POPAT',          cls: 'boot-line--data' },
     { text: 'DISCIPLINE....... AERONAUTICAL ENG → AI', cls: 'boot-line--data' },
-    { text: 'STATUS........... BUILDING',          cls: 'boot-line--data' },
-    { text: 'LAB.............. ACTIVE',            cls: 'boot-line--active' },
+    { text: 'STATUS........... BUILDING',             cls: 'boot-line--data' },
+    { text: 'LAB.............. ACTIVE',               cls: 'boot-line--active' },
+    { text: 'LOADING GENIUS......... ERROR 404',      cls: 'boot-line--error' },
+    { text: 'LOADING PRAGMATISM..... COMPLETE',       cls: 'boot-line--active' },
+    { text: 'RUNNING ANYWAY.',                        cls: 'boot-line--init' },
   ]
   const [visible, setVisible] = useState([])
   const [fading, setFading] = useState(false)
@@ -351,6 +354,7 @@ const agents = [
     icon: '🦞',
     title: 'OpenClaw Personal Research Assistant',
     desc: 'A personal AI research agent built with OpenClaw and Claude Code, running on a Raspberry Pi. Autonomously gathers and synthesises information to answer research queries on demand.',
+    note: 'Runs on a Raspberry Pi. This was a choice I made.',
     tags: ['OpenClaw', 'Claude Code', 'Raspberry Pi'],
     tagClasses: ['tc-cyan', 'tc-purple', 'tc-green'],
     delay: 'delay-1',
@@ -360,7 +364,7 @@ const agents = [
   {
     icon: '🔧',
     title: 'In The Lab',
-    desc: 'Something\'s brewing. Check back soon.',
+    desc: 'Classified. Mostly because it doesn\'t exist yet.',
     tags: [],
     tagClasses: [],
     delay: 'delay-2',
@@ -370,7 +374,7 @@ const agents = [
   {
     icon: '🔧',
     title: 'In The Lab',
-    desc: 'Something\'s brewing. Check back soon.',
+    desc: 'Classified. Mostly because it doesn\'t exist yet.',
     tags: [],
     tagClasses: [],
     delay: 'delay-3',
@@ -389,7 +393,7 @@ function AgentsTab() {
             <span className="section-label">Agents</span>
             <h1 className="tab-hero-headline">AI Systems & Agents</h1>
             <p className="tab-hero-sub">
-              Things I've built, broken, and learned from.
+              Things I've built. Some of them worked.
             </p>
           </div>
         </div>
@@ -411,6 +415,7 @@ function AgentsTab() {
                 </div>
                 <h3 className="agent-title">{agent.title}</h3>
                 <p className="agent-desc">{agent.desc}</p>
+                {agent.note && <p className="agent-note">{agent.note}</p>}
                 <div className="agent-card-footer">
                   <span className="agent-status">
                     <span className="agent-status-dot" />
@@ -651,8 +656,9 @@ function InsightsTab({ onReadMore }) {
             <span className="section-label">Transmission Log</span>
             <h1 className="tab-hero-headline">Thinking Out Loud on AI</h1>
             <p className="tab-hero-sub">
-              Signals from the lab. Thinking out loud on AI, agents, and what it actually takes to build.
+              Thinking out loud on AI. Occasionally useful.
             </p>
+            <QuoteBlock size="small" />
           </div>
         </div>
       </section>
@@ -702,6 +708,57 @@ function InsightsTab({ onReadMore }) {
 /* ═══════════════════════════════════════════════════════════
    ABOUT TAB
 ═══════════════════════════════════════════════════════════ */
+/* ─── Quote block ────────────────────────────────────────── */
+const WRIGHT_QUOTE = "The Wright Brothers didn't have a product roadmap. They had a hypothesis, a field, and the willingness to be wrong at speed. That's still the job."
+
+function QuoteBlock({ size = 'large' }) {
+  const ref = useRef(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
+      { threshold: 0.2 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div ref={ref} className={`quote-block quote-block--${size}${visible ? ' quote-block--visible' : ''}`}>
+      <span className="quote-mark">"</span>
+      <blockquote className="quote-text">{WRIGHT_QUOTE}</blockquote>
+      <cite className="quote-attr">— Rahil Popat</cite>
+    </div>
+  )
+}
+
+function PassionStat() {
+  const [show, setShow] = useState(false)
+  const timerRef = useRef(null)
+
+  const handleClick = () => {
+    setShow(true)
+    clearTimeout(timerRef.current)
+    timerRef.current = setTimeout(() => setShow(false), 2000)
+  }
+
+  useEffect(() => () => clearTimeout(timerRef.current), [])
+
+  return (
+    <div className="stat-row stat-row--passion" onClick={handleClick} style={{ cursor: 'pointer', position: 'relative', userSelect: 'none' }}>
+      <span className="stat-key">PASSION.......... </span><span className="stat-val">∞</span>
+      {show && (
+        <span className="passion-tooltip">
+          This field cannot be quantified. Engineering has tried.
+        </span>
+      )}
+    </div>
+  )
+}
+
 function AboutTab() {
   useScrollReveal()
   const TYPING_TEXTS = [
@@ -737,7 +794,7 @@ function AboutTab() {
             <div className="stats-readout">
               <div className="stat-row"><span className="stat-key">EXPERIENCE....... </span><span className="stat-val">5+ YRS</span></div>
               <div className="stat-row"><span className="stat-key">CERTIFICATIONS... </span><span className="stat-val">4</span></div>
-              <div className="stat-row"><span className="stat-key">PASSION.......... </span><span className="stat-val">∞</span></div>
+              <PassionStat />
             </div>
           </div>
         </div>
@@ -764,7 +821,9 @@ function AboutTab() {
                 AI Product Labs is my personal lab — one builder, experimenting and sharing in public. Not a company, not a consultancy.
               </p>
 
-              <p className="about-obsessing">Currently obsessing over: Claude Code, agentic memory, and whether a Raspberry Pi can run a useful agent.</p>
+              <QuoteBlock size="large" />
+
+              <p className="about-obsessing">Currently obsessing over: Claude Code, agentic memory, and whether a Raspberry Pi can run a useful agent. Results pending.</p>
 
               <div className="about-tags">
                 <span className="tag tag-purple">Agent Design</span>
@@ -897,8 +956,9 @@ function Footer({ onSwitch }) {
             </button>
           ))}
         </div>
-        <span className="footer-copy">© 2026 Rahil Popat · Built with Claude · All thoughts and insights are my own.</span>
+        <span className="footer-copy">© {new Date().getFullYear()} Rahil Popat · Built with Claude · All thoughts and insights are my own.</span>
         <span className="footer-disclaimer">AI Product Labs is a personal learning lab — not a company, agency, or consultancy. All projects are personal passion projects built independently.</span>
+        <span className="footer-mono">Built by Rahil Popat. Powered by curiosity and Claude Code. The Raspberry Pi is load-bearing.</span>
       </div>
     </footer>
   )

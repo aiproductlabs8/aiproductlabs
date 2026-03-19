@@ -854,6 +854,107 @@ body::before {
 /* About — obsessing line */
 .about-obsessing { font-size: 13px; color: var(--text-3); opacity: 0.8; font-style: italic; margin-bottom: 20px; line-height: 1.6; border-left: 2px solid var(--amber); padding-left: 12px; }
 
+/* ─── Quote block ────────────────────────────────────────── */
+.quote-block {
+  position: relative;
+  border-left: 2px solid var(--accent);
+  background: rgba(255,255,255,0.025);
+  padding: 28px 28px 24px 36px;
+  margin: 28px 0;
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.quote-block--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.quote-mark {
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  font-size: 80px;
+  line-height: 1;
+  color: var(--accent);
+  font-family: Georgia, serif;
+  opacity: 0.6;
+  user-select: none;
+  pointer-events: none;
+}
+.quote-text {
+  font-style: italic;
+  color: var(--text-1);
+  line-height: 1.8;
+  font-style: italic;
+  font-weight: 400;
+  margin: 0 0 12px 0;
+}
+.quote-attr {
+  display: block;
+  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent);
+  opacity: 0.6;
+  font-style: normal;
+  letter-spacing: 0.05em;
+}
+/* Large variant (About bio) */
+.quote-block--large .quote-text { font-size: 20px; }
+/* Small variant (Insights header) */
+.quote-block--small {
+  margin: 20px 0 0 0;
+  padding: 20px 20px 18px 28px;
+}
+.quote-block--small .quote-text { font-size: 16px; }
+.quote-block--small .quote-mark { font-size: 56px; top: -6px; left: 10px; }
+
+/* ─── Agent note line ────────────────────────────────────── */
+.agent-note {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-3);
+  margin-top: 8px;
+  opacity: 0.7;
+  font-family: var(--font-mono);
+}
+
+/* ─── Footer mono line ───────────────────────────────────── */
+.footer-mono {
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-3);
+  opacity: 0.4;
+  margin-top: 6px;
+}
+
+/* ─── Passion tooltip ────────────────────────────────────── */
+.passion-tooltip {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 8px);
+  background: var(--bg-card);
+  border: 1px solid var(--amber);
+  color: var(--amber);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 8px 12px;
+  white-space: nowrap;
+  border-radius: 4px;
+  animation: tooltipFade 2s ease forwards;
+  z-index: 10;
+  pointer-events: none;
+}
+@keyframes tooltipFade {
+  0%   { opacity: 0; transform: translateY(4px); }
+  15%  { opacity: 1; transform: translateY(0); }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 /* ─── Boot sequence ──────────────────────────────────────── */
 .boot-overlay {
   position: fixed; inset: 0; z-index: 10000;
@@ -873,6 +974,7 @@ body::before {
 .boot-line--init   { color: var(--accent); }
 .boot-line--data   { color: var(--amber); }
 .boot-line--active { color: #4ade80; letter-spacing: 0.04em; }
+.boot-line--error  { color: #f87171; }
 .boot-cursor { color: var(--amber); animation: blink-cursor 0.6s step-end infinite; font-family: var(--font-mono); }
 .main--booting { visibility: hidden; }
 
