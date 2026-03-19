@@ -240,6 +240,27 @@ body::before {
 }
 .about-hero-right { padding-top: 4px; }
 
+/* Social links row — under quote block */
+.social-links-row { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 16px; }
+.social-links-disclaimer { font-family: var(--font-mono); font-size: 12px; color: var(--accent); opacity: 0.9; text-align: center; line-height: 1.7; margin-top: 10px; letter-spacing: 0.03em; }
+.social-links-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; color: var(--text-3); opacity: 0.7; }
+.social-links-icons { display: flex; gap: 12px; }
+.social-icon-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border: 0.5px solid rgba(0,229,255,0.2);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-3);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+.social-icon-btn:hover {
+  border-color: rgba(0,229,255,0.6);
+  background: rgba(0,229,255,0.05);
+  color: var(--accent);
+}
+
 .tab-hero-text { max-width: 680px; }
 .tab-hero-headline {
   font-family: var(--font-h); font-size: clamp(36px, 5vw, 56px);
@@ -855,13 +876,7 @@ body::before {
   50%       { opacity: 0; }
 }
 
-/* About — building status */
-.about-building-status { display: inline-flex; align-items: center; gap: 7px; margin-top: 12px; font-size: 13px; color: var(--text-3); }
-.about-building-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; flex-shrink: 0; animation: pulse-green 2s ease-in-out infinite; }
-@keyframes pulse-green {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
-  50%       { opacity: 0.7; box-shadow: 0 0 0 5px rgba(74,222,128,0); }
-}
+/* About — building status handled by FlightStatus component */
 
 /* About — obsessing line */
 .about-obsessing { font-size: 13px; color: var(--text-3); opacity: 0.8; font-style: italic; margin-bottom: 20px; line-height: 1.6; border-left: 2px solid var(--amber); padding-left: 12px; }

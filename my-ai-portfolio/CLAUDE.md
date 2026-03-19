@@ -54,6 +54,14 @@ This site has specific compliance requirements. Always follow these when editing
 ### Approved About subtitle (do not change without being asked):
 > Agent Builder · Aeronautical Engineer · Building in Public
 
+### Approved About hero status indicator (do not change without being asked):
+> Rendered by `src/components/FlightStatus.jsx` — a three-stage horizontal timeline:
+> SYSTEMS READY → READY FOR TAKEOFF → AI(BORNE)
+>
+> Steps animate in sequentially on page load (300ms, 700ms/1000ms, 1400ms/1700ms delays).
+> Connector lines fill between steps. Final stage has a pulsing green dot above the icon.
+> "AI" is full teal; "(BORNE)" is 30% teal opacity.
+
 ### Approved About tags (only these three):
 - AGENT DESIGN
 - BUILDING IN PUBLIC
