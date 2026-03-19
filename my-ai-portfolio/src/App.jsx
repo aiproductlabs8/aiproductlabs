@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
+import StoryAnimation from './components/StoryAnimation'
 
 /* ─── Icons ──────────────────────────────────────────────── */
 const ArrowIcon = () => (
@@ -897,6 +898,8 @@ function AboutTab() {
                   Connect on LinkedIn
                 </MagneticBtn>
               </div>
+
+              <StoryAnimation />
             </div>
 
             <div className="about-credentials">
