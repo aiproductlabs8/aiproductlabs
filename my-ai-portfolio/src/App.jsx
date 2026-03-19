@@ -115,7 +115,7 @@ const capabilities = [
     accent: 'cap-purple',
     items: [
       'Microsoft Azure AI Services',
-      'Enterprise-scale AI environments',
+      'Cloud AI deployment & monitoring',
       'Production deployment & monitoring',
       'Data pipelines & integrations',
     ],
@@ -128,7 +128,7 @@ const capabilities = [
       '0 → 1 product development',
       'Roadmap ownership & OKR alignment',
       'Cross-functional team leadership',
-      'Stakeholder management & delivery',
+      'Ship fast, iterate faster',
     ],
   },
 ]
@@ -140,7 +140,7 @@ const certifications = [
   { icon: <img src="/dacfp.png" alt="DACFP" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />, acronym: 'DACFP', name: 'Digital Assets Certificate', body: 'DACFP' },
 ]
 
-function ExpertiseTab() {
+function ExpertiseTab({ onSwitch }) {
   return (
     <div className="tab-content">
 
@@ -152,18 +152,17 @@ function ExpertiseTab() {
             <div className="exp-hero-text fade-in">
               <div className="hero-badge">
                 <span className="hero-badge-dot" />
-                Senior AI Product Owner · Invesco
+                Senior AI Product Owner
               </div>
 
               <h1 className="exp-headline">
-                I design and deliver<br />
-                <span className="accent-text">AI-powered products</span><br />
-                that drive real business impact.
+                I build<br />
+                <span className="accent-text">AI products & agents</span><br />
+                and share everything I learn.
               </h1>
 
               <p className="exp-sub">
-                Bridging product strategy, AI engineering, and enterprise delivery
-                to build systems that people actually use — at scale.
+                From side projects to production — building in public and documenting the journey.
               </p>
 
               <div className="exp-stats">
@@ -173,18 +172,18 @@ function ExpertiseTab() {
                 </div>
                 <div className="estat-sep" />
                 <div className="estat">
-                  <span className="estat-val">10<span className="estat-plus">+</span></span>
-                  <span className="estat-label">AI Systems Delivered</span>
+                  <span className="estat-val">4</span>
+                  <span className="estat-label">Certifications</span>
                 </div>
                 <div className="estat-sep" />
                 <div className="estat">
-                  <span className="estat-val">4</span>
-                  <span className="estat-label">Certifications</span>
+                  <span className="estat-val">∞</span>
+                  <span className="estat-label">Passion</span>
                 </div>
               </div>
 
               <div className="exp-hero-cta fade-in delay-2">
-                <button className="btn btn-primary" onClick={() => {}}>View My Agents</button>
+                <button className="btn btn-primary" onClick={() => onSwitch('agents')}>View My Agents</button>
                 <a href="https://www.linkedin.com/in/rahilpopat" target="_blank" rel="noreferrer" className="btn btn-outline">Connect →</a>
               </div>
             </div>
@@ -198,7 +197,7 @@ function ExpertiseTab() {
                 <div className="stack-section">
                   <div className="stack-section-label">Agents & LLMs</div>
                   <div className="stack-pills">
-                    {['LangChain', 'LangGraph', 'RAG', 'Claude API'].map(t => (
+                    {['LangChain', 'LangGraph', 'RAG', 'Claude API', 'OpenClaw', 'Claude Code'].map(t => (
                       <span key={t} className="spill spill-cyan">{t}</span>
                     ))}
                   </div>
@@ -206,7 +205,7 @@ function ExpertiseTab() {
                 <div className="stack-section">
                   <div className="stack-section-label">Cloud Platform</div>
                   <div className="stack-pills">
-                    {['Azure AI', 'Copilot Studio', 'Enterprise'].map(t => (
+                    {['Azure AI', 'Copilot Studio'].map(t => (
                       <span key={t} className="spill spill-purple">{t}</span>
                     ))}
                   </div>
@@ -252,38 +251,6 @@ function ExpertiseTab() {
         </div>
       </section>
 
-      {/* ── Experience ── */}
-      <section className="tab-section fade-in delay-3">
-        <div className="container">
-          <div className="section-hd">
-            <span className="section-label">Experience</span>
-            <h2 className="section-title">Where I Work</h2>
-          </div>
-          <div className="exp-role-card">
-            <div className="exp-role-logo"><img src="/invesco.jpeg" alt="Invesco" style={{ height: '36px', width: 'auto', objectFit: 'contain', borderRadius: '4px' }} /></div>
-            <div className="exp-role-body">
-              <div className="exp-role-top">
-                <div>
-                  <div className="exp-role-title">Senior AI Product Owner</div>
-                  <div className="exp-role-meta">Invesco &nbsp;·&nbsp; Finance & Asset Management &nbsp;·&nbsp; <span className="exp-role-current">Current</span></div>
-                </div>
-                <span className="exp-role-badge">Full-time</span>
-              </div>
-              <p className="exp-role-desc">
-                Leading the design and delivery of AI-powered platforms and digital products across finance and asset management.
-                Driving AI initiatives from discovery through production — with a focus on real-world adoption, stakeholder alignment,
-                and measurable business outcomes.
-              </p>
-              <div className="exp-role-tags">
-                {['AI Agents', 'Azure AI', 'LangChain', 'RAG', 'Roadmap Ownership', 'Enterprise Delivery'].map(t => (
-                  <span key={t} className="tag tag-dim">{t}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── Certifications ── */}
       <section className="tab-section tab-section-last fade-in delay-3">
         <div className="container">
@@ -313,31 +280,31 @@ function ExpertiseTab() {
 ═══════════════════════════════════════════════════════════ */
 const agents = [
   {
-    icon: '🧠',
-    title: 'AI Knowledge Agent',
-    desc: 'Enterprise RAG system that ingests complex documentation and surfaces precise, contextual answers — cutting research time dramatically.',
-    outcome: 'Faster information retrieval across large, fragmented knowledge bases',
-    tags: ['RAG', 'LangChain', 'Azure AI', 'Vector DB'],
-    tagClasses: ['tc-cyan', 'tc-purple', 'tc-purple', 'tc-green'],
+    icon: '🦞',
+    title: 'OpenClaw Personal Research Assistant',
+    desc: 'A personal AI research agent built with OpenClaw and Claude Code, running on a Raspberry Pi. Autonomously gathers and synthesises information to answer research queries on demand.',
+    tags: ['OpenClaw', 'Claude Code', 'Raspberry Pi'],
+    tagClasses: ['tc-cyan', 'tc-purple', 'tc-green'],
     delay: 'delay-1',
+    comingSoon: true,
   },
   {
-    icon: '🔬',
-    title: 'Research Automation Agent',
-    desc: 'Multi-agent system that autonomously gathers, synthesises, and structures research from multiple sources into stakeholder-ready reports.',
-    outcome: 'Hours of manual research condensed into structured output in minutes',
-    tags: ['Multi-Agent', 'LangGraph', 'LLM', 'Automation'],
-    tagClasses: ['tc-purple', 'tc-purple', 'tc-cyan', 'tc-orange'],
+    icon: '🔧',
+    title: 'Coming Soon',
+    desc: 'Another agent is in the works. Check back soon.',
+    tags: [],
+    tagClasses: [],
     delay: 'delay-2',
+    comingSoon: true,
   },
   {
-    icon: '⚙️',
-    title: 'Workflow Optimisation Agent',
-    desc: 'AI-driven process analysis that maps existing workflows, identifies bottlenecks, and generates prioritised optimisation recommendations.',
-    outcome: 'Measurable reduction in manual process overhead and decision latency',
-    tags: ['AI Agent', 'Process Mining', 'LLM', 'Analytics'],
-    tagClasses: ['tc-green', 'tc-cyan', 'tc-cyan', 'tc-purple'],
+    icon: '🔧',
+    title: 'Coming Soon',
+    desc: 'Another agent is in the works. Check back soon.',
+    tags: [],
+    tagClasses: [],
     delay: 'delay-3',
+    comingSoon: true,
   },
 ]
 
@@ -350,7 +317,7 @@ function AgentsTab() {
             <span className="section-label">Agents</span>
             <h1 className="tab-hero-headline">AI Systems & Agents</h1>
             <p className="tab-hero-sub">
-              Built with product rigour. Each agent explores a real business problem.
+              Personal agents I've built and documented openly.
             </p>
           </div>
         </div>
@@ -359,8 +326,8 @@ function AgentsTab() {
       <section className="tab-section fade-in delay-1">
         <div className="container">
           <div className="agents-grid">
-            {agents.map(agent => (
-              <div key={agent.title} className={`agent-card fade-in ${agent.delay}`}>
+            {agents.map((agent, idx) => (
+              <div key={idx} className={`agent-card fade-in ${agent.delay}${agent.comingSoon ? ' agent-card-soon' : ''}`}>
                 <div className="agent-card-top">
                   <div className="agent-icon">{agent.icon}</div>
                   <div className="agent-tags">
@@ -371,18 +338,16 @@ function AgentsTab() {
                 </div>
                 <h3 className="agent-title">{agent.title}</h3>
                 <p className="agent-desc">{agent.desc}</p>
-                <div className="agent-outcome">
-                  <span className="agent-outcome-icon">✓</span>
-                  <span>{agent.outcome}</span>
-                </div>
                 <div className="agent-card-footer">
                   <span className="agent-status">
                     <span className="agent-status-dot" />
-                    Concept
+                    {agent.comingSoon ? 'Under Construction' : 'Live'}
                   </span>
-                  <a href="https://github.com/aiproductlabs8/aiproductlabs" target="_blank" rel="noreferrer" className="agent-cta">
-                    View on GitHub <ArrowIcon />
-                  </a>
+                  {!agent.comingSoon && (
+                    <a href="https://github.com/aiproductlabs8/aiproductlabs" target="_blank" rel="noreferrer" className="agent-cta">
+                      View on GitHub <ArrowIcon />
+                    </a>
+                  )}
                 </div>
               </div>
             ))}
@@ -399,13 +364,13 @@ function AgentsTab() {
 ═══════════════════════════════════════════════════════════ */
 const insights = [
   {
-    id: 'ai-pm',
-    category: 'Product Strategy',
+    id: 'aero-to-ai',
+    category: 'Career & Perspective',
     catClass: 'tc-cyan',
-    title: 'The Modern AI PM in the Age of Agents',
-    desc: 'The job of a PM used to be translation. That layer is compressing. When agents can take a well-formed problem and produce working code, the PM\'s job shifts — and the spec is becoming the product.',
+    title: 'From Aeronautical Engineering to AI Product Management',
+    desc: 'The two worlds sound nothing alike. One involves flight dynamics and wind tunnels. The other involves sprint planning and model evaluation. But the discipline transfers more than you\'d think.',
     date: 'Mar 2026',
-    readTime: '12 min read',
+    readTime: '10 min read',
     featured: true,
     delay: 'delay-1',
   },
@@ -423,22 +388,20 @@ const insights = [
 ]
 
 /* ═══════════════════════════════════════════════════════════
-   ARTICLE PAGE
+   ARTICLE PAGES
 ═══════════════════════════════════════════════════════════ */
-function ArticlePage({ onBack }) {
+function AeroToAiPage({ onBack }) {
   return (
     <div className="tab-content fade-in">
       <section className="article-hero">
         <div className="container">
-          <button className="article-back" onClick={onBack}>
-            ← Back to Insights
-          </button>
+          <button className="article-back" onClick={onBack}>← Back to Insights</button>
           <div className="article-header">
             <div className="article-header-meta">
-              <span className="atag tc-cyan">Product Strategy</span>
-              <span className="article-date">Mar 2026 · 12 min read</span>
+              <span className="atag tc-cyan">Career & Perspective</span>
+              <span className="article-date">Mar 2026 · 10 min read</span>
             </div>
-            <h1 className="article-title">The Modern AI PM in the Age of Agents</h1>
+            <h1 className="article-title">From Aeronautical Engineering to AI Product Management</h1>
             <p className="article-byline">By Rahil Popat · Senior AI Product Owner</p>
           </div>
         </div>
@@ -449,70 +412,55 @@ function ArticlePage({ onBack }) {
           <div className="article-body-wrap">
             <div className="article-body">
 
-              <p>The job of a PM used to be translation. You talked to customers, synthesized their problems, wrote specs, and handed them to engineers. You were the bridge between "what people need" and "what gets built." The value was in that translation layer.</p>
-              <p>That layer is compressing.</p>
-              <p>When agents can take a well-formed problem and produce working code, the PM's job shifts. You're no longer translating for engineers. You're forming intent clearly enough that agents can act on it directly.</p>
-              <p className="article-callout">The spec is becoming the product.</p>
-              <p>I've watched this happen with myself and dozens of other PMs. Previously, a PM would write a detailed spec, hand it off, wait for questions, clarify, wait for implementation, review, give feedback, iterate. The cycle took weeks. Now they write a clear problem statement with constraints, point an agent at it, and review working code in an hour.</p>
-              <p>The time between "I know what we should build" and "here it is" collapsed. But the work of knowing what to build didn't get easier. It got more important.</p>
-              <p>You don't need to write the code yourself. You need to know what you want clearly enough that an agent can build it. The spec and the prototype are becoming the same thing. You just describe what you want, watch it take shape, course-correct, and iterate. The bottleneck isn't implementation anymore.</p>
-              <p>And the speed of shipping is only accelerating. Every big and small AI company is shipping at this pace, thanks to AI coding agents. The cycle times that used to define product development — from quarterly planning, monthly sprints, to weekly releases — are compressing into something closer to continuous deployment of ideas.</p>
-              <p>When the implementation barrier drops this fast, the bottleneck shifts upstream. The scarce resource isn't engineering capacity anymore. It's knowing what's actually worth building.</p>
+              <p>When I tell people I moved from aeronautical engineering into AI product management, the reaction is usually a polite tilt of the head — as if I&apos;d announced a career change from deep-sea diving to competitive baking. The two worlds sound nothing alike. One involves flight dynamics, structural loads, and wind tunnels. The other involves sprint planning, user interviews, and model evaluation.</p>
+              <p>But the further I&apos;ve gone into AI product work, the more I&apos;ve realised the foundations were already there — laid in every system I designed, every failure mode I analysed, every constraint I had to work around. The language changed. The discipline didn&apos;t.</p>
 
-              <h2>The New PM Skillset</h2>
+              <h2>Both fields begin with constraints, not possibilities</h2>
+              <p>In aeronautics, you never start with a blank canvas. You start with physics. Structural limits, fuel budgets, regulatory envelopes — every design decision is a negotiation with hard boundaries. The engineer&apos;s job isn&apos;t to dream freely; it&apos;s to find the optimal solution within ruthless constraint.</p>
+              <p>AI product management works the same way, even if the constraints are less visible. Model capability ceilings, latency budgets, data availability, safety guardrails, cost per inference — these aren&apos;t obstacles to creativity, they define it. The best AI PMs I&apos;ve encountered think like engineers: they map the envelope before they plot the course.</p>
 
-              <div className="article-infographic-float">
-                <img src="/infographic.png" alt="AI Is Changing What It Means to Be a Product Manager" />
+              <div className="article-comparison-table">
+                <div className="act-row act-header">
+                  <div className="act-col">Aeronautical</div>
+                  <div className="act-col">AI Product</div>
+                </div>
+                <div className="act-row">
+                  <div className="act-col"><strong>Flight envelope analysis</strong><br /><span>Defining the operational boundaries a craft can safely fly within — speed, altitude, load factor.</span></div>
+                  <div className="act-col"><strong>Model capability mapping</strong><br /><span>Defining where the model performs reliably and where it degrades — latency, accuracy, edge cases.</span></div>
+                </div>
+                <div className="act-row">
+                  <div className="act-col"><strong>Failure mode &amp; effects analysis</strong><br /><span>Systematically identifying what breaks, how it breaks, and what the downstream consequences are.</span></div>
+                  <div className="act-col"><strong>Red-teaming &amp; eval design</strong><br /><span>Stress-testing the system against adversarial inputs, distributional shift, and unexpected user behaviour.</span></div>
+                </div>
+                <div className="act-row">
+                  <div className="act-col"><strong>Iterative wind tunnel testing</strong><br /><span>Build a prototype, expose it to real conditions, measure delta from expected, refine the design.</span></div>
+                  <div className="act-col"><strong>Prompt &amp; experiment iteration</strong><br /><span>Ship a version, gather real usage data, measure against benchmarks, adjust system design.</span></div>
+                </div>
               </div>
 
-              <h3>Problem Shaping</h3>
-              <p>The best PMs I know have always been good at this, but it used to be one skill among many. Now it's THE skill. Can you take an ambiguous customer pain point and shape it into something clear enough that an agent or team of agents can act on it? Can you identify the constraints that actually matter? Can you articulate what success looks like?</p>
-              <p>The spec isn't a document anymore. It's a well-formed problem with clear boundaries.</p>
-
-              <h3>Context Curation</h3>
-              <p>This is the skill nobody talks about, but every PM who's effective with agents has developed it. The quality of what an agent produces is directly proportional to the context you feed it.</p>
-              <p>When I first started working with agents, I'd give vague prompts: "build me a dashboard for customer feedback." I'd get something that technically worked but missed the point entirely. It didn't understand our users, our constraints, what "good" looked like for us.</p>
-              <p>Now I maintain context docs that I feed to agents before starting any project. Over time I've figured out what actually matters in these docs:</p>
-              <ul>
-                <li><strong>The user, specifically.</strong> Not a persona. Real details: who they are, what they care about, what makes them give up, what makes them pay attention.</li>
-                <li><strong>The problem in their words.</strong> Direct quotes from calls, tickets, or sales notes. Their language, not your synthesis. This grounds the agent in real pain, not abstracted pain.</li>
-                <li><strong>What good looks like.</strong> Examples your team considers well-designed. Your own past work, competitors, adjacent products. Show, don't describe.</li>
-                <li><strong>What you've tried and why it failed.</strong> Institutional knowledge that usually lives in people's heads. The approaches you've already killed and the reasons why.</li>
-                <li><strong>Constraints that shape the solution.</strong> Not every constraint. Just the ones that will actually change what gets built.</li>
-                <li><strong>How you'll know it worked.</strong> Concrete, not fuzzy. Something you could actually measure or observe.</li>
-              </ul>
-              <p>When I ask an agent to prototype something now, it's not starting from zero. It knows who we're building for, what they actually said, what good looks like, and what's already failed. The output fits because the input was specific.</p>
-
-              <h3>Evaluation and Taste</h3>
-              <p>Taste is underrated. But when agents produce output quickly and in bulk, it becomes the most important skill. Is this actually solving the problem? Does it handle the edge cases that matter? Is this the version we should ship or just the version that runs?</p>
-              <p>This is harder than it sounds. Agents will confidently produce things that look correct but miss the point entirely. You need reps to develop the taste. There's no shortcut: you have to build things, evaluate them, learn what "good enough to ship" actually feels like versus "technically works."</p>
-
-              <h2>The Mental Model Shift</h2>
-              <p><strong>Old model:</strong> PM figures out what to build → writes spec → engineers build it → PM reviews → iterate.</p>
-              <p><strong>New model:</strong> PM figures out what to build → PM builds it with agents → PM evaluates → iterates quickly → hands to engineers to go live in prod.</p>
-              <p>The AI PM isn't just handing off requirements anymore. They're building the first iteration themselves and getting real feedback on working software, not slide decks or Figma mocks. Engineers then become collaborators on making the product better and production-ready rather than translators of your intent.</p>
-              <p>This changes your relationship with the product. You're not describing what you want and hoping it comes back right. You're shaping it directly, in real time.</p>
-              <p><strong>Think in iterations.</strong> Let the first version be wrong. Don't try to get it perfect in your head before you start. Give the agent rich context about the problem, then let it take a rough first pass. See what comes out. React. Iterate. You'll learn more from "that's not quite right because..." than from trying to think through every edge case upfront.</p>
-              <p>I regularly have agents build two or three completely different approaches just to see which one feels right when I use it. That used to be expensive. Now it's a Tuesday afternoon with a few parallel agents.</p>
-              <p><strong>Hold ambiguity longer.</strong> Old PM instinct was to resolve ambiguity into specs as fast as possible. New instinct is to stay in the ambiguous zone while you explore. Don't collapse to a solution too early. Let agents help you understand the solution space before you commit.</p>
-
-              <h2>Getting Started</h2>
-              <p>If you're a PM who hasn't worked this way yet, here's how to start:</p>
-              <ul>
-                <li><strong>Pick a small problem you actually have.</strong> Not an imaginary one. Something that's annoying you right now. A report you have to manually compile. A workflow that's tedious. A prototype you wish existed.</li>
-                <li><strong>Spend 30 minutes writing context before you prompt.</strong> See the context curation section above for the full list.</li>
-                <li><strong>Point an agent at it and watch what happens.</strong> Don't expect perfection. Expect a starting point. React to it. Guide it. Iterate.</li>
-                <li><strong>Do this ten times.</strong> With different problems. Different levels of complexity. You'll develop intuition for what works, what context matters, how to evaluate output. This intuition is the new PM skill.</li>
-              </ul>
-              <p>The PMs who will thrive are the ones who understand problems so clearly that the solution becomes obvious to them and to the agents they work with. I switch between AI Studio, Cursor, Antigravity and Claude Code depending on the task. The tool matters less than building the muscle of working with agents daily.</p>
+              <h2>Systems thinking is systems thinking</h2>
+              <p>An aircraft is not a collection of components. It is a system of systems — where a change in the propulsion subsystem propagates into thermal management, which affects materials choices, which changes the weight budget, which loops back to propulsion. You learn, very quickly, to hold the whole picture in your head while working on any individual part.</p>
+              <p>AI products are identical in spirit. Change the retrieval strategy in a RAG pipeline and you alter latency, which affects UX, which changes where users drop off, which feeds back into what data you need to collect. The engineer&apos;s instinct to trace second and third-order effects is not a habit you have to learn for AI — it&apos;s one you already have.</p>
 
               <blockquote>
-                "If your job was mostly translating customer needs into documents for engineers, that's a workflow. Workflows get automated. If your job was 'understand problems so deeply that the right solution becomes obvious,' you're more valuable than ever. Agents amplify that understanding into shipped product faster than any team ever could before."
+                &quot;The engineer&apos;s instinct to trace second and third-order effects is not a habit you have to learn for AI — it&apos;s one you already have.&quot;
               </blockquote>
 
-              <p>The question every PM should ask: when the translation layer disappears, what's left?</p>
-              <p>For the best PMs, the answer is everything that actually mattered. Understanding the problem. User empathy. Judgment. Taste.</p>
-              <p className="article-closing">These were always part of the PM job. Now they're becoming the whole job.</p>
+              <h2>Uncertainty is the material you work with</h2>
+              <p>Engineering schools teach you to be precise. What they actually teach you — underneath the equations — is how to make good decisions with incomplete information under time pressure. A structural engineer doesn&apos;t know exactly how a wing will flex in a once-in-a-decade gust. They design for it anyway, using probabilistic load cases and safety margins.</p>
+              <p>AI product management is the same exercise in a different medium. You don&apos;t know how users will prompt your product. You don&apos;t know exactly how the model will behave on tomorrow&apos;s distribution. You design evaluation frameworks, set confidence thresholds, build human-in-the-loop safety nets — and ship anyway. The posture is identical. The vocabulary is different.</p>
+
+              <p className="article-callout">✈ In both fields, the job is to make a complex, partially unpredictable system behave reliably for the people depending on it.</p>
+
+              <h2>Certification culture and the AI safety moment</h2>
+              <p>Aviation is one of the most heavily regulated industries on earth, and for good reason. The consequence of failure is catastrophic and often irreversible. As a result, aeronautical engineers develop an almost instinctive relationship with documentation, traceability, and sign-off culture. Nothing ships without a paper trail.</p>
+              <p>AI is in the early stages of building exactly this kind of rigour — and it desperately needs people who already understand why it matters. The emerging landscape of AI governance, safety evals, model cards, and deployment audits maps almost directly onto the design assurance frameworks I worked within as an engineer. If you have an aerospace background, you&apos;re not new to this conversation. You&apos;ve been living it.</p>
+
+              <h2>What actually changed</h2>
+              <p>Honesty matters here. The transition was not frictionless. Engineering produces artefacts — drawings, simulations, test reports — where correctness is binary or at least measurable. Product management produces decisions, alignment, and momentum, where quality is far harder to assess. Learning to operate in that ambiguity, to lead without formal authority, to communicate in the language of business outcomes rather than technical specifications — that took real work.</p>
+              <p>But the mental model I brought from aeronautics — the instinct to decompose complexity, to reason about failure, to think in systems, to respect constraints — turned out to be an advantage rather than a relic. Not a bridge I had to build. A runway I&apos;d already constructed.</p>
+
+              <p className="article-closing">If you&apos;re an engineer considering a move into AI product management — or trying to explain to someone why that move makes sense — the short version is this: the discipline transfers. The altitude changes. The physics stay the same.</p>
 
             </div>
           </div>
@@ -637,7 +585,7 @@ function InsightsTab({ onReadMore }) {
 
       <section className="tab-section fade-in delay-1">
         <div className="container">
-          <div className="insight-featured fade-in delay-1" onClick={() => onReadMore('ai-pm')} style={{ cursor: 'pointer' }}>
+          <div className="insight-featured fade-in delay-1" onClick={() => onReadMore(featured.id)} style={{ cursor: 'pointer' }}>
             <div className="insight-feat-left">
               <div className="insight-feat-inner">
                 <span className={`atag ${featured.catClass}`}>{featured.category}</span>
@@ -688,7 +636,7 @@ function AboutTab() {
           <div className="tab-hero-text">
             <span className="section-label">About</span>
             <h1 className="tab-hero-headline">Rahil Popat</h1>
-            <p className="tab-hero-sub">Senior AI Product Owner · Builder · Aeronautical Engineer</p>
+            <p className="tab-hero-sub">AI Product Management · Agent Builder · Aeronautical Engineer</p>
           </div>
         </div>
       </section>
@@ -699,24 +647,22 @@ function AboutTab() {
 
             <div className="about-bio">
               <p className="about-p">
-                I&apos;m a Senior AI Product Owner at <strong>Invesco</strong>, a global investment management firm.
-                I lead the design and delivery of AI-powered platforms — from intelligent agents and RAG systems
-                to enterprise automation — with a focus on outcomes that matter to the business.
+                I build AI products by day and AI agents by night.
               </p>
               <p className="about-p">
-                My background is in aeronautical engineering, which shapes how I approach complex systems:
-                rigorously, with an eye for failure modes and a bias toward pragmatic solutions.
-                I bring that same thinking to AI product development.
+                Professionally, I&apos;m a Senior AI Product Owner — building intelligent agents, RAG systems, and AI-powered platforms.
               </p>
               <p className="about-p">
-                Beyond my day role, I build and document AI agents openly — sharing what I learn
-                to help other product leaders and engineers navigate this shift confidently.
+                My foundation is aeronautical engineering, which taught me to treat complex systems with rigour: mapping failure modes, thinking in feedback loops, and defaulting to pragmatic over perfect. That lens shapes everything I build.
+              </p>
+              <p className="about-p">
+                I document my passion projects and learnings from my agent-building journey openly — because the best way to help other PMs and engineers make the leap into AI building is to show the work.
               </p>
 
               <div className="about-tags">
                 <span className="tag tag-cyan">AI Product Leadership</span>
                 <span className="tag tag-purple">Agent Design</span>
-                <span className="tag tag-green">Enterprise Delivery</span>
+                <span className="tag tag-green">Building in Public</span>
                 <span className="tag tag-orange">Finance & Asset Management</span>
               </div>
 
@@ -731,13 +677,6 @@ function AboutTab() {
             </div>
 
             <div className="about-credentials">
-              <div className="cred-card">
-                <div className="cred-icon"><img src="/invesco.jpeg" alt="Invesco" style={{ height: '28px', width: 'auto', objectFit: 'contain', borderRadius: '4px' }} /></div>
-                <div>
-                  <div className="cred-title">Senior AI Product Owner</div>
-                  <div className="cred-sub">Invesco · Global Asset Management</div>
-                </div>
-              </div>
               <div className="cred-card">
                 <div className="cred-icon"><MicrosoftIcon /></div>
                 <div>
@@ -763,7 +702,7 @@ function AboutTab() {
               <div className="about-stack-card">
                 <div className="about-stack-label">Current Stack</div>
                 <div className="about-stack-items">
-                  {['LangChain', 'LangGraph', 'Azure AI', 'RAG', 'Claude API', 'Copilot Studio'].map(t => (
+                  {['LangChain', 'LangGraph', 'Azure AI', 'RAG', 'Claude API', 'Copilot Studio', 'OpenClaw', 'Claude Code'].map(t => (
                     <span key={t} className="spill spill-cyan">{t}</span>
                   ))}
                 </div>
@@ -823,14 +762,14 @@ export default function App() {
   }
 
   const TAB_CONTENT = {
-    expertise: <ExpertiseTab />,
+    expertise: <ExpertiseTab onSwitch={handleSwitch} />,
     agents:    <AgentsTab />,
     insights:  <InsightsTab onReadMore={handleReadMore} />,
     about:     <AboutTab />,
   }
 
-  const articleContent = openArticle === 'ai-pm'
-    ? <ArticlePage onBack={handleBack} />
+  const articleContent = openArticle === 'aero-to-ai'
+    ? <AeroToAiPage onBack={handleBack} />
     : openArticle === 'pm-fundamentals'
     ? <PmFundamentalsPage onBack={handleBack} />
     : null
