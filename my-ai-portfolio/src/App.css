@@ -758,6 +758,7 @@ body::before {
 }
 .footer-nav-link:hover { color: var(--text-1); background: rgba(255,255,255,0.04); }
 .footer-copy { margin-left: auto; font-size: 13px; color: var(--text-3); }
+.footer-disclaimer { width: 100%; text-align: center; font-size: 11px; color: var(--text-3); opacity: 0.5; margin-top: 8px; }
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE

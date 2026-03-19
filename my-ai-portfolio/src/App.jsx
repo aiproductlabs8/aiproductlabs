@@ -546,6 +546,7 @@ function Footer({ onSwitch }) {
           ))}
         </div>
         <span className="footer-copy">© 2026 Rahil Popat · Built with Claude · All thoughts and insights are my own.</span>
+        <span className="footer-disclaimer">AI Product Labs is a personal learning lab — not a company, agency, or consultancy. All projects are personal passion projects built independently.</span>
       </div>
     </footer>
   )
