@@ -894,6 +894,7 @@ body::before {
   gap: 6px;
 }
 .lsc-title   { font-size: 13px; font-weight: 500; letter-spacing: 0.06em; }
+.lsc-section-label { font-size: 9px; letter-spacing: 0.18em; color: var(--amber); opacity: 0.8; margin-top: 2px; margin-bottom: 2px; }
 .lsc-divider { font-size: 12px; opacity: 0.4; line-height: 1; }
 .lsc-row     { font-size: 12px; font-weight: 400; }
 .lsc-key     { opacity: 0.65; }

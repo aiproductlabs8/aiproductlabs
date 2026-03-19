@@ -793,6 +793,24 @@ function LabStatusCard() {
         <span className="lsc-key">MISSION: </span>
         <span className="lsc-val lsc-val--white">{mission()}</span>
       </div>
+      <div className="lsc-divider">━━━━━━━━━━━━━━━━━━━━</div>
+      <div className="lsc-section-label">CURRENT MISSION</div>
+      <div className="lsc-row">
+        <span className="lsc-key">OBJECTIVE........ </span>
+        <span className="lsc-val lsc-val--white">Build &amp; ship agents</span>
+      </div>
+      <div className="lsc-row">
+        <span className="lsc-key">TOOLS............ </span>
+        <span className="lsc-val lsc-val--white">Whatever works</span>
+      </div>
+      <div className="lsc-row">
+        <span className="lsc-key">PLATFORM......... </span>
+        <span className="lsc-val lsc-val--white">Wherever it runs</span>
+      </div>
+      <div className="lsc-row">
+        <span className="lsc-key">ETA.............. </span>
+        <span className="lsc-val lsc-val--white">Unknown</span>
+      </div>
       <div className="lsc-building">
         <span className="lsc-dot" />
         CURRENTLY BUILDING
