@@ -1081,6 +1081,7 @@ body::before {
 }
 .stat-key { color: var(--text-3); }
 .stat-val { color: var(--accent); font-weight: 600; }
+.stat-row--passion .stat-val { font-size: 18px; line-height: 1; vertical-align: middle; }
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE

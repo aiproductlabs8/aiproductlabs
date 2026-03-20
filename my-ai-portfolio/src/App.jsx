@@ -90,18 +90,16 @@ function BootSequence({ onComplete }) {
 
   const [visible, setVisible] = useState([])
   const [fading, setFading] = useState(false)
-  const hasRun = useRef(false)
-  const timers = useRef([])
 
   useEffect(() => {
-    if (hasRun.current) return
-    hasRun.current = true
+    setVisible([])
+    const timers = []
 
-    LINES.forEach((line, i) => {
+    LINES.forEach((line) => {
       const t = setTimeout(() => {
         setVisible(prev => [...prev, line])
       }, line.delay)
-      timers.current.push(t)
+      timers.push(t)
     })
 
     const fadeT = setTimeout(() => {
@@ -110,11 +108,11 @@ function BootSequence({ onComplete }) {
         sessionStorage.setItem('hasBooted', '1')
         onComplete()
       }, 650)
-      timers.current.push(doneT)
+      timers.push(doneT)
     }, lastDelay + 520)
-    timers.current.push(fadeT)
+    timers.push(fadeT)
 
-    return () => timers.current.forEach(clearTimeout)
+    return () => timers.forEach(clearTimeout)
   }, [])
 
   return (
@@ -873,8 +871,8 @@ function AboutTab({ onNavigate, onOpenArticle }) {
   useScrollReveal()
   const TYPING_TEXTS = [
     'Rahil Popat',
-    'Agent Builder · Aeronautical Engineer · Thinks in Systems',
-    'Trained on aircraft. Deployed on AI.',
+    'Agent Builder · Product Owner · Aeronautical Engineer · Thinks in Systems',
+    'PM by day. Builder by compulsion. Aeronautical engineer by origin.',
     'Builder. AI products, agents, and everything in between.',
   ]
   const { displayed, done } = useTypewriter(TYPING_TEXTS, 48)
@@ -907,11 +905,6 @@ function AboutTab({ onNavigate, onOpenArticle }) {
                 </p>
               )}
               <FlightStatus />
-              <div className="stats-readout">
-                <div className="stat-row"><span className="stat-key">EXPERIENCE....... </span><span className="stat-val">5+ YRS</span></div>
-                <div className="stat-row"><span className="stat-key">CERTIFICATIONS... </span><span className="stat-val">6</span></div>
-                <PassionStat />
-              </div>
             </div>
             <div className="about-hero-right">
               <QuoteBlock size="large" />
@@ -1121,7 +1114,7 @@ function Footer({ onSwitch }) {
           ))}
         </div>
         <span className="footer-copy">© {new Date().getFullYear()} Rahil Popat · Built with Claude · All thoughts and insights are my own.</span>
-        <span className="footer-disclaimer">AI Product Labs is a personal learning lab — not a company, agency, or consultancy. All projects are personal passion projects built independently.</span>
+        <span className="footer-disclaimer">Disclaimer: This is a personal website. The views expressed are my own and do not represent the views of my employer or any affiliated organization.</span>
         <span className="footer-mono">Built by Rahil Popat. Powered by curiosity and Claude Code. The Raspberry Pi is load-bearing.</span>
       </div>
     </footer>
