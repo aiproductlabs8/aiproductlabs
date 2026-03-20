@@ -617,6 +617,17 @@ body::before {
 .about-p--lead { font-size: 19px; color: var(--accent); }
 .about-p strong { color: var(--text-1); font-weight: 600; }
 .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; margin-bottom: 36px; }
+
+/* Grouped tags */
+.about-tags-grouped { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; margin-bottom: 36px; }
+.tag-group { display: flex; flex-direction: column; gap: 8px; }
+.tag-group-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag-group-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; }
+.tag-group-label--amber { color: var(--amber); }
+.tag-group-label--teal  { color: rgba(74,222,128,0.8); }
+.tag-group-label--cyan  { color: var(--accent); }
+.tag-amber { background: rgba(245,158,11,0.08); color: rgba(245,158,11,0.85); border: 1px solid rgba(245,158,11,0.2); }
+.tag-teal  { background: rgba(74,222,128,0.07); color: rgba(74,222,128,0.85); border: 1px solid rgba(74,222,128,0.2); }
 .about-links { display: flex; gap: 14px; flex-wrap: wrap; }
 
 /* Credentials */
@@ -881,6 +892,23 @@ body::before {
 
 /* About — obsessing line */
 .about-obsessing { font-size: 13px; color: var(--text-3); opacity: 0.8; font-style: italic; margin-bottom: 20px; line-height: 1.6; border-left: 2px solid var(--amber); padding-left: 12px; }
+
+/* Current focus card */
+.current-focus-card {
+  font-family: var(--font-mono);
+  background: rgba(74,222,128,0.03);
+  border: 0.5px solid rgba(74,222,128,0.2);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 28px;
+}
+.cfc-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.cfc-dot { width: 7px; height: 7px; border-radius: 50%; background: #4ade80; flex-shrink: 0; animation: pulse-green 2s ease-in-out infinite; }
+.cfc-label { font-size: 9px; letter-spacing: 0.2em; color: rgba(74,222,128,0.7); text-transform: uppercase; }
+.cfc-row { font-size: 12px; line-height: 1.9; }
+.cfc-key { color: var(--text-3); opacity: 0.7; }
+.cfc-val { color: rgba(220,240,255,0.75); }
+.cfc-cursor { color: #4ade80; animation: blink-cursor 0.7s step-end infinite; margin-left: 2px; font-size: 11px; }
 
 /* ─── Lab Status Card ────────────────────────────────────── */
 .lab-status-card {

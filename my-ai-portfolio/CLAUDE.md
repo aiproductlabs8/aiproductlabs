@@ -45,11 +45,13 @@ This site has specific compliance requirements. Always follow these when editing
 - Credentials (Microsoft cert, Oxford Blockchain, Wits Engineering) — these are personal
 
 ### The approved bio (do not change without being asked):
-> Builder. AI products, agents, and everything in between.
+> My foundation is aeronautical engineering — which taught me to treat complex systems with rigour: mapping failure modes, thinking in feedback loops, and defaulting to pragmatic over perfect.
 >
-> My foundation is aeronautical engineering, which taught me to treat complex systems with rigour: mapping failure modes, thinking in feedback loops, and defaulting to pragmatic over perfect. That lens shapes everything I build.
+> That lens carried into a decade in financial services as a Senior Product Owner, where I worked at the intersection of emerging technology and strategy — across digital assets, tokenisation, and innovation programmes where the constraints were just as tight and the stakes just as real.
 >
-> I document my passion projects and learnings from my agent-building journey openly — because the best way to help other PMs and engineers make the leap into AI building is to show the work.
+> Now I apply all of it to building AI agents. The tools changed. The discipline didn't.
+>
+> AI is moving fast — and I'm learning in public. Every project, decision, and dead end gets documented here, because the best way to help other PMs and engineers navigate this space is to show the journey, not just the destination.
 
 ### Approved About subtitle (do not change without being asked):
 > Agent Builder · Aeronautical Engineer · Building in Public

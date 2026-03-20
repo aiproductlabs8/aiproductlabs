@@ -3,6 +3,7 @@ import './App.css'
 import ContrastCard from './components/ContrastCard'
 import FlightStatus from './components/FlightStatus'
 import SignalBoard from './components/SignalBoard'
+import AgentCanvas from './components/AgentCanvas'
 
 /* ─── Icons ──────────────────────────────────────────────── */
 const ArrowIcon = () => (
@@ -421,6 +422,8 @@ function AgentsTab() {
   useScrollReveal()
   return (
     <div className="tab-content">
+      <AgentCanvas />
+
       <section className="tab-section-hero fade-in">
         <div className="container">
           <div className="tab-hero-text">
@@ -684,6 +687,8 @@ function InsightsTab({ onReadMore }) {
 
   return (
     <div className="tab-content">
+      <AgentCanvas />
+
       <section className="tab-section-hero fade-in">
         <div className="container">
           <div className="tab-hero-text">
@@ -692,7 +697,7 @@ function InsightsTab({ onReadMore }) {
             <p className="tab-hero-sub">
               Thinking out loud on AI. Occasionally useful.
             </p>
-            <QuoteBlock size="small" />
+
           </div>
         </div>
       </section>
@@ -769,7 +774,7 @@ function QuoteBlock({ size = 'large' }) {
 }
 
 /* ─── Lab Status Card ────────────────────────────────────── */
-const LAB_START = new Date('2026-03-17T00:00:00')
+const LAB_START = new Date('2020-03-01T00:00:00')
 
 function LabStatusCard() {
   const [now, setNow] = useState(new Date())
@@ -785,19 +790,18 @@ function LabStatusCard() {
     const h = now.getHours()
     if (h >= 6  && h < 12) return 'OPEN'
     if (h >= 12 && h < 18) return 'ACTIVE'
-    if (h >= 18 && h < 24) return 'RUNNING HOT'
+    if (h >= 18 && h < 24) return 'AIRBORNE'
     return 'ACTIVE — UNEXPECTED'
   }
 
   const localTime = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`
 
   const mission = () => {
-    const diff = Math.max(0, Math.floor((now - LAB_START) / 1000))
-    const d = Math.floor(diff / 86400)
-    const h = Math.floor((diff % 86400) / 3600)
-    const m = Math.floor((diff % 3600) / 60)
-    const s = diff % 60
-    return `${String(d).padStart(3, '0')}d ${pad(h)}h ${pad(m)}m ${pad(s)}s`
+    const yrs = now.getFullYear() - LAB_START.getFullYear()
+    const mos = now.getMonth() - LAB_START.getMonth() + yrs * 12
+    const years = Math.floor(mos / 12)
+    const months = mos % 12
+    return `${years} YRS ${months} MOS`
   }
 
   return (
@@ -940,26 +944,53 @@ function AboutTab({ onNavigate, onOpenArticle }) {
                 </p>
               )}
               <p className="about-p">
-                My foundation is aeronautical engineering, which taught me to treat complex systems with rigour: mapping failure modes, thinking in feedback loops, and defaulting to pragmatic over perfect. That lens shapes everything I build.
+                My foundation is aeronautical engineering — which taught me to treat complex systems with rigour: mapping failure modes, thinking in feedback loops, and defaulting to pragmatic over perfect.
               </p>
               <p className="about-p">
-                I document my passion projects and learnings from my agent-building journey openly — because the best way to help other PMs and engineers make the leap into AI building is to show the work.
+                That lens carried into a decade in financial services as a Senior Product Owner, where I worked at the intersection of emerging technology and strategy — across digital assets, tokenisation, and innovation programmes where the constraints were just as tight and the stakes just as real.
               </p>
-              <p className="about-obsessing">Currently obsessing over: Claude Code, agentic memory, and whether a Raspberry Pi can run a useful agent. Results pending.</p>
+              <p className="about-p">
+                Now I apply all of it to building AI agents. The tools changed. The discipline didn't.
+              </p>
+              <p className="about-p">
+                AI is moving fast — and I'm learning in public. Every project, decision, and dead end gets documented here, because the best way to help other PMs and engineers navigate this space is to show the journey, not just the destination.
+              </p>
+              <div className="current-focus-card">
+                <div className="cfc-header">
+                  <span className="cfc-dot" />
+                  <span className="cfc-label">CURRENT FOCUS</span>
+                </div>
+                <div className="cfc-row">
+                  <span className="cfc-key">BUILDING......... </span>
+                  <span className="cfc-val">Agents to solve real world problems</span>
+                </div>
+                <div className="cfc-row">
+                  <span className="cfc-key">OBSESSING OVER... </span>
+                  <span className="cfc-val">Claude Code &amp; agentic memory</span>
+                </div>
+                <div className="cfc-row">
+                  <span className="cfc-key">EXPERIMENTING.... </span>
+                  <span className="cfc-val">Can a Raspberry Pi run a useful agent?<span className="cfc-cursor">█</span></span>
+                </div>
+              </div>
 
               <div className="about-tags">
-                <span className="tag tag-purple">Agent Design</span>
-                <span className="tag tag-cyan">Agentic AI</span>
-                <span className="tag tag-cyan">Orchestration</span>
-                <span className="tag tag-orange">Evaluation</span>
-                <span className="tag tag-purple">LLM Engineering</span>
-                <span className="tag tag-green">RAG Systems</span>
-                <span className="tag tag-orange">Systems Thinking</span>
-                <span className="tag tag-green">Prompt Engineering</span>
-                <span className="tag tag-purple">Memory &amp; Context</span>
-                <span className="tag tag-cyan">Tool Use &amp; MCP</span>
-                <span className="tag tag-orange">Claude Code</span>
-                <span className="tag tag-green">Human-in-the-Loop</span>
+                {[
+                  { label: 'Systems Engineering',   cls: 'tag-amber' },
+                  { label: 'Failure Mode Analysis', cls: 'tag-amber' },
+                  { label: 'Agent Design',          cls: 'tag-teal'  },
+                  { label: 'Evaluation',            cls: 'tag-teal'  },
+                  { label: 'Prompt Engineering',    cls: 'tag-teal'  },
+                  { label: 'Tool Use & MCP',        cls: 'tag-teal'  },
+                  { label: 'Agentic AI',            cls: 'tag-teal'  },
+                  { label: 'Orchestration',         cls: 'tag-teal'  },
+                  { label: 'RAG Systems',           cls: 'tag-teal'  },
+                  { label: 'Claude Code',           cls: 'tag-cyan'  },
+                  { label: 'Memory & Context',      cls: 'tag-cyan'  },
+                  { label: 'Human-in-the-Loop',     cls: 'tag-cyan'  },
+                ].map(({ label, cls }) => (
+                  <span key={label} className={`tag ${cls}`}>{label}</span>
+                ))}
               </div>
 
               <ContrastCard />
