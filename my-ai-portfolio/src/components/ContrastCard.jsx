@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react'
 
 const ROWS = [
-  { then: 'Flight dynamics',          now: 'Agent architecture'       },
-  { then: 'Wind tunnels',             now: 'Evals & benchmarks'       },
-  { then: 'Failure mode analysis',    now: 'Hallucination modes'      },
-  { then: 'Structural load limits',   now: 'Token budgets'            },
-  { then: 'Safety margins',           now: 'Guardrails'               },
-  { then: 'Design assurance',         now: 'Red-teaming'              },
-  { then: 'Iterative testing',        now: 'Ship / measure / iterate' },
+  { then: 'Flight dynamics',          bridge: 'Systems thinking',           now: 'Agent architecture'       },
+  { then: 'Wind tunnels',             bridge: 'Experiment frameworks',       now: 'Evals & benchmarks'       },
+  { then: 'Failure mode analysis',    bridge: 'Risk & edge case mapping',    now: 'Hallucination modes'      },
+  { then: 'Structural load limits',   bridge: 'Constraints & tradeoffs',     now: 'Token budgets'            },
+  { then: 'Safety margins',           bridge: 'Acceptable failure rates',    now: 'Guardrails'               },
+  { then: 'Design assurance',         bridge: 'QA & sign-off processes',     now: 'Red-teaming'              },
+  { then: 'Iterative testing',        bridge: 'Build / measure / learn',     now: 'Ship / measure / iterate' },
 ]
 
 export default function ContrastCard() {
@@ -31,9 +31,22 @@ export default function ContrastCard() {
           overflow: hidden;
           background: rgba(6, 12, 24, 0.6);
         }
+        .cc-heading {
+          padding: 10px 16px;
+          font-size: 10px;
+          letter-spacing: 0.14em;
+          color: var(--text-3);
+          opacity: 0.7;
+          border-bottom: 0.5px solid var(--border-subtle);
+          text-align: center;
+        }
+        .cc-heading span.cc-h-then { color: rgba(245, 158, 11, 0.8); }
+        .cc-heading span.cc-h-bridge { color: rgba(74, 222, 128, 0.8); }
+        .cc-heading span.cc-h-now { color: rgba(0, 212, 255, 0.8); }
+        .cc-heading span.cc-h-arrow { color: var(--text-3); opacity: 0.5; margin: 0 6px; }
         .cc-header {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
           border-bottom: 0.5px solid var(--border-subtle);
         }
         .cc-col-head {
@@ -47,12 +60,16 @@ export default function ContrastCard() {
           border-right: 0.5px solid var(--border-subtle);
           color: var(--amber);
         }
+        .cc-col-head.cc-col-bridge {
+          border-right: 0.5px solid var(--border-subtle);
+          color: rgba(74, 222, 128, 0.8);
+        }
         .cc-col-head:last-child {
           color: var(--accent);
         }
         .cc-row {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
           border-bottom: 0.5px solid rgba(20, 36, 58, 0.5);
           opacity: 0;
           transform: translateY(6px);
@@ -75,6 +92,10 @@ export default function ContrastCard() {
           border-right: 0.5px solid rgba(20, 36, 58, 0.5);
           color: rgba(245, 158, 11, 0.65);
         }
+        .cc-cell.cc-cell-bridge {
+          border-right: 0.5px solid rgba(20, 36, 58, 0.5);
+          color: rgba(74, 222, 128, 0.7);
+        }
         .cc-cell:last-child {
           color: rgba(0, 212, 255, 0.8);
         }
@@ -91,8 +112,17 @@ export default function ContrastCard() {
         }
       `}</style>
 
+      <div className="cc-heading">
+        <span className="cc-h-then">Aeronautical Engineer</span>
+        <span className="cc-h-arrow">→</span>
+        <span className="cc-h-bridge">AI Product Manager</span>
+        <span className="cc-h-arrow">→</span>
+        <span className="cc-h-now">AI Agent Builder</span>
+      </div>
+
       <div className="cc-header">
         <div className="cc-col-head">▶ THEN</div>
+        <div className="cc-col-head cc-col-bridge">▶ BRIDGE</div>
         <div className="cc-col-head">▶ NOW</div>
       </div>
 
@@ -103,12 +133,13 @@ export default function ContrastCard() {
           ref={el => rowRefs.current[i] = el}
         >
           <div className="cc-cell">{row.then}</div>
+          <div className="cc-cell cc-cell-bridge">{row.bridge}</div>
           <div className="cc-cell">{row.now}</div>
         </div>
       ))}
 
       <div className="cc-footer">
-        "That's still the job." — <strong>RAHIL POPAT</strong>
+        "An AI product without an eval is an aircraft without instruments. You're flying. You just don't know where." — <strong>RAHIL POPAT</strong>
       </div>
     </div>
   )

@@ -743,7 +743,7 @@ function InsightsTab({ onReadMore }) {
    ABOUT TAB
 ═══════════════════════════════════════════════════════════ */
 /* ─── Quote block ────────────────────────────────────────── */
-const WRIGHT_QUOTE = "\u201CAn AI product without an eval is an aircraft without instruments. You\u2019re flying. You just don\u2019t know where.\u201D"
+const WRIGHT_QUOTE = "\u201CI didn\u2019t switch industries. I switched the medium. Complex systems, failure modes, tight constraints \u2014 the job description didn\u2019t change, just the altitude.\u201D"
 
 function QuoteBlock({ size = 'large' }) {
   const ref = useRef(null)
@@ -955,6 +955,11 @@ function AboutTab({ onNavigate, onOpenArticle }) {
                 <span className="tag tag-purple">LLM Engineering</span>
                 <span className="tag tag-green">RAG Systems</span>
                 <span className="tag tag-orange">Systems Thinking</span>
+                <span className="tag tag-green">Prompt Engineering</span>
+                <span className="tag tag-purple">Memory &amp; Context</span>
+                <span className="tag tag-cyan">Tool Use &amp; MCP</span>
+                <span className="tag tag-orange">Claude Code</span>
+                <span className="tag tag-green">Human-in-the-Loop</span>
               </div>
 
               <ContrastCard />
@@ -963,6 +968,18 @@ function AboutTab({ onNavigate, onOpenArticle }) {
 
             <div className="about-credentials">
               <LabStatusCard />
+
+              <GitHubActivity />
+
+              <div className="about-stack-card">
+                <div className="about-stack-label">Current Stack</div>
+                <div className="about-stack-items">
+                  {['LangChain', 'LangGraph', 'Azure AI', 'RAG', 'Claude API', 'Copilot Studio', 'OpenClaw', 'Claude Code'].map(t => (
+                    <span key={t} className="spill spill-cyan">{t}</span>
+                  ))}
+                </div>
+              </div>
+
               <div className="cred-card">
                 <div className="cred-icon"><MicrosoftIcon /></div>
                 <div>
@@ -1006,17 +1023,6 @@ function AboutTab({ onNavigate, onOpenArticle }) {
                   <div className="cred-sub">ConsenSys</div>
                 </div>
               </div>
-
-              <div className="about-stack-card">
-                <div className="about-stack-label">Current Stack</div>
-                <div className="about-stack-items">
-                  {['LangChain', 'LangGraph', 'Azure AI', 'RAG', 'Claude API', 'Copilot Studio', 'OpenClaw', 'Claude Code'].map(t => (
-                    <span key={t} className="spill spill-cyan">{t}</span>
-                  ))}
-                </div>
-              </div>
-
-              <GitHubActivity />
             </div>
 
           </div>
