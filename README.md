@@ -93,3 +93,127 @@ Currently obsessing over: **Claude Code**, **agentic memory**, and whether a Ras
 ⭐ If any of this is useful to you, star a repo. It helps more than you'd think.
 
 </div>
+
+<div align="center">
+
+```
+ █████╗ ██╗    ██████╗ ██████╗  ██████╗ ██████╗ ██╗   ██╗ ██████╗████████╗
+██╔══██╗██║    ██╔══██╗██╔══██╗██╔═══██╗██╔══██╗██║   ██║██╔════╝╚══██╔══╝
+███████║██║    ██████╔╝██████╔╝██║   ██║██║  ██║██║   ██║██║        ██║   
+██╔══██║██║    ██╔═══╝ ██╔══██╗██║   ██║██║  ██║██║   ██║██║        ██║   
+██║  ██║██║    ██║     ██║  ██║╚██████╔╝██████╔╝╚██████╔╝╚██████╗   ██║   
+╚═╝  ╚═╝╚═╝    ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝  ╚═════╝   ╚═╝   
+                                                                             
+                    L  A  B  S
+```
+
+**Rahil Popat's personal lab — building real-world agents in public.**
+
+[![Website](https://img.shields.io/badge/🌐_aiproductlabs.co.uk-0a0f1e?style=for-the-badge)](https://www.aiproductlabs.co.uk)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/rahilpopat)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://github.com/aiproductlabs8)
+
+</div>
+
+---
+
+## `> MISSION BRIEFING`
+
+```
+OBJECTIVE.......... Build & ship agents that solve real problems
+APPROACH........... Pragmatic over perfect. Document everything.
+AUDIENCE........... PMs making the leap into AI building
+STATUS............. RUNNING HOT
+```
+
+This repository is Rahil Popat's personal lab — one builder, experimenting and sharing in public. Not a company, not a consultancy. Just the work.
+
+> My foundation is aeronautical engineering — mapping failure modes, thinking in feedback loops, defaulting to pragmatic over perfect. That lens shapes everything I build.
+
+---
+
+## `> AGENTS & PROJECTS`
+
+Each folder is a self-contained mission. Every project includes:
+- **What it does** — the problem being solved
+- **How it works** — architecture and decisions
+- **What I learned** — honest post-mission notes
+
+| Agent | Status | Stack | Description |
+|-------|--------|-------|-------------|
+| 🔄 *Coming soon* | 🟡 Pre-flight | Claude API, JS | First agent deploying shortly |
+
+> *"An AI product without an eval is an aircraft without instruments. You're flying. You just don't know where."*
+
+---
+
+## `> HOW THIS WORKS`
+
+```
+┌─────────────────────────────────────────────┐
+│  IDEA  →  BUILD  →  EVAL  →  SHIP  →  DOCS  │
+│                                             │
+│  No perfect first drafts.                   │
+│  No waiting until it's ready.               │
+│  Ship the work. Learn in public.            │
+└─────────────────────────────────────────────┘
+```
+
+Each agent is built with **Claude Code** where possible, documented as it ships, and evaluated against real criteria — not vibes.
+
+---
+
+## `> TECH STACK`
+
+```
+LANGUAGE........ JavaScript / Node.js (primary)
+                 Python (when it makes sense)
+AI LAYER........ Anthropic Claude API
+AGENT TOOLS..... Claude Code CLI, MCP servers
+INFRA........... GitHub Actions, wherever it runs
+EVALS........... Custom per-project
+```
+
+---
+
+## `> RUNNING LOCALLY`
+
+```bash
+# Clone the repo
+git clone https://github.com/aiproductlabs8/aiproductlabs.git
+cd aiproductlabs
+
+# Navigate to any agent folder
+cd agents/[agent-name]
+
+# Install dependencies
+npm install
+
+# Check the agent's own README for setup instructions
+cat README.md
+```
+
+> Each agent has its own `README.md` with specific environment variables, API keys needed, and run instructions.
+
+---
+
+## `> FOLLOW THE BUILD`
+
+The full context — insights, decisions, and lessons — lives at **[aiproductlabs.co.uk](https://www.aiproductlabs.co.uk)**.
+
+```
+SYSTEMS READY    [ ✓ ] — Foundations complete
+READY FOR TAKEOFF [ ✓ ] — Runway cleared  
+AI(BORNE)        [ → ] — In progress
+```
+
+---
+
+<div align="center">
+
+*AI Product Labs — One builder. Experimenting and sharing in public.*
+
+⭐ **Star this repo** if you're on a similar journey. Helps more than you'd think.
+
+</div>
+
