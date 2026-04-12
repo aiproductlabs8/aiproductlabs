@@ -671,6 +671,17 @@ function StackTab() {
 ═══════════════════════════════════════════════════════════ */
 const insights = [
   {
+    id: 'jira-audit-agent',
+    category: 'Agent Build',
+    catClass: 'tc-green',
+    title: 'An AI Agent That Audits Your Jira Board Before Engineering Does',
+    desc: 'Three independent checks — field completeness, AI quality scoring, and staleness detection — produce a single audit report. Only one check uses the Claude API. Auditing 20 tickets costs roughly $0.02.',
+    date: 'Apr 2026',
+    readTime: '6 min read',
+    featured: true,
+    delay: 'delay-1',
+  },
+  {
     id: 'meeting-to-prd',
     category: 'Agent Build',
     catClass: 'tc-green',
@@ -678,7 +689,7 @@ const insights = [
     desc: 'A two-agent pipeline that takes a raw meeting transcript and produces a structured PRD — problem statement, user stories, acceptance criteria, and decisions. Split into Extractor and Writer for debuggability.',
     date: 'Apr 2026',
     readTime: '6 min read',
-    featured: true,
+    featured: false,
     delay: 'delay-1',
   },
   {
@@ -1014,6 +1025,65 @@ function PersonalAiResearchAssistantPage({ onBack }) {
               <p>The research assistant is Phase 1. The digest proved its value &mdash; now the next step is adding a Writer agent that reads the daily briefing and drafts a LinkedIn post about the most interesting find of the week. Same pattern, new agent. Each one reads from the last one&apos;s output file. No API calls between agents. Just files.</p>
               <p>The field is moving fast. The best way I&apos;ve found to keep up is to build things that help me keep up &mdash; and then build the next thing those things surface.</p>
               <p className="article-closing">That&apos;s the loop.</p>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function JiraAuditAgentPage({ onBack }) {
+  return (
+    <div className="tab-content fade-in">
+      <section className="article-hero">
+        <div className="container">
+          <button className="article-back" onClick={onBack}>&larr; Back to Insights</button>
+          <div className="article-header">
+            <div className="article-header-meta">
+              <span className="atag tc-green">Agent Build</span>
+              <span className="article-date">Apr 2026 &middot; 6 min read</span>
+            </div>
+            <h1 className="article-title">An AI Agent That Audits Your Jira Board Before Engineering Does</h1>
+            <p className="article-byline">By Rahil</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="tab-section tab-section-last">
+        <div className="container">
+          <div className="article-body-wrap">
+            <div className="article-body">
+
+              <h2>The Problem</h2>
+              <p>Every sprint has that moment. Engineering picks up a ticket, reads the description, and immediately has three questions. &ldquo;What does &lsquo;improve performance&rsquo; actually mean?&rdquo; &ldquo;Where are the acceptance criteria?&rdquo; &ldquo;This ticket hasn&apos;t been updated in three weeks &mdash; is anyone still working on this?&rdquo;</p>
+              <p>The PM scrambles to fill in the gaps. The standup gets derailed. A story that should have taken two days takes four because the requirements weren&apos;t clear enough to start building from.</p>
+              <p>The root cause isn&apos;t bad PMs or lazy engineers. It&apos;s that nobody systematically checks ticket quality before work begins. It&apos;s manual, it&apos;s tedious, and it falls through the cracks.</p>
+
+              <h2>What I Built</h2>
+              <p>Jira Audit Agent runs three independent checks against every ticket on your board and produces a single audit report telling you exactly what needs fixing before engineering picks it up.</p>
+              <p>The three checks are deliberately different in how they work:</p>
+              <p><strong>Field Checker</strong> &mdash; pure Python, no AI. Checks every ticket for missing description, no acceptance criteria, no story points, unassigned, no priority, no labels, no sprint. This is arithmetic, not judgement. It doesn&apos;t need an LLM, so it costs nothing to run.</p>
+              <p><strong>Quality Scorer</strong> &mdash; Claude-powered. Reads each ticket description and scores it 1&ndash;10 for clarity, specificity, and actionability. A ticket that says &ldquo;improve dashboard performance&rdquo; gets a 4 with specific feedback: &ldquo;Replace &lsquo;improve performance&rsquo; with a target like &lsquo;reduce load time to under 2 seconds&rsquo;.&rdquo; It doesn&apos;t just flag the problem &mdash; it tells you how to fix it.</p>
+              <p><strong>Staleness Detector</strong> &mdash; pure Python, no AI. Flags tickets with no activity in 14+ days, &ldquo;In Progress&rdquo; tickets idle for 7+ days, and tickets stuck in the same status for 30+ days. Again, date math &mdash; no LLM needed.</p>
+              <p>The key design choice: only one of the three checks uses the Claude API. Field completeness and staleness are deterministic &mdash; there&apos;s no reason to pay for an LLM to do arithmetic. This means auditing 20 tickets costs roughly $0.02.</p>
+
+              <h2>How It Works</h2>
+              <pre><code>{`Tickets JSON → Field Checker (free)
+             → Quality Scorer (Claude)  → Aggregated Audit Report
+             → Staleness Detector (free)`}</code></pre>
+              <pre><code>python3 -m src.cli examples/sample_tickets.json -o output/report.md</code></pre>
+              <p>The report groups findings by severity &mdash; critical issues first, then warnings, then informational. A PM can scan the critical section in 30 seconds and know exactly which tickets need work before sprint planning.</p>
+
+              <h2>What I Learned</h2>
+              <p>Severity levels matter more than you&apos;d think. My first version was binary &mdash; pass or fail. But &ldquo;missing labels&rdquo; and &ldquo;missing acceptance criteria&rdquo; are not the same level of problem. A three-tier system (critical, warning, info) means the report is actionable rather than noisy. You fix the critical issues before planning. You fix warnings during the sprint. You ignore info items unless you&apos;re doing housekeeping.</p>
+              <p>The loader abstraction was also a deliberate choice. V1 uses a local JSON file of sample tickets. But all ticket data flows through <code>loader.py</code>, which returns Pydantic models. When I add real Jira API support, I change one file. The field checker, quality scorer, staleness detector, and reporter don&apos;t know or care where the data came from.</p>
+
+              <h2>Tech Stack</h2>
+              <p>Python, Claude API (Sonnet for quality scoring), Click CLI, Pydantic, Jinja2. 33 passing tests. The <code>--skip-quality</code> flag runs field and staleness checks without an API key &mdash; useful for CI or quick checks.</p>
+
+              <p><a href="https://github.com/rahilpopat/jira-agent" target="_blank" rel="noreferrer">&rarr; View on GitHub</a></p>
 
             </div>
           </div>
@@ -1595,6 +1665,8 @@ export default function App() {
     ? <PersonalAiResearchAssistantPage onBack={handleBack} />
     : openArticle === 'meeting-to-prd'
     ? <MeetingToPrdPage onBack={handleBack} />
+    : openArticle === 'jira-audit-agent'
+    ? <JiraAuditAgentPage onBack={handleBack} />
     : null
 
   return (
