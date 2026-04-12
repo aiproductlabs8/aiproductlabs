@@ -618,6 +618,13 @@ const journalEntries = [
     body: 'Ran git init in my ~/Agentic/ parent directory at some point. Every project underneath got treated as subfolders of one giant repo instead of independent repos. Pushes included everything. Fix was simple: rm -rf .git in the parent directory. Lesson: before running git init, always check ls -la for an existing .git in a parent folder.',
     tags: ['mistake', 'git', 'devops'],
   },
+  {
+    date: '1 Apr 2026',
+    type: 'pattern',
+    title: 'DECISIONS.md as memory between Claude Code sessions',
+    body: "Claude Code has no memory between sessions. Every time you open a new session, it starts fresh. CLAUDE.md gives it project context, but it doesn't know what choices you already made or why. DECISIONS.md solves this — a running log of every architectural decision with the date, the options considered, and the reasoning. When Claude Code reads it at the start of a session, it understands not just what the project is, but why it's built the way it is. Without it, you re-debate the same decisions every session. With it, Claude Code picks up where you left off.",
+    tags: ['pattern', 'claude-code', 'memory', 'personal-research-assistant'],
+  },
 ]
 
 function JournalTab() {
