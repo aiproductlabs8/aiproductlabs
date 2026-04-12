@@ -441,6 +441,17 @@ const agents = [
     comingSoon: true,
     sys: 'STANDBY',
   },
+  {
+    icon: '📝',
+    title: 'Meeting to PRD Agent',
+    desc: 'Paste a meeting transcript, get a structured PRD. Two-stage Claude pipeline — first extracts decisions, requirements, and open questions from the raw transcript, then structures them into a complete PRD with problem statement, user stories, success metrics, and scope boundaries. Optional third stage scores the PRD for completeness and flags ambiguity.',
+    note: 'In development. No integrations needed — just Claude.',
+    tags: ['Claude API', 'Python', 'Product Management'],
+    tagClasses: ['tc-cyan', 'tc-green', 'tc-purple'],
+    delay: 'delay-3',
+    comingSoon: true,
+    sys: 'STANDBY',
+  },
 ]
 
 function AgentsTab() {
