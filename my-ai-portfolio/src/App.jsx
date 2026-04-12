@@ -428,8 +428,8 @@ const agents = [
     tags: ['Claude API', 'Python', 'Product Management'],
     tagClasses: ['tc-cyan', 'tc-green', 'tc-purple'],
     delay: 'delay-1',
-    comingSoon: true,
-    sys: 'STANDBY',
+    comingSoon: false,
+    sys: 'ACTIVE',
     github: 'https://github.com/rahilpopat/meeting-to-prd-agent/tree/master',
   },
   {
