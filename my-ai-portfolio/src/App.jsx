@@ -452,6 +452,7 @@ const agents = [
     delay: 'delay-3',
     comingSoon: true,
     sys: 'STANDBY',
+    github: 'https://github.com/rahilpopat/meeting-to-prd-agent/tree/master',
   },
   {
     icon: '📰',
