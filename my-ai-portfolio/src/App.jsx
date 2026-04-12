@@ -409,14 +409,15 @@ const agents = [
     github: 'https://github.com/rahilpopat/personal-ai-research-assistant',
   },
   {
-    icon: '🔧',
-    title: 'In The Lab',
-    desc: 'Classified. Mostly because it doesn\'t exist yet.',
-    tags: [],
-    tagClasses: [],
+    icon: '📦',
+    title: 'Jarvis — Amazon FBA Agent',
+    desc: 'A private multi-agent system that autonomously manages core FBA operations. Built on OpenClaw with Claude at the core. Handles research, monitoring, and decision support across the seller workflow.',
+    note: 'Proprietary. Architecture only — business logic stays classified.',
+    tags: ['OpenClaw', 'Claude API', 'Python', 'Amazon'],
+    tagClasses: ['tc-cyan', 'tc-cyan', 'tc-purple', 'tc-orange'],
     delay: 'delay-3',
-    comingSoon: true,
-    sys: 'STANDBY',
+    comingSoon: false,
+    sys: 'ACTIVE',
   },
 ]
 
