@@ -343,6 +343,7 @@ function useTypewriter(texts, speed = 55) {
 const TABS = [
   { id: 'about',    label: 'About' },
   { id: 'agents',   label: 'Agents' },
+  { id: 'stack',    label: 'Stack' },
   { id: 'insights', label: 'Insights' },
 ]
 
@@ -506,6 +507,124 @@ function AgentsTab() {
         </div>
       </section>
 
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════
+   STACK TAB
+═══════════════════════════════════════════════════════════ */
+const stackCategories = [
+  {
+    label: 'AI Models',
+    tools: [
+      { name: 'Claude (Sonnet / Opus)', desc: 'Powers every agent in the lab. Sonnet for speed, Opus for depth.', status: 'ACTIVE' },
+      { name: 'OpenAI GPT-4o', desc: 'Benchmarking and comparison runs.', status: 'EXPLORING' },
+    ],
+  },
+  {
+    label: 'Agent Framework',
+    tools: [
+      { name: 'OpenClaw', desc: 'The backbone of Jarvis. Orchestrates multi-agent chains on a Raspberry Pi.', status: 'ACTIVE' },
+      { name: 'Claude Code', desc: 'How I ship. Agentic coding from the terminal.', status: 'ACTIVE' },
+      { name: 'BMad Method', desc: 'Structured project scaffolding with Claude Code. CLAUDE.md, rules, commands.', status: 'ACTIVE' },
+    ],
+  },
+  {
+    label: 'Infra & Hosting',
+    tools: [
+      { name: 'Raspberry Pi', desc: 'Jarvis runs 24/7 on a Pi. 6am cron, Telegram alerts, zero cloud costs.', status: 'ACTIVE' },
+      { name: 'Railway', desc: 'Backend hosting for SaaS products.', status: 'ACTIVE' },
+      { name: 'Render', desc: 'API deployment for the Amazon Product Checker.', status: 'ACTIVE' },
+      { name: 'Vercel', desc: 'Frontend hosting. Fast deploys from GitHub.', status: 'ACTIVE' },
+      { name: 'GitHub', desc: 'Everything lives here. Repos, CI, build logs.', status: 'ACTIVE' },
+    ],
+  },
+  {
+    label: 'Languages & Frameworks',
+    tools: [
+      { name: 'Python', desc: 'FastAPI backends, automation scripts, data pipelines.', status: 'ACTIVE' },
+      { name: 'React', desc: 'Frontend for all SaaS products.', status: 'ACTIVE' },
+      { name: 'Streamlit', desc: 'Internal dashboards and prototypes.', status: 'ACTIVE' },
+    ],
+  },
+  {
+    label: 'APIs & Data',
+    tools: [
+      { name: 'Keepa', desc: 'Price and BSR history for every ASIN Jarvis evaluates.', status: 'ACTIVE' },
+      { name: 'Brave Search API', desc: 'Wholesaler discovery in the sourcing pipeline.', status: 'ACTIVE' },
+      { name: 'Telegram Bot API', desc: 'How Jarvis talks to me. Alerts, approvals, daily briefings.', status: 'ACTIVE' },
+      { name: 'Stripe', desc: 'Billing for the Product Checker. Freemium tiers.', status: 'ACTIVE' },
+      { name: 'Clerk', desc: 'Auth for SaaS products. Drop-in, no custom auth code.', status: 'ACTIVE' },
+    ],
+  },
+  {
+    label: 'Products',
+    tools: [
+      { name: 'Jarvis', desc: 'Autonomous FBA sourcing system. 6 agents, daily cron, runs on a Pi.', status: 'ACTIVE' },
+      { name: 'Amazon Product Checker', desc: 'Micro-SaaS for FBA sellers. React + FastAPI, Stripe billing.', status: 'ACTIVE' },
+      { name: 'Meridian', desc: 'AI Chief of Staff for PMs. Multi-agent prioritisation engine.', status: 'EXPLORING' },
+      { name: 'Financial Dashboard', desc: 'Personal net worth tracker. Streamlit, live ETF/crypto pricing.', status: 'ACTIVE' },
+    ],
+  },
+]
+
+function StackTab() {
+  useScrollReveal()
+  return (
+    <div className="tab-content">
+      <section className="tab-section-hero fade-in">
+        <div className="container">
+          <div className="tab-hero-text">
+            <span className="section-label">Stack</span>
+            <h1 className="tab-hero-headline">What I build with</h1>
+            <p className="tab-hero-sub">
+              The tools, frameworks and infrastructure behind everything shipped from this lab.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {stackCategories.map((cat, ci) => (
+        <section key={cat.label} className={`tab-section fade-in delay-${Math.min(ci + 1, 4)}`}>
+          <div className="container">
+            <div className="stack-cat-label">{cat.label}</div>
+            <div className="stack-grid">
+              {cat.tools.map(tool => (
+                <div key={tool.name} className="stack-card">
+                  <div className="stack-card-name">{tool.name}</div>
+                  <p className="stack-card-desc">{tool.desc}</p>
+                  <span className={`stack-pill${tool.status === 'EXPLORING' ? ' stack-pill--exploring' : ''}`}>
+                    <span className={`stack-pill-dot${tool.status === 'EXPLORING' ? ' stack-pill-dot--exploring' : ''}`} />
+                    {tool.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
+
+      <section className="tab-section fade-in delay-3">
+        <div className="container">
+          <div className="lab-status-card">
+            <div className="lsc-title">STACK.LOG</div>
+            <div className="lsc-divider">━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
+            <div className="lsc-row">
+              <span className="lsc-key">LAST UPDATED: </span>
+              <span className="lsc-val lsc-val--white">2026-04-12</span>
+            </div>
+            <div className="lsc-row">
+              <span className="lsc-key">TOOLS TRACKED: </span>
+              <span className="lsc-val lsc-val--accent">22</span>
+            </div>
+            <div className="lsc-row">
+              <span className="lsc-key">STATUS: </span>
+              <span className="lsc-val lsc-val--accent">BUILDING IN PUBLIC</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
@@ -1220,6 +1339,7 @@ export default function App() {
 
   const TAB_CONTENT = {
     agents:   <AgentsTab />,
+    stack:    <StackTab />,
     insights: <InsightsTab onReadMore={handleReadMore} />,
     about:    <AboutTab onNavigate={handleSwitch} onOpenArticle={handleReadMore} />,
   }
