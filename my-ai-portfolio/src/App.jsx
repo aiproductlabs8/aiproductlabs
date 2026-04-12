@@ -671,6 +671,17 @@ function StackTab() {
 ═══════════════════════════════════════════════════════════ */
 const insights = [
   {
+    id: 'release-notes-drafter',
+    category: 'Agent Build',
+    catClass: 'tc-green',
+    title: 'Why I Built an AI That Writes Release Notes From Git History',
+    desc: 'A three-stage pipeline that collects changes from git history and GitHub PRs, has Claude categorise and rewrite each one, then renders structured release notes. One API call per release, roughly $0.01.',
+    date: 'Apr 2026',
+    readTime: '6 min read',
+    featured: true,
+    delay: 'delay-1',
+  },
+  {
     id: 'jira-audit-agent',
     category: 'Agent Build',
     catClass: 'tc-green',
@@ -678,7 +689,7 @@ const insights = [
     desc: 'Three independent checks — field completeness, AI quality scoring, and staleness detection — produce a single audit report. Only one check uses the Claude API. Auditing 20 tickets costs roughly $0.02.',
     date: 'Apr 2026',
     readTime: '6 min read',
-    featured: true,
+    featured: false,
     delay: 'delay-1',
   },
   {
@@ -1025,6 +1036,69 @@ function PersonalAiResearchAssistantPage({ onBack }) {
               <p>The research assistant is Phase 1. The digest proved its value &mdash; now the next step is adding a Writer agent that reads the daily briefing and drafts a LinkedIn post about the most interesting find of the week. Same pattern, new agent. Each one reads from the last one&apos;s output file. No API calls between agents. Just files.</p>
               <p>The field is moving fast. The best way I&apos;ve found to keep up is to build things that help me keep up &mdash; and then build the next thing those things surface.</p>
               <p className="article-closing">That&apos;s the loop.</p>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function ReleaseNotesDrafterPage({ onBack }) {
+  return (
+    <div className="tab-content fade-in">
+      <section className="article-hero">
+        <div className="container">
+          <button className="article-back" onClick={onBack}>&larr; Back to Insights</button>
+          <div className="article-header">
+            <div className="article-header-meta">
+              <span className="atag tc-green">Agent Build</span>
+              <span className="article-date">Apr 2026 &middot; 6 min read</span>
+            </div>
+            <h1 className="article-title">Why I Built an AI That Writes Release Notes From Git History</h1>
+            <p className="article-byline">By Rahil</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="tab-section tab-section-last">
+        <div className="container">
+          <div className="article-body-wrap">
+            <div className="article-body">
+
+              <h2>The Problem</h2>
+              <p>Nobody writes good release notes. Here&apos;s what usually happens: a release is tagged, someone scrolls through the commit log, copies a few messages into a markdown file, and calls it done. The result is a list that says things like &ldquo;fix tests&rdquo;, &ldquo;address review comments&rdquo;, &ldquo;wip&rdquo;, and &ldquo;update deps&rdquo; &mdash; completely useless to anyone who wants to know what actually changed.</p>
+              <p>The other approach is worse: someone manually writes release notes from memory, inevitably forgets half the changes, and includes things that didn&apos;t actually ship. Neither approach works, so most teams either skip release notes entirely or publish ones nobody reads.</p>
+              <p>The actual problem isn&apos;t laziness. It&apos;s that commit messages and release notes serve different audiences. Commits are for developers tracking work in progress. Release notes are for stakeholders, users, and future developers who need to understand what changed and why. Translating between the two requires context and judgement &mdash; exactly what an LLM is good at.</p>
+
+              <h2>What I Built</h2>
+              <p>Release Notes Drafter is a three-stage pipeline: collect changes from git history and GitHub PRs, have Claude categorise and rewrite each one, then render structured release notes grouped by category.</p>
+              <p><strong>Git Collector</strong> reads commits between any two refs (tags, branches, SHAs) from your local repo using GitPython. Works offline, works on any git repo.</p>
+              <p><strong>GitHub Collector</strong> (optional) fetches merged PRs for the same range via the GitHub API. When both run, the tool deduplicates &mdash; if a commit is associated with a PR, the PR data wins because PR descriptions are almost always more informative than individual commit messages.</p>
+              <p><strong>Categoriser</strong> sends all changes to Claude in a single batched prompt. Claude categorises each as feature, fix, docs, refactor, chore, or breaking change. It also rewrites messy messages into clean summaries &mdash; &ldquo;fix #234&rdquo; becomes &ldquo;Fixed login timeout on slow connections&rdquo; when the PR body provides context.</p>
+              <p>The critical design choice: <strong>batch categorisation</strong>. A release might have 50 changes. Sending one API call per change would be 50 calls. Batching them into one prompt is cheaper, faster, and gives Claude context to avoid categorising duplicates differently. One release costs roughly $0.01.</p>
+
+              <h2>How It Works</h2>
+              <pre><code>Git commits + GitHub PRs &rarr; Deduplicate &rarr; Claude categorises (one call) &rarr; Jinja2 renders</code></pre>
+              <pre><code>{`# From a real repo
+python3 -m src.cli /path/to/repo v1.0.0 v1.1.0 -o release_notes.md
+
+# With GitHub PR enrichment
+python3 -m src.cli /path/to/repo v1.0.0 v1.1.0 --github owner/repo -o release_notes.md
+
+# From sample data
+python3 -m src.cli --from-json examples/sample_changes.json -o release_notes.md`}</code></pre>
+              <p>The output is clean markdown grouped by category &mdash; breaking changes first, then features, fixes, docs, refactors, chores. Each item has the clean summary and identifier (PR number or commit SHA). Copy it straight into a GitHub Release.</p>
+
+              <h2>What I Learned</h2>
+              <p>The decision to use Claude for categorisation instead of parsing conventional commit prefixes was validated immediately. Most real repos don&apos;t follow conventional commits consistently. Messages like &ldquo;updated auth flow&rdquo; or &ldquo;fixed the thing&rdquo; are common. Claude correctly categorises these without requiring format discipline from the team. If your repo does use conventional commits, Claude still gets it right &mdash; but it doesn&apos;t break when someone forgets the prefix.</p>
+              <p>The deduplication logic was also important. Without it, you get both &ldquo;wip&rdquo; and &ldquo;fix tests&rdquo; commits alongside the PR that contains them. Preferring PR data over individual commits eliminates the noise that makes commit-based release notes useless.</p>
+
+              <h2>Tech Stack</h2>
+              <p>Python, Claude API (Sonnet), GitPython, PyGithub, Click CLI, Pydantic, Jinja2. 27 passing tests. GitHub collector is optional &mdash; the tool works without a token, just uses local git history.</p>
+
+              <p><a href="https://github.com/rahilpopat/release-notes-drafter" target="_blank" rel="noreferrer">&rarr; View on GitHub</a></p>
 
             </div>
           </div>
@@ -1667,6 +1741,8 @@ export default function App() {
     ? <MeetingToPrdPage onBack={handleBack} />
     : openArticle === 'jira-audit-agent'
     ? <JiraAuditAgentPage onBack={handleBack} />
+    : openArticle === 'release-notes-drafter'
+    ? <ReleaseNotesDrafterPage onBack={handleBack} />
     : null
 
   return (
