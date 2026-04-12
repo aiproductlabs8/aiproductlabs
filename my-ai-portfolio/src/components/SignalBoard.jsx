@@ -213,6 +213,27 @@ export default function SignalBoard({ onNavigate, onOpenArticle }) {
         <div
           className="sb-row"
           id="sb-r1"
+          onClick={() => onOpenArticle('personal-ai-research-assistant')}
+        >
+          <div className="sb-flight">INS-003</div>
+          <div className="sb-title-wrap">
+            <div className="sb-row-title">
+              I Built a Personal AI Agent That Reads My GitHub
+            </div>
+            <div className="sb-read">12 MIN READ</div>
+          </div>
+          <div className="sb-cat sb-cat-career">
+            AGENT BUILD
+          </div>
+          <div className="sb-status-live">
+            <div className="sb-live-dot"></div>
+            LIVE <span className="sb-arrow">→</span>
+          </div>
+        </div>
+
+        <div
+          className="sb-row"
+          id="sb-r2"
           onClick={() => onOpenArticle('aero-to-ai')}
         >
           <div className="sb-flight">INS-001</div>
@@ -233,7 +254,7 @@ export default function SignalBoard({ onNavigate, onOpenArticle }) {
 
         <div
           className="sb-row"
-          id="sb-r2"
+          id="sb-r3"
           onClick={() => onOpenArticle('pm-fundamentals')}
         >
           <div className="sb-flight">INS-002</div>
@@ -250,18 +271,6 @@ export default function SignalBoard({ onNavigate, onOpenArticle }) {
             <div className="sb-live-dot"></div>
             LIVE <span className="sb-arrow">→</span>
           </div>
-        </div>
-
-        <div className="sb-row" id="sb-r3">
-          <div className="sb-flight">INS-003</div>
-          <div className="sb-title-wrap">
-            <div className="sb-row-title-dim">
-              [NEXT TRANSMISSION]
-            </div>
-            <div className="sb-read">FILING</div>
-          </div>
-          <div className="sb-cat sb-cat-next">INCOMING</div>
-          <div className="sb-status-filing">FILING →</div>
         </div>
       </div>
 
