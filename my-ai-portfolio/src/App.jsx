@@ -419,6 +419,28 @@ const agents = [
     comingSoon: false,
     sys: 'ACTIVE',
   },
+  {
+    icon: '📋',
+    title: 'Jira Audit Agent',
+    desc: 'An agent that connects to a Jira board via MCP, scores ticket quality, identifies backlog health issues, and surfaces a prioritised audit report. Built for PMs who inherit messy boards.',
+    note: 'In development. MCP integration with Jira.',
+    tags: ['Claude API', 'MCP', 'Jira', 'Python'],
+    tagClasses: ['tc-cyan', 'tc-purple', 'tc-orange', 'tc-green'],
+    delay: 'delay-1',
+    comingSoon: true,
+    sys: 'STANDBY',
+  },
+  {
+    icon: '🧭',
+    title: 'Meridian — PM Co-Pilot',
+    desc: 'A persistent memory agent that lives alongside real PM work. Builds a model of your product, team, and decisions over time. Surfaces insights proactively rather than waiting to be asked.',
+    note: 'In the lab. The most ambitious build on the roadmap.',
+    tags: ['Claude API', 'Agentic Memory', 'Python', 'OpenClaw'],
+    tagClasses: ['tc-cyan', 'tc-purple', 'tc-green', 'tc-cyan'],
+    delay: 'delay-2',
+    comingSoon: true,
+    sys: 'STANDBY',
+  },
 ]
 
 function AgentsTab() {
