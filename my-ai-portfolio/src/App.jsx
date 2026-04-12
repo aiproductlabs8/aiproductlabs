@@ -542,7 +542,7 @@ function AeroToAiPage({ onBack }) {
               <span className="article-date">Mar 2026 · 10 min read</span>
             </div>
             <h1 className="article-title">From Aeronautical Engineering to AI Product Management</h1>
-            <p className="article-byline">By Rahil Popat</p>
+            <p className="article-byline">By Rahil</p>
           </div>
         </div>
       </section>
@@ -622,7 +622,7 @@ function PmFundamentalsPage({ onBack }) {
               <span className="article-date">Mar 2026 · 8 min read</span>
             </div>
             <h1 className="article-title">Product Management Fundamentals Every PM Should Know</h1>
-            <p className="article-byline">By Rahil Popat</p>
+            <p className="article-byline">By Rahil</p>
           </div>
         </div>
       </section>
@@ -793,7 +793,7 @@ function QuoteBlock({ size = 'large' }) {
   return (
     <div ref={ref} className={`quote-block quote-block--${size}${visible ? ' quote-block--visible' : ''}`}>
       <blockquote className="quote-text">{WRIGHT_QUOTE}</blockquote>
-      <cite className="quote-attr">— Rahil Popat</cite>
+      <cite className="quote-attr">— Rahil</cite>
     </div>
   )
 }
@@ -899,7 +899,7 @@ function PassionStat() {
 function AboutTab({ onNavigate, onOpenArticle }) {
   useScrollReveal()
   const TYPING_TEXTS = [
-    'Rahil Popat',
+    'Rahil',
     'Agent Builder · Product Owner · Aeronautical Engineer · Thinks in Systems',
     'PM by day. Builder by compulsion. Aeronautical engineer by origin.',
     'Builder. AI products, agents, and everything in between.',
@@ -1175,9 +1175,9 @@ function Footer({ onSwitch }) {
             </button>
           ))}
         </div>
-        <span className="footer-copy">© {new Date().getFullYear()} Rahil Popat · Built with Claude · All thoughts and insights are my own.</span>
+        <span className="footer-copy">© {new Date().getFullYear()} Rahil · Built with Claude · All thoughts and insights are my own.</span>
         <span className="footer-disclaimer">Disclaimer: This is a personal website. The views expressed are my own and do not represent the views of my employer or any affiliated organization.</span>
-        <span className="footer-mono">Built by Rahil Popat. Powered by curiosity and Claude Code. The Raspberry Pi is load-bearing.</span>
+        <span className="footer-mono">Built by Rahil. Powered by curiosity and Claude Code. The Raspberry Pi is load-bearing.</span>
       </div>
     </footer>
   )
