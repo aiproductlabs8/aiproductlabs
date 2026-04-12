@@ -671,6 +671,17 @@ function StackTab() {
 ═══════════════════════════════════════════════════════════ */
 const insights = [
   {
+    id: 'meeting-to-prd',
+    category: 'Agent Build',
+    catClass: 'tc-green',
+    title: 'Turning Meeting Transcripts Into PRDs Automatically',
+    desc: 'A two-agent pipeline that takes a raw meeting transcript and produces a structured PRD — problem statement, user stories, acceptance criteria, and decisions. Split into Extractor and Writer for debuggability.',
+    date: 'Apr 2026',
+    readTime: '6 min read',
+    featured: true,
+    delay: 'delay-1',
+  },
+  {
     id: 'personal-ai-research-assistant',
     category: 'Agent Build',
     catClass: 'tc-green',
@@ -678,7 +689,7 @@ const insights = [
     desc: 'A 4-stage Python pipeline that monitors Brave Search, GitHub trending and RSS feeds daily — then scores and synthesises everything against your actual commits using Claude.',
     date: 'Apr 2026',
     readTime: '12 min read',
-    featured: true,
+    featured: false,
     delay: 'delay-1',
   },
   {
@@ -1003,6 +1014,62 @@ function PersonalAiResearchAssistantPage({ onBack }) {
               <p>The research assistant is Phase 1. The digest proved its value &mdash; now the next step is adding a Writer agent that reads the daily briefing and drafts a LinkedIn post about the most interesting find of the week. Same pattern, new agent. Each one reads from the last one&apos;s output file. No API calls between agents. Just files.</p>
               <p>The field is moving fast. The best way I&apos;ve found to keep up is to build things that help me keep up &mdash; and then build the next thing those things surface.</p>
               <p className="article-closing">That&apos;s the loop.</p>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function MeetingToPrdPage({ onBack }) {
+  return (
+    <div className="tab-content fade-in">
+      <section className="article-hero">
+        <div className="container">
+          <button className="article-back" onClick={onBack}>&larr; Back to Insights</button>
+          <div className="article-header">
+            <div className="article-header-meta">
+              <span className="atag tc-green">Agent Build</span>
+              <span className="article-date">Apr 2026 &middot; 6 min read</span>
+            </div>
+            <h1 className="article-title">Turning Meeting Transcripts Into PRDs Automatically</h1>
+            <p className="article-byline">By Rahil</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="tab-section tab-section-last">
+        <div className="container">
+          <div className="article-body-wrap">
+            <div className="article-body">
+
+              <h2>The Problem</h2>
+              <p>Every PM knows this cycle. You sit in a 45-minute planning meeting. Decisions get made. User stories get discussed. Technical constraints surface. Then the meeting ends, and someone &mdash; usually you &mdash; has to spend another hour translating messy notes into a structured PRD that engineering can actually build from.</p>
+              <p>The gap between &ldquo;we discussed it&rdquo; and &ldquo;it&apos;s written down clearly&rdquo; is where requirements get lost. The acceptance criteria that were obvious in the meeting become vague by the time they&apos;re documented. The edge case someone raised gets forgotten. The decision about scope gets remembered differently by three different people.</p>
+
+              <h2>What I Built</h2>
+              <p>Meeting to PRD Agent is a two-agent pipeline that takes a raw meeting transcript and produces a structured PRD &mdash; problem statement, user stories, acceptance criteria, technical constraints, dependencies, open questions, decisions, and stakeholders.</p>
+              <p>The key design choice was splitting this into two agents instead of one:</p>
+              <p><strong>Agent 1 (Extractor)</strong> reads the messy transcript and pulls out structured data. It doesn&apos;t write prose &mdash; it produces validated JSON against a Pydantic schema. If something wasn&apos;t discussed in the meeting, it says so. It never fabricates requirements.</p>
+              <p><strong>Agent 2 (Writer)</strong> takes that structured JSON and produces the actual PRD using a Jinja2 template. The LLM generates the overview paragraph; everything else is rendered from the extracted data.</p>
+              <p>Why two agents? Debuggability. If the PRD is wrong, you inspect the intermediate JSON. Was the extraction wrong, or was the writing wrong? You know exactly where the failure happened. You can also tune each prompt independently.</p>
+
+              <h2>How It Works</h2>
+              <pre><code>Transcript &rarr; Extractor Agent &rarr; Validated JSON &rarr; Writer Agent &rarr; Markdown PRD</code></pre>
+              <p>You run it from the command line:</p>
+              <pre><code>python3 -m src.cli meeting_notes.txt -o output/prd.md</code></pre>
+              <p>The output is a markdown PRD with every section populated from what was actually discussed. Sections where nothing was said get &ldquo;None identified in meeting transcript&rdquo; &mdash; not invented content.</p>
+
+              <h2>What I Learned</h2>
+              <p>The biggest lesson was the gap between mocked tests and real API responses. All 21 tests passed with mocked data, but the first real API call failed because Claude returned user stories as plain strings instead of the structured objects the Pydantic schema expected. The fix was making the extraction prompt more explicit &mdash; including a concrete JSON example showing the exact shape of every field.</p>
+              <p>This is the kind of thing you only discover by running against real data, and it&apos;s why the two-agent architecture paid off immediately. The extraction prompt needed work; the writing prompt was fine. One fix, one file, problem solved.</p>
+
+              <h2>Tech Stack</h2>
+              <p>Python, Claude API (Sonnet), Click CLI, Pydantic for validation, Jinja2 for templating. 21 passing tests. No web UI &mdash; CLI only, intentionally simple.</p>
+
+              <p><a href="https://github.com/rahilpopat/meeting-to-prd-agent" target="_blank" rel="noreferrer">&rarr; View on GitHub</a></p>
 
             </div>
           </div>
@@ -1526,6 +1593,8 @@ export default function App() {
     ? <PmFundamentalsPage onBack={handleBack} />
     : openArticle === 'personal-ai-research-assistant'
     ? <PersonalAiResearchAssistantPage onBack={handleBack} />
+    : openArticle === 'meeting-to-prd'
+    ? <MeetingToPrdPage onBack={handleBack} />
     : null
 
   return (
