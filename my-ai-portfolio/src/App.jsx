@@ -1588,19 +1588,19 @@ function LabStatusCard() {
       <div className="lsc-section-label">CURRENT MISSION</div>
       <div className="lsc-row">
         <span className="lsc-key">OBJECTIVE........ </span>
-        <span className="lsc-val lsc-val--white">Build &amp; ship agents</span>
+        <span className="lsc-val lsc-val--white">Build &amp; ship AI tools for PMs</span>
       </div>
       <div className="lsc-row">
         <span className="lsc-key">TOOLS............ </span>
-        <span className="lsc-val lsc-val--white">Whatever works</span>
+        <span className="lsc-val lsc-val--white">Claude Code, Claude API, Python</span>
       </div>
       <div className="lsc-row">
         <span className="lsc-key">PLATFORM......... </span>
-        <span className="lsc-val lsc-val--white">Wherever it runs</span>
+        <span className="lsc-val lsc-val--white">CLI-first, web later</span>
       </div>
       <div className="lsc-row">
         <span className="lsc-key">ETA.............. </span>
-        <span className="lsc-val lsc-val--white">Unknown</span>
+        <span className="lsc-val lsc-val--white">Shipping weekly</span>
       </div>
       <div className="lsc-building">
         <span className="lsc-dot" />
@@ -1725,32 +1725,30 @@ function AboutTab({ onNavigate, onOpenArticle }) {
                 </div>
                 <div className="cfc-row">
                   <span className="cfc-key">BUILDING......... </span>
-                  <span className="cfc-val">Agents to solve real world problems</span>
+                  <span className="cfc-val">PM tools that automate the grunt work</span>
                 </div>
                 <div className="cfc-row">
                   <span className="cfc-key">OBSESSING OVER... </span>
-                  <span className="cfc-val">Claude Code &amp; agentic memory</span>
+                  <span className="cfc-val">Claude Code workflows &amp; .claude/ project structure</span>
                 </div>
                 <div className="cfc-row">
                   <span className="cfc-key">EXPERIMENTING.... </span>
-                  <span className="cfc-val">Can a Raspberry Pi run a useful agent?<span className="cfc-cursor">█</span></span>
+                  <span className="cfc-val">MCP servers &amp; agentic memory<span className="cfc-cursor">█</span></span>
                 </div>
               </div>
 
               <div className="about-tags">
                 {[
-                  { label: 'Systems Engineering',   cls: 'tag-amber' },
-                  { label: 'Failure Mode Analysis', cls: 'tag-amber' },
-                  { label: 'Agent Design',          cls: 'tag-teal'  },
-                  { label: 'Evaluation',            cls: 'tag-teal'  },
-                  { label: 'Prompt Engineering',    cls: 'tag-teal'  },
-                  { label: 'Tool Use & MCP',        cls: 'tag-teal'  },
-                  { label: 'Agentic AI',            cls: 'tag-teal'  },
-                  { label: 'Orchestration',         cls: 'tag-teal'  },
-                  { label: 'RAG Systems',           cls: 'tag-teal'  },
-                  { label: 'Claude Code',           cls: 'tag-cyan'  },
-                  { label: 'Memory & Context',      cls: 'tag-cyan'  },
-                  { label: 'Human-in-the-Loop',     cls: 'tag-cyan'  },
+                  { label: 'Agent Design',            cls: 'tag-teal'  },
+                  { label: 'Prompt Engineering',     cls: 'tag-teal'  },
+                  { label: 'Tool Use & MCP',         cls: 'tag-teal'  },
+                  { label: 'Agentic AI',             cls: 'tag-teal'  },
+                  { label: 'Multi-Agent Pipelines',  cls: 'tag-teal'  },
+                  { label: 'Claude Code',            cls: 'tag-cyan'  },
+                  { label: 'Memory & Context',       cls: 'tag-cyan'  },
+                  { label: 'Cost Optimisation',      cls: 'tag-cyan'  },
+                  { label: 'Product Management',     cls: 'tag-amber' },
+                  { label: 'Systems Thinking',       cls: 'tag-amber' },
                 ].map(({ label, cls }) => (
                   <span key={label} className={`tag ${cls}`}>{label}</span>
                 ))}
@@ -1768,7 +1766,7 @@ function AboutTab({ onNavigate, onOpenArticle }) {
               <div className="about-stack-card">
                 <div className="about-stack-label">Current Stack</div>
                 <div className="about-stack-items">
-                  {['RAG', 'Claude API', 'OpenClaw', 'Claude Code', 'Raspberry Pi 5', 'VS Code', 'GitHub Copilot'].map(t => (
+                  {['Claude API', 'Claude Code', 'Python', 'Pydantic', 'Click', 'Jinja2', 'GitPython', 'VS Code'].map(t => (
                     <span key={t} className="spill spill-cyan">{t}</span>
                   ))}
                 </div>
@@ -1876,7 +1874,7 @@ function GitHubActivity() {
         <div className="gh-fallback">
           <div className="gh-fallback-line">LAB ACTIVITY: CLASSIFIED</div>
           <a
-            href="https://github.com/aiproductlabs8"
+            href="https://github.com/rahilpopat"
             target="_blank"
             rel="noreferrer"
             className="gh-fallback-link"
