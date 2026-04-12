@@ -542,6 +542,105 @@ body::before {
 .agents-cta-sub { font-size: 16px; color: var(--text-2); margin-bottom: 32px; }
 
 /* ═══════════════════════════════════════════════════════════
+   JOURNAL TAB
+═══════════════════════════════════════════════════════════ */
+.journal-timeline {
+  position: relative;
+  padding-left: 32px;
+  max-width: 760px;
+}
+.journal-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: rgba(0, 229, 195, 0.15);
+}
+.journal-entry {
+  position: relative;
+  display: flex;
+  gap: 0;
+  margin-bottom: 40px;
+}
+.journal-entry:last-child { margin-bottom: 0; }
+.journal-line {
+  position: absolute;
+  left: -32px;
+  top: 6px;
+  width: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+.journal-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 8px rgba(0, 229, 195, 0.25);
+}
+.journal-content {
+  flex: 1;
+}
+.journal-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.journal-date {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 12px;
+  color: var(--text-3);
+  letter-spacing: 0.04em;
+}
+.journal-type {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.journal-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-1);
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.journal-body {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.journal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.journal-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  background: rgba(0, 229, 195, 0.08);
+  color: rgba(0, 229, 195, 0.6);
+  border: 1px solid rgba(0, 229, 195, 0.12);
+}
+
+@media (max-width: 600px) {
+  .journal-timeline { padding-left: 24px; }
+  .journal-line { left: -24px; }
+  .journal-title { font-size: 16px; }
+  .journal-body { font-size: 13px; }
+}
+
+/* ═══════════════════════════════════════════════════════════
    STACK TAB
 ═══════════════════════════════════════════════════════════ */
 .stack-cat-label {

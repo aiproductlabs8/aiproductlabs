@@ -343,6 +343,7 @@ function useTypewriter(texts, speed = 55) {
 const TABS = [
   { id: 'about',    label: 'About' },
   { id: 'agents',   label: 'Agents' },
+  { id: 'journal',  label: 'Journal' },
   { id: 'stack',    label: 'Stack' },
   { id: 'insights', label: 'Insights' },
 ]
@@ -544,6 +545,133 @@ function AgentsTab() {
         </div>
       </section>
 
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════════════════
+   JOURNAL TAB
+═══════════════════════════════════════════════════════════ */
+const JOURNAL_TYPE_COLORS = {
+  pattern:        '#00e5c3',
+  shipped:        '#5DCAA5',
+  debugging:      '#378ADD',
+  decision:       '#8b6fd4',
+  mistake:        '#D85A30',
+  'cost-insight': '#EF9F27',
+}
+
+const journalEntries = [
+  {
+    date: '12 Apr 2026',
+    type: 'shipped',
+    title: 'Five projects, one night, 132 tests',
+    body: 'Meeting to PRD Agent (21 tests), Jira Audit Agent (33 tests), Release Notes Drafter (27 tests), PM Toolkit with 5 tools (51 tests). Every project follows the same .claude/ structure. Four project articles written. Polished READMEs with consistent branding across all repos.',
+    tags: ['shipped', 'milestone', 'portfolio'],
+  },
+  {
+    date: '12 Apr 2026',
+    type: 'pattern',
+    title: 'The scaffolding-first workflow — structure before code',
+    body: 'Every project tonight followed the same sequence: create CLAUDE.md, DECISIONS.md, .claude/agents/, .claude/commands/, .claude/settings.json, docs/ARCHITECTURE.md, README.md, and pyproject.toml before writing a single line of application code. Then open Claude Code — it reads CLAUDE.md automatically and understands the entire project from the first prompt.',
+    tags: ['pattern', 'workflow', 'claude-code'],
+  },
+  {
+    date: '12 Apr 2026',
+    type: 'decision',
+    title: 'One repo with five tools beats five separate repos',
+    body: 'Was about to create five separate repositories for PM tools. Stopped and realised they all follow the exact same pattern: text input → load agent prompt → call Claude once → validate with Pydantic → render with Jinja2. Built PM Toolkit instead: one shared API layer, five independent tools. Shows architectural thinking, not template repetition.',
+    tags: ['decision', 'architecture', 'pm-toolkit'],
+  },
+  {
+    date: '12 Apr 2026',
+    type: 'cost-insight',
+    title: 'Not every check needs an LLM — separate the arithmetic from the judgement',
+    body: 'Building the Jira Audit Agent, I split it into three checks. Only the Quality Scorer needs Claude. Field completeness is null checks. Staleness is date math. Making those two pure Python means auditing 20 tickets costs ~$0.02 instead of ~$0.60.',
+    tags: ['architecture', 'cost', 'jira-audit'],
+  },
+  {
+    date: '12 Apr 2026',
+    type: 'debugging',
+    title: 'Mocked tests pass, real API fails — always test against real data',
+    body: 'All 21 mocked tests passed for the Meeting to PRD Agent. First real API call crashed with 18 Pydantic validation errors. Claude returned user stories as plain strings instead of structured objects. The fix was two changes: added a concrete JSON example to the extractor prompt showing the exact shape of every field, and added markdown fence stripping to handle Claude wrapping JSON in code blocks.',
+    tags: ['debugging', 'prompt-engineering', 'pydantic'],
+  },
+  {
+    date: '12 Apr 2026',
+    type: 'shipped',
+    title: 'Meeting to PRD Agent — first project from scaffolding to passing tests in under an hour',
+    body: 'Built a two-agent pipeline: Extractor reads meeting transcripts and produces validated JSON, Writer takes that JSON and renders a PRD via Jinja2. The split was deliberate — if the PRD is wrong, inspect the intermediate JSON to find whether extraction or writing failed. 21 tests passing.',
+    tags: ['shipped', 'two-agent-pipeline', 'meeting-to-prd'],
+  },
+  {
+    date: '12 Apr 2026',
+    type: 'pattern',
+    title: 'The .claude/ structure that actually works',
+    body: "Started setting up Claude Code project scaffolding and initially created a .claude/rules/ directory for coding standards. Checked the official docs and discovered that directory doesn't exist as a feature — Claude Code doesn't read it. The real structure is simpler: CLAUDE.md in the project root (read automatically every session), .claude/agents/ for subagent definitions, .claude/commands/ for slash commands, and .claude/settings.json for permissions. Rules go directly in CLAUDE.md.",
+    tags: ['claude-code', 'correction', 'configuration'],
+  },
+  {
+    date: '12 Apr 2026',
+    type: 'mistake',
+    title: 'Git repo in the parent directory caught everything',
+    body: 'Ran git init in my ~/Agentic/ parent directory at some point. Every project underneath got treated as subfolders of one giant repo instead of independent repos. Pushes included everything. Fix was simple: rm -rf .git in the parent directory. Lesson: before running git init, always check ls -la for an existing .git in a parent folder.',
+    tags: ['mistake', 'git', 'devops'],
+  },
+]
+
+function JournalTab() {
+  useScrollReveal()
+  return (
+    <div className="tab-content">
+      <AgentCanvas />
+
+      <section className="tab-section-hero fade-in">
+        <div className="container">
+          <div className="tab-hero-text">
+            <span className="section-label">Build Journal</span>
+            <h1 className="tab-hero-headline">How I Build</h1>
+            <p className="tab-hero-sub">
+              Decisions, mistakes, and patterns — documented in real time.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="tab-section fade-in delay-1">
+        <div className="container">
+          <div className="journal-timeline">
+            {journalEntries.map((entry, idx) => (
+              <div key={idx} className={`journal-entry fade-in delay-${(idx % 3) + 1}`}>
+                <div className="journal-line">
+                  <span
+                    className="journal-dot"
+                    style={{ background: JOURNAL_TYPE_COLORS[entry.type] || '#00e5c3' }}
+                  />
+                </div>
+                <div className="journal-content">
+                  <div className="journal-meta">
+                    <span className="journal-date">{entry.date}</span>
+                    <span
+                      className="journal-type"
+                      style={{ color: JOURNAL_TYPE_COLORS[entry.type] || '#00e5c3' }}
+                    >
+                      {entry.type.replace('-', ' ')}
+                    </span>
+                  </div>
+                  <h3 className="journal-title">{entry.title}</h3>
+                  <p className="journal-body">{entry.body}</p>
+                  <div className="journal-tags">
+                    {entry.tags.map(tag => (
+                      <span key={tag} className="journal-tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
@@ -1812,6 +1940,7 @@ export default function App() {
 
   const TAB_CONTENT = {
     agents:   <AgentsTab />,
+    journal:  <JournalTab />,
     stack:    <StackTab />,
     insights: <InsightsTab onReadMore={handleReadMore} />,
     about:    <AboutTab onNavigate={handleSwitch} onOpenArticle={handleReadMore} />,
