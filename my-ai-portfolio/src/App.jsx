@@ -655,6 +655,17 @@ const insights = [
     featured: false,
     delay: 'delay-2',
   },
+  {
+    id: 'personal-ai-research-assistant',
+    category: 'Agent Build',
+    catClass: 'tc-green',
+    title: 'I Built a Personal AI Agent That Reads My GitHub and Tells Me What to Build Next',
+    desc: 'A 4-stage Python pipeline that monitors Brave Search, GitHub trending and RSS feeds daily — then scores and synthesises everything against your actual commits using Claude.',
+    date: 'Apr 2026',
+    readTime: '12 min read',
+    featured: false,
+    delay: 'delay-3',
+  },
 ]
 
 /* ═══════════════════════════════════════════════════════════
@@ -827,6 +838,134 @@ function PmFundamentalsPage({ onBack }) {
 
               <p>If you get those right, everything else becomes easier.</p>
               <p className="article-closing">If you don&apos;t, no tool or framework will save you.</p>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function PersonalAiResearchAssistantPage({ onBack }) {
+  return (
+    <div className="tab-content fade-in">
+      <section className="article-hero">
+        <div className="container">
+          <button className="article-back" onClick={onBack}>&larr; Back to Insights</button>
+          <div className="article-header">
+            <div className="article-header-meta">
+              <span className="atag tc-green">Agent Build</span>
+              <span className="article-date">Apr 2026 &middot; 12 min read</span>
+            </div>
+            <h1 className="article-title">I Built a Personal AI Agent That Reads My GitHub and Tells Me What to Build Next</h1>
+            <p className="article-byline">By Rahil</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="tab-section tab-section-last">
+        <div className="container">
+          <div className="article-body-wrap">
+            <div className="article-body">
+
+              <p>There&apos;s a problem nobody talks about when you&apos;re learning to build with AI.</p>
+              <p>It&apos;s not the tools. It&apos;s not the APIs. It&apos;s not even the code.</p>
+              <p>It&apos;s keeping up with a field that moves faster than you can read about it &mdash; and figuring out which parts of it actually matter to <em>you</em>, for what <em>you&apos;re</em> building, right now.</p>
+              <p>I was spending too long reading newsletters, scrolling through Hacker News, saving articles I&apos;d never get back to. And none of it connected to what I was actually working on. TLDR AI doesn&apos;t know I&apos;m building agentic systems. Feedly doesn&apos;t know my GitHub. Perplexity answers questions I ask, but doesn&apos;t monitor anything on my behalf.</p>
+              <p>The problem wasn&apos;t a lack of information. It was a lack of signal. Nothing was filtering the AI landscape through the lens of my actual projects and goals.</p>
+              <p>So I built something that does.</p>
+
+              <h2>What I Built</h2>
+              <p>A Python pipeline called the <strong>Personal AI Research Assistant</strong> &mdash; a 4-stage automated system that runs every morning and delivers a personalised briefing directly to my inbox.</p>
+              <p>Not a newsletter. Not a feed. A briefing that looks like this:</p>
+              <blockquote>&ldquo;There&apos;s a new tool that does X. You built this manually in personal-ai-research-assistant last week. It could have saved you 4 hours. Here&apos;s how to get started.&rdquo;</blockquote>
+              <p>Real repo names. Specific time estimates. And if it can&apos;t make a genuine connection to something I&apos;ve built &mdash; it says so honestly rather than making one up.</p>
+              <p>That last part was a deliberate design decision. Hallucination in a research tool isn&apos;t just wrong &mdash; it&apos;s counterproductive. I&apos;d rather get fewer, more honest briefings than confident fabrications.</p>
+
+              <h2>How It Works</h2>
+              <p>The pipeline has four stages, each one feeding into the next.</p>
+
+              <h3>Stage 1 &mdash; Monitor</h3>
+              <p>Every morning it pulls from three source types:</p>
+              <ul>
+                <li><strong>Brave Search API</strong> &mdash; rotating queries on topics I care about: Claude Code, MCP servers, agentic frameworks, LLM evaluation</li>
+                <li><strong>GitHub trending</strong> &mdash; repos created in the last 7 days with stars above 10, filtered by topic</li>
+                <li><strong>RSS feeds</strong> &mdash; Hacker News, Simon Willison, Anthropic Blog, The Batch, AI News</li>
+              </ul>
+              <p>It also fetches my recent public commit history via the GitHub Events API. This isn&apos;t a source of news &mdash; it&apos;s context for the stages that follow.</p>
+              <p>After deduplication, I typically end up with 50&ndash;80 raw items.</p>
+
+              <h3>Stage 2 &mdash; Score</h3>
+              <p>Not all 80 items are worth reading. Most aren&apos;t.</p>
+              <p>I use <strong>Claude Haiku</strong> here &mdash; fast and cheap for bulk scoring. Each item gets passed to the model with my personal goal profile (skills, learning objectives, active projects, topics to exclude) and a summary of my last 40 commits.</p>
+              <p>The scoring guide is simple: 10 means directly connected to something I&apos;m actively building. 7&ndash;9 means strong learning value. Below 7 gets dropped.</p>
+              <p>Haiku for this stage isn&apos;t just a cost decision &mdash; it&apos;s the right model for the job. Scoring is pattern matching. I don&apos;t need deep reasoning here, I need speed across 80 items at fractions of a cent each.</p>
+              <p>Items with a score of 7 or above pass through. Usually 5&ndash;8 survive.</p>
+
+              <h3>Stage 3 &mdash; Synthesise</h3>
+              <p>This is where the interesting work happens.</p>
+              <p>The surviving items go to <strong>Claude Sonnet</strong>. Sonnet gets the item, my goal profile, and crucially &mdash; my last 40 commit messages pulled from the GitHub Events API.</p>
+              <p>The prompt asks one question: <em>does this new tool connect to something I built manually?</em></p>
+              <p>If yes &mdash; name the repo, estimate the hours it could have saved, suggest what I could build with that time.</p>
+              <p>If no genuine match exists &mdash; flag it as a forward recommendation and don&apos;t fabricate a connection.</p>
+              <p>I chose Sonnet here because synthesis requires actual reasoning. It needs to look at a commit message like &ldquo;feat: session 3 &mdash; scorer with commit-aware haiku scoring&rdquo; and understand what that work involved, then map a new tool onto that context. Haiku can score. Sonnet can reason.</p>
+
+              <h3>Stage 4 &mdash; Deliver</h3>
+              <p>The synthesised briefings get rendered into an HTML email via a Jinja2 template and sent to my inbox at 07:00 UTC every morning via GitHub Actions.</p>
+              <p>No server. No Pi required for the core pipeline. Just a cron job on GitHub&apos;s infrastructure, running whether my laptop is open or not.</p>
+              <p>The pipeline also writes a plain text <code>DAILY-INTEL.md</code> file &mdash; a version of the digest that future agents in my system can read without parsing HTML.</p>
+
+              <h2>The Problem I Didn&apos;t Expect to Solve</h2>
+              <p>Building a 4-stage pipeline isn&apos;t one session of work. It&apos;s multiple sessions across multiple days. And Claude Code &mdash; the tool I used to build this &mdash; has no persistent memory between sessions.</p>
+              <p>Every time I opened a new session, it started fresh. No memory of what was built the day before, what decisions were made, what stage we were at.</p>
+              <p>This was killing my flow. I was spending the first 10 minutes of every session re-explaining context.</p>
+              <p>I solved it with two files.</p>
+              <p><strong>CLAUDE.md</strong> &mdash; the permanent project spec. Architecture decisions, coding standards, the session plan, the rules Claude Code should always follow. Written once, read at the start of every session.</p>
+              <p><strong>DECISIONS.md</strong> &mdash; a living session log. What was built, what changed, what the verify step showed, where we left off. Updated at the end of every session.</p>
+              <p>The ritual is simple:</p>
+              <ul>
+                <li>Start every session: <em>&ldquo;Read CLAUDE.md and DECISIONS.md and tell me where we left off.&rdquo;</em></li>
+                <li>End every session: <em>&ldquo;Update DECISIONS.md with what we built today.&rdquo;</em></li>
+              </ul>
+              <p>Claude Code reads both files and reconstructs the full project state in seconds. No repeated explanations. No drift. It picks up exactly where the last session ended.</p>
+              <p>This isn&apos;t a technical innovation &mdash; it&apos;s discipline. But the difference between having this system and not having it is the difference between a project that compounds across sessions and one that resets every day.</p>
+
+              <h2>What the Output Actually Looks Like</h2>
+              <p>Right now, most briefings connect back to one repo &mdash; <code>personal-ai-research-assistant</code> &mdash; because that&apos;s what I&apos;ve been building. The more I ship publicly, the richer the connections get. That&apos;s the loop. The tool grows with you.</p>
+              <p>Here&apos;s a real example from this week:</p>
+              <blockquote>
+                <em>Claude Code workflow docs that directly support your personal-ai-research-assistant project development patterns</em>
+                <br /><br />
+                <strong>You built this manually:</strong> rahilpopat/personal-ai-research-assistant<br />
+                <strong>This could have saved you:</strong> 2&ndash;3 hours per session on debugging and refactoring<br />
+                <strong>With that time:</strong> Apply these patterns to optimise your commit-aware synthesiser
+              </blockquote>
+              <p>Is every item that specific? Not yet. But when it lands, it genuinely changes what I pay attention to. That&apos;s the test.</p>
+
+              <h2>What I Learned</h2>
+              <p><strong>Finding the right problem is harder than building the solution.</strong></p>
+              <p>I knew what was possible with the APIs available. Claude, Brave Search, GitHub &mdash; the building blocks were obvious. What took time was identifying the specific problem worth solving. Not &ldquo;I want an AI assistant&rdquo; but &ldquo;I want something that reads my commits and tells me what I should have built differently.&rdquo;</p>
+              <p>That framing &mdash; <em>connect new tools to my actual work</em> &mdash; is what made this worth building. Without it I&apos;d have built another RSS reader with a Claude wrapper.</p>
+
+              <p><strong>Use the right model for the right job.</strong></p>
+              <p>Haiku for bulk scoring. Sonnet for synthesis. The cost difference is significant and so is the capability difference. Haiku can pattern-match 50 items against a profile quickly and cheaply. Sonnet can reason about a commit message and connect it to a new framework. Treating them as interchangeable would have either broken the output quality or made the daily cost unsustainable.</p>
+
+              <p><strong>Hallucination is a design constraint, not just a risk.</strong></p>
+              <p>The synthesiser&apos;s forward-only flag &mdash; where it explicitly declares it couldn&apos;t find a genuine connection rather than fabricating one &mdash; was the most important prompt engineering decision I made. A tool that confidently lies about what connects to your work is worse than no tool at all. Building honesty into the output format made the results trustworthy.</p>
+
+              <p><strong>Ship something that runs without you.</strong></p>
+              <p>The GitHub Actions cron job feels like a small thing. It isn&apos;t. There&apos;s a meaningful difference between a script you run manually and a system that runs whether you&apos;re working or not. The moment it sent its first automatic email was the moment it became a real product rather than a demo.</p>
+
+              <h2>The Repo</h2>
+              <p>The whole thing is open source. Fork it, edit two YAML files &mdash; <code>profile.yaml</code> with your skills and goals, <code>sources.yaml</code> with your topics &mdash; and it reads your commits and goals instead of mine.</p>
+              <p>It costs roughly $0.15 a day to run. Haiku scoring 50 items plus Sonnet synthesising 8. Brave Search and GitHub are free tier.</p>
+              <p><a href="https://github.com/rahilpopat/personal-ai-research-assistant" target="_blank" rel="noreferrer">github.com/rahilpopat/personal-ai-research-assistant</a></p>
+
+              <h2>What&apos;s Next</h2>
+              <p>The research assistant is Phase 1. The digest proved its value &mdash; now the next step is adding a Writer agent that reads the daily briefing and drafts a LinkedIn post about the most interesting find of the week. Same pattern, new agent. Each one reads from the last one&apos;s output file. No API calls between agents. Just files.</p>
+              <p>The field is moving fast. The best way I&apos;ve found to keep up is to build things that help me keep up &mdash; and then build the next thing those things surface.</p>
+              <p className="article-closing">That&apos;s the loop.</p>
 
             </div>
           </div>
@@ -1348,6 +1487,8 @@ export default function App() {
     ? <AeroToAiPage onBack={handleBack} />
     : openArticle === 'pm-fundamentals'
     ? <PmFundamentalsPage onBack={handleBack} />
+    : openArticle === 'personal-ai-research-assistant'
+    ? <PersonalAiResearchAssistantPage onBack={handleBack} />
     : null
 
   return (
