@@ -1094,6 +1094,7 @@ body::before {
 /* ─── Active/live indicators amber ───────────────────────── */
 .agent-status-dot { background: var(--amber) !important; }
 .agent-card-soon .agent-status-dot { background: var(--amber) !important; }
+.agent-status-dot--active { background: #34d399 !important; }
 
 /* ─── Stats readout ──────────────────────────────────────── */
 .stats-readout {

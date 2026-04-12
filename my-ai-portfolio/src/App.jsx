@@ -397,14 +397,16 @@ const agents = [
     sys: 'ACTIVE',
   },
   {
-    icon: '🔧',
-    title: 'In The Lab',
-    desc: 'Classified. Mostly because it doesn\'t exist yet.',
-    tags: [],
-    tagClasses: [],
+    icon: '🧠',
+    title: 'Personal AI Research Assistant',
+    desc: 'A 4-stage Python pipeline that reads your GitHub commits and tells you what tools you should have used. Monitors Brave Search, GitHub trending, and RSS feeds daily. Scores against your goal profile using Claude Haiku, synthesises with Claude Sonnet, delivers to your inbox at 07:00 UTC.',
+    note: 'Runs on GitHub Actions. Costs ~$0.13/day.',
+    tags: ['Claude API', 'Brave Search', 'GitHub Actions', 'Python'],
+    tagClasses: ['tc-cyan', 'tc-orange', 'tc-purple', 'tc-green'],
     delay: 'delay-2',
-    comingSoon: true,
-    sys: 'STANDBY',
+    comingSoon: false,
+    sys: 'ACTIVE',
+    github: 'https://github.com/rahilpopat/personal-ai-research-assistant',
   },
   {
     icon: '🔧',
@@ -455,11 +457,11 @@ function AgentsTab() {
                 {agent.note && <p className="agent-note">{agent.note}</p>}
                 <div className="agent-card-footer">
                   <span className="agent-status">
-                    <span className="agent-status-dot" />
-                    {agent.comingSoon ? 'In the lab' : 'Live'}
+                    <span className={`agent-status-dot${!agent.comingSoon ? ' agent-status-dot--active' : ''}`} />
+                    {agent.comingSoon ? 'In the lab' : 'Active'}
                   </span>
-                  {!agent.comingSoon && (
-                    <a href="https://github.com/aiproductlabs8/aiproductlabs" target="_blank" rel="noreferrer" className="agent-cta">
+                  {agent.github && (
+                    <a href={agent.github} target="_blank" rel="noreferrer" className="agent-cta">
                       View on GitHub <ArrowIcon />
                     </a>
                   )}
@@ -1005,7 +1007,7 @@ function AboutTab({ onNavigate, onOpenArticle }) {
               <div className="about-stack-card">
                 <div className="about-stack-label">Current Stack</div>
                 <div className="about-stack-items">
-                  {['LangChain', 'LangGraph', 'Azure AI', 'RAG', 'Claude API', 'Copilot Studio', 'OpenClaw', 'Claude Code'].map(t => (
+                  {['RAG', 'Claude API', 'OpenClaw', 'Claude Code', 'Raspberry Pi 5', 'VS Code', 'GitHub Copilot'].map(t => (
                     <span key={t} className="spill spill-cyan">{t}</span>
                   ))}
                 </div>
