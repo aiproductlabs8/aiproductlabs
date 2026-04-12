@@ -420,7 +420,7 @@ const agents = [
     delay: 'delay-2',
     comingSoon: false,
     sys: 'ACTIVE',
-    github: 'https://github.com/rahilpopat/jira-audit-agent/tree/master/jira-audit-agent',
+    github: 'https://github.com/rahilpopat/jira-audit-agent',
   },
   {
     icon: '📰',
@@ -1243,7 +1243,7 @@ function JiraAuditAgentPage({ onBack }) {
               <h2>Tech Stack</h2>
               <p>Python, Claude API (Sonnet for quality scoring), Click CLI, Pydantic, Jinja2. 33 passing tests. The <code>--skip-quality</code> flag runs field and staleness checks without an API key &mdash; useful for CI or quick checks.</p>
 
-              <p><a href="https://github.com/rahilpopat/jira-agent" target="_blank" rel="noreferrer">&rarr; View on GitHub</a></p>
+              <p><a href="https://github.com/rahilpopat/jira-audit-agent" target="_blank" rel="noreferrer">&rarr; View on GitHub</a></p>
 
             </div>
           </div>
