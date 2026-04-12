@@ -634,6 +634,17 @@ function StackTab() {
 ═══════════════════════════════════════════════════════════ */
 const insights = [
   {
+    id: 'personal-ai-research-assistant',
+    category: 'Agent Build',
+    catClass: 'tc-green',
+    title: 'I Built a Personal AI Agent That Reads My GitHub and Tells Me What to Build Next',
+    desc: 'A 4-stage Python pipeline that monitors Brave Search, GitHub trending and RSS feeds daily — then scores and synthesises everything against your actual commits using Claude.',
+    date: 'Apr 2026',
+    readTime: '12 min read',
+    featured: true,
+    delay: 'delay-1',
+  },
+  {
     id: 'aero-to-ai',
     category: 'Career & Perspective',
     catClass: 'tc-cyan',
@@ -641,8 +652,8 @@ const insights = [
     desc: 'The two worlds sound nothing alike. One involves flight dynamics and wind tunnels. The other involves sprint planning and model evaluation. But the discipline transfers more than you\'d think.',
     date: 'Mar 2026',
     readTime: '10 min read',
-    featured: true,
-    delay: 'delay-1',
+    featured: false,
+    delay: 'delay-2',
   },
   {
     id: 'pm-fundamentals',
@@ -652,17 +663,6 @@ const insights = [
     desc: 'The best PMs aren\'t the ones who know the most frameworks. They\'re the ones who are consistently good at a few core things.',
     date: 'Mar 2026',
     readTime: '8 min read',
-    featured: false,
-    delay: 'delay-2',
-  },
-  {
-    id: 'personal-ai-research-assistant',
-    category: 'Agent Build',
-    catClass: 'tc-green',
-    title: 'I Built a Personal AI Agent That Reads My GitHub and Tells Me What to Build Next',
-    desc: 'A 4-stage Python pipeline that monitors Brave Search, GitHub trending and RSS feeds daily — then scores and synthesises everything against your actual commits using Claude.',
-    date: 'Apr 2026',
-    readTime: '12 min read',
     featured: false,
     delay: 'delay-3',
   },
