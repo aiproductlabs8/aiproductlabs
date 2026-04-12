@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 export default function SignalBoard({ onNavigate, onOpenArticle }) {
   useEffect(() => {
-    const rows = ['sb-r1', 'sb-r2', 'sb-r3', 'sb-r4', 'sb-r5', 'sb-r6'];
+    const rows = ['sb-r1', 'sb-r2', 'sb-r3', 'sb-r4', 'sb-r5', 'sb-r6', 'sb-r7'];
     const timeouts = rows.map((id, i) =>
       setTimeout(() => {
         const el = document.getElementById(id);
@@ -213,6 +213,27 @@ export default function SignalBoard({ onNavigate, onOpenArticle }) {
         <div
           className="sb-row"
           id="sb-r1"
+          onClick={() => onOpenArticle('pm-toolkit')}
+        >
+          <div className="sb-flight">INS-007</div>
+          <div className="sb-title-wrap">
+            <div className="sb-row-title">
+              PM Toolkit: Five AI Tools for the Work PMs Do
+            </div>
+            <div className="sb-read">8 MIN READ</div>
+          </div>
+          <div className="sb-cat sb-cat-career">
+            AGENT BUILD
+          </div>
+          <div className="sb-status-live">
+            <div className="sb-live-dot"></div>
+            LIVE <span className="sb-arrow">→</span>
+          </div>
+        </div>
+
+        <div
+          className="sb-row"
+          id="sb-r2"
           onClick={() => onOpenArticle('release-notes-drafter')}
         >
           <div className="sb-flight">INS-006</div>
@@ -233,7 +254,7 @@ export default function SignalBoard({ onNavigate, onOpenArticle }) {
 
         <div
           className="sb-row"
-          id="sb-r2"
+          id="sb-r3"
           onClick={() => onOpenArticle('jira-audit-agent')}
         >
           <div className="sb-flight">INS-005</div>
@@ -254,7 +275,7 @@ export default function SignalBoard({ onNavigate, onOpenArticle }) {
 
         <div
           className="sb-row"
-          id="sb-r3"
+          id="sb-r4"
           onClick={() => onOpenArticle('meeting-to-prd')}
         >
           <div className="sb-flight">INS-004</div>
@@ -275,7 +296,7 @@ export default function SignalBoard({ onNavigate, onOpenArticle }) {
 
         <div
           className="sb-row"
-          id="sb-r4"
+          id="sb-r5"
           onClick={() => onOpenArticle('personal-ai-research-assistant')}
         >
           <div className="sb-flight">INS-003</div>
@@ -296,7 +317,7 @@ export default function SignalBoard({ onNavigate, onOpenArticle }) {
 
         <div
           className="sb-row"
-          id="sb-r5"
+          id="sb-r6"
           onClick={() => onOpenArticle('aero-to-ai')}
         >
           <div className="sb-flight">INS-001</div>
@@ -317,7 +338,7 @@ export default function SignalBoard({ onNavigate, onOpenArticle }) {
 
         <div
           className="sb-row"
-          id="sb-r6"
+          id="sb-r7"
           onClick={() => onOpenArticle('pm-fundamentals')}
         >
           <div className="sb-flight">INS-002</div>

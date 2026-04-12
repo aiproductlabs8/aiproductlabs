@@ -671,6 +671,17 @@ function StackTab() {
 ═══════════════════════════════════════════════════════════ */
 const insights = [
   {
+    id: 'pm-toolkit',
+    category: 'Agent Build',
+    catClass: 'tc-green',
+    title: 'PM Toolkit: Five AI Tools for the Work PMs Actually Do',
+    desc: 'Five AI-powered tools in a single CLI — priority ranking, assumption mapping, decision logging, retro synthesis, and story refinement. One shared Claude API layer, one repo, 51 tests.',
+    date: 'Apr 2026',
+    readTime: '8 min read',
+    featured: true,
+    delay: 'delay-1',
+  },
+  {
     id: 'release-notes-drafter',
     category: 'Agent Build',
     catClass: 'tc-green',
@@ -678,7 +689,7 @@ const insights = [
     desc: 'A three-stage pipeline that collects changes from git history and GitHub PRs, has Claude categorise and rewrite each one, then renders structured release notes. One API call per release, roughly $0.01.',
     date: 'Apr 2026',
     readTime: '6 min read',
-    featured: true,
+    featured: false,
     delay: 'delay-1',
   },
   {
@@ -1036,6 +1047,81 @@ function PersonalAiResearchAssistantPage({ onBack }) {
               <p>The research assistant is Phase 1. The digest proved its value &mdash; now the next step is adding a Writer agent that reads the daily briefing and drafts a LinkedIn post about the most interesting find of the week. Same pattern, new agent. Each one reads from the last one&apos;s output file. No API calls between agents. Just files.</p>
               <p>The field is moving fast. The best way I&apos;ve found to keep up is to build things that help me keep up &mdash; and then build the next thing those things surface.</p>
               <p className="article-closing">That&apos;s the loop.</p>
+
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  )
+}
+
+function PmToolkitPage({ onBack }) {
+  return (
+    <div className="tab-content fade-in">
+      <section className="article-hero">
+        <div className="container">
+          <button className="article-back" onClick={onBack}>&larr; Back to Insights</button>
+          <div className="article-header">
+            <div className="article-header-meta">
+              <span className="atag tc-green">Agent Build</span>
+              <span className="article-date">Apr 2026 &middot; 8 min read</span>
+            </div>
+            <h1 className="article-title">PM Toolkit: Five AI Tools for the Work PMs Actually Do</h1>
+            <p className="article-byline">By Rahil</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="tab-section tab-section-last">
+        <div className="container">
+          <div className="article-body-wrap">
+            <div className="article-body">
+
+              <h2>The Problem</h2>
+              <p>Product management is full of tasks that require structured thinking but produce unstructured output. You prioritise a backlog in your head but can&apos;t show your reasoning. You spot assumptions in a feature proposal but don&apos;t write them down systematically. You sit through a retro, hear the same feedback for the third sprint in a row, but nobody connects the pattern. You write user stories that engineering immediately has questions about because the acceptance criteria are missing or vague.</p>
+              <p>These aren&apos;t hard problems individually. But they&apos;re time-consuming, repetitive, and easy to skip &mdash; which means they don&apos;t get done properly. The result is backlogs prioritised by gut feel, features built on untested assumptions, decisions nobody can remember the reasoning for, retros that don&apos;t lead to change, and user stories that create rework.</p>
+
+              <h2>What I Built</h2>
+              <p>PM Toolkit is five AI-powered tools in a single CLI. Each one takes a specific type of messy PM input and produces structured, actionable output. One shared Claude API layer, five independent tools, no duplication.</p>
+
+              <h3>Priority Ranker</h3>
+              <p>You paste in your raw backlog. It scores every item on Reach (how many users does this affect?), Impact (how much does it matter to them?), Confidence (how sure are you about those numbers?), and Effort (how hard is it to build?). You get back a ranked list with written reasoning per item.</p>
+              <p>The value isn&apos;t the ranking &mdash; it&apos;s the reasoning. When a stakeholder asks &ldquo;why isn&apos;t my feature first?&rdquo;, you point to the scores and the justification instead of saying &ldquo;because I think so.&rdquo;</p>
+
+              <h3>Assumption Mapper</h3>
+              <p>You describe a feature your team is about to build. It surfaces every hidden assumption &mdash; about user behaviour, technical feasibility, market demand, data quality, resourcing &mdash; rated by risk level with a specific way to validate each one before you commit engineering time.</p>
+              <p>The value is catching expensive mistakes early. A 10-minute assumption mapping exercise before sprint 1 can prevent discovering in sprint 3 that users don&apos;t actually want the feature.</p>
+
+              <h3>Decision Logger</h3>
+              <p>You paste in messy meeting notes. It extracts every decision made &mdash; who decided, what alternatives were considered, why they were rejected, whether the decision is final or tentative. Auto-tags for future search.</p>
+              <p>The value is institutional memory. Three weeks from now when someone asks &ldquo;why did we choose Postgres?&rdquo;, the answer exists in a structured log instead of buried in someone&apos;s meeting notes.</p>
+
+              <h3>Retro Synthesiser</h3>
+              <p>You dump in raw retro feedback &mdash; sticky notes, Slack threads, survey responses. It clusters related items into themes, spots patterns across items, and produces specific recommendations with owners and effort estimates.</p>
+              <p>The value is turning scattered feedback into specific actions. Instead of &ldquo;we should improve deployments&rdquo;, you get &ldquo;Add automated rollback and deploy health checks &mdash; owner: Tech Lead, effort: medium, impact: high.&rdquo;</p>
+
+              <h3>User Story Refiner</h3>
+              <p>You paste in rough user stories. It rewrites them with proper personas, testable acceptance criteria, realistic edge cases, and flags for common problems &mdash; missing personas, vague language, scope creep.</p>
+              <p>The value is a quality gate before engineering. A story that says &ldquo;users should be able to export data&rdquo; goes in; a story with three acceptance criteria and two edge cases comes out. Engineering knows exactly what &ldquo;done&rdquo; looks like before they start.</p>
+
+              <h2>Architecture</h2>
+              <p>All five tools follow the same pattern: read input &rarr; load agent prompt from a markdown file &rarr; call Claude once &rarr; validate the response with Pydantic &rarr; render output with a Jinja2 template.</p>
+              <p>The shared layer (<code>shared.py</code>) handles all Claude API interaction &mdash; prompt loading, API calls, JSON parsing. Each tool is just three things: the prompt, the Pydantic model, and the Jinja2 template. Adding a sixth tool means creating those three files and registering a new CLI subcommand.</p>
+              <pre><code>{`pm-toolkit rank backlog.txt -o output/ranked.md
+pm-toolkit assumptions "Add real-time collaboration" -o output/assumptions.md
+pm-toolkit decisions meeting_notes.txt -o output/decisions.md
+pm-toolkit retro retro_notes.txt -o output/retro.md
+pm-toolkit refine user_stories.txt -o output/refined.md`}</code></pre>
+
+              <h2>Why One Repo, Not Five</h2>
+              <p>The alternative was five separate repositories &mdash; one per tool. But all five follow the same pattern. Five repos would mean five copies of the Claude API helper, five sets of permissions config, five READMEs explaining the same architecture. One repo with a shared layer shows that I recognised the pattern and built for it, rather than repeating the same scaffolding five times.</p>
+              <p>It also means any improvement to the shared layer &mdash; adding retry logic, switching models, adding rate limiting &mdash; happens once and benefits all five tools.</p>
+
+              <h2>Tech Stack</h2>
+              <p>Python, Claude API (Sonnet), Click CLI with subcommands, Pydantic, Jinja2. 51 passing tests across all five tools. Each tool makes exactly one API call per run &mdash; roughly $0.01&ndash;0.03 per invocation.</p>
+
+              <p><a href="https://github.com/rahilpopat/pm-toolkit" target="_blank" rel="noreferrer">&rarr; View on GitHub</a></p>
 
             </div>
           </div>
@@ -1743,6 +1829,8 @@ export default function App() {
     ? <JiraAuditAgentPage onBack={handleBack} />
     : openArticle === 'release-notes-drafter'
     ? <ReleaseNotesDrafterPage onBack={handleBack} />
+    : openArticle === 'pm-toolkit'
+    ? <PmToolkitPage onBack={handleBack} />
     : null
 
   return (
